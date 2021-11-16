@@ -138,6 +138,9 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionRegistro(){
+        return $this->render('registro/registro');
+    }
     /**
      * Logout action.
      *
