@@ -143,7 +143,8 @@ $this->title = 'My Yii Application';
                             'header'=> 'Accion',
                             'headerOptions'=>[
                                                 'width'=>'90'
-                                            ]
+                            ],
+                            'template'=>'{update} // {delete}'
                         ],
                     ],
                 ]);

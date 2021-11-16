@@ -116,6 +116,10 @@ class SiteController extends Controller
         return $this->redirect('index');
     }
 
+    public function actionUpdate(){
+        return $this->render('update');
+    }
+
     /**
      * Login action.
      *
