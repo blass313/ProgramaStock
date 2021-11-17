@@ -34,6 +34,5 @@
                 'precio_bulto'=>'Precio por bulto:',
             ];
         }
-        
     }
 ?>

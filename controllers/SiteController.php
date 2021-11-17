@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 
+use yii\helpers\Html;
 use app\models\ProductSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -28,7 +29,7 @@ class SiteController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -115,9 +116,76 @@ class SiteController extends Controller
 		$model->delete();
         return $this->redirect('index');
     }
-
+    
     public function actionUpdate(){
-        return $this->render('update');
+        $model = new ProductForm;
+        $msg = null;
+        if($model->load(Yii::$app->request->post()))
+        {
+            if($model->validate())
+            {
+                $datos = product::findOne($_GET["id"]);
+                if($datos)
+                {
+                    $datos->cod = $model->cod;
+                    $datos->name = $model->name;
+                    $datos->description = $model->description;
+                    $datos->categoria = $model->categoria;
+                    $datos->status = $model->status;
+                    $datos->precio_unidad = $model->precio_unidad;
+                    $datos->precio_bulto = $model->precio_bulto;
+    
+                    if ($datos->update())
+                    {
+                        $msg = "El producto ha sido actualizado correctamente";
+                    }
+                    else
+                    {
+                        $msg = "El producto no ha podido ser actualizado";
+                    }
+                }
+                else
+                {
+                    $msg = "El producto seleccionado no ha sido encontrado";
+                }
+            }
+            else
+            {
+                $model->getErrors();
+            }
+        }
+
+        if (Yii::$app->request->get("id"))
+        {
+            $id = Html::encode($_GET["id"]);
+            if ((int) $id)
+            {
+                $datos = product::findOne($id);
+                if($datos)
+                {
+                    $model->cod = $datos->cod;
+                    $model->name = $datos->name;
+                    $model->description = $datos->description;
+                    $model->categoria = $datos->categoria;
+                    $model->status = $datos->status;
+                    $model->precio_unidad = $datos->precio_unidad;
+                    $model->precio_bulto = $datos->precio_bulto;
+                }
+                else
+                {
+                    return $this->redirect(["index"]);
+                }
+            }
+            else
+            {
+                return $this->redirect(["index"]);
+            }
+        }
+        else
+        {
+            return $this->redirect(["index"]);
+        }
+        return $this->render("update", ["model" => $model, "msg" => $msg]);
     }
 
     /**
@@ -155,33 +223,5 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

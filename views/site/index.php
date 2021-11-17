@@ -20,7 +20,7 @@ $this->title = 'My Yii Application';
                     'title' => '<h2>Crear producto</h2>',
                     'headerOptions' => ['id' => 'modalHeader'],
                     'id' => 'AltaBaja',
-                    'size' => 'modal-lg',
+                    'size' => 'modal-sm',
                     'closeButton' => [
                             'id'=>'close-button',
                             'class'=>'close',
@@ -34,47 +34,45 @@ $this->title = 'My Yii Application';
                     'clientOptions' => [
                             'backdrop' => true, 'keyboard' => true,
                         ]
-                ]);?>
+                ]);
+        ?>
+            <div class="product-form">
+                <?php $form = ActiveForm::begin( [
+                                'enableClientValidation' => true,
+                                'method' => 'post',
+                                ]);?>
 
-                    <div class="product-form">
+                    <div class="form-group">
+                        <?= $form->field($model, 'cod')->textInput() ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    </div>
 
-                        <?php $form = ActiveForm::begin( [
-                                        'enableClientValidation' => true,
-                                        'method' => 'post',
-                                     ]);?>
+                    <div class="form-group">
+                        <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+                    </div>
 
-                            <div class="form-group">
-                                <?= $form->field($model, 'cod')->textInput() ?>
-                            </div>
-                            <div class="form-group">
-                                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                            </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'categoria')->textInput() ?>
+                    </div>
 
-                            <div class="form-group">
-                                <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
-                            </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'status')->textInput() ?>
+                    </div>
 
-                            <div class="form-group">
-                                <?= $form->field($model, 'categoria')->textInput() ?>
-                            </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'precio_unidad')->textInput() ?>
+                    </div>
 
-                            <div class="form-group">
-                                <?= $form->field($model, 'status')->textInput() ?>
-                            </div>
+                    <div class="form-group">
+                        <?= $form->field($model, 'precio_bulto')->textInput() ?>
+                    </div>
 
-                            <div class="form-group">
-                                <?= $form->field($model, 'precio_unidad')->textInput() ?>
-                            </div>
-
-                            <div class="form-group">
-                                <?= $form->field($model, 'precio_bulto')->textInput() ?>
-                            </div>
-
-                            <div class="form-group">
-                                <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
-                            </div>
-                        <?php ActiveForm::end(); ?>
-
+                    <div class="form-group">
+                        <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
+                    </div>
+                <?php ActiveForm::end(); ?>
             </div>
         <?php
             Modal::end();
@@ -98,6 +96,7 @@ $this->title = 'My Yii Application';
                         'backdrop' => true, 'keyboard' => true,
                     ]
             ]);
+
             Modal::end();
 
             Modal::begin([
