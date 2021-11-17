@@ -1,6 +1,9 @@
 <?php
 namespace app\models;
 use Yii;
+use yii\helpers\ArrayHelper;
+use app\models\Product;
+use yii\bootstrap4\Dropdown;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
@@ -76,7 +79,8 @@ $this->title = 'My Yii Application';
             </div>
         <?php
             Modal::end();
-
+        ?>
+        <?php
             Modal::begin([
                 'title' => '<h2>Generar venta</h2>',
                 'headerOptions' => ['id' => 'modalHeader'],
@@ -96,7 +100,17 @@ $this->title = 'My Yii Application';
                         'backdrop' => true, 'keyboard' => true,
                     ]
             ]);
-
+                $form = ActiveForm::begin([
+                    'action'=>'venta'
+                ]);
+            ?>
+                    <?= $form->field($model,"name")->dropDownList(ArrayHelper::map(product::find()->all(), "cod","name"));?>
+                    <?= $form->field($model, 'status')->textInput(['type' => 'number']);?>
+                    <div class="form-group">
+                        <?= Html::submitButton('Generar Venta', ['class' => 'btn btn-success']) ?>
+                    </div>
+            <?php
+                ActiveForm::end();
             Modal::end();
 
             Modal::begin([
