@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 
 
-$this->title = 'My Yii Application';
+$this->title = 'PAgina principal';
 ?>
 <div class="site-index">
     <h1>Stock de Mercaderia</h1>
@@ -144,13 +144,18 @@ $this->title = 'My Yii Application';
                     'filterModel' => $searchModel,
                     'columns'=>[
                         'cod',
-                        'name',
+                        [
+                            'attribute'=>'name',
+                            'label'=>'Producto'
+                        ],
                         'description',
-                        'categoria',
-                        'status',
+                        'categoria', 
+                        [
+                            'attribute'=>'status',
+                            'label'=>'Stock'
+                        ],
                         'precio_unidad',
                         'precio_bulto',
-            
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'header'=> 'Accion',

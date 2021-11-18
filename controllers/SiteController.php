@@ -98,10 +98,8 @@ class SiteController extends Controller
         }
 
         $searchModel = new ProductSearch();
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-            'pagination'=>false
-        ]);
+        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
