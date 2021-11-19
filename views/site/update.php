@@ -33,17 +33,28 @@ $this->title = 'Update producto';
     </div>
 
     <div class="form-group">
-        <?= $form->field($model, 'status')->textInput() ?>
+        <?= $form->field($model, 'stock')->textInput() ?>
     </div>
 
     <div class="form-group">
-        <?= $form->field($model, 'precio_unidad')->textInput() ?>
+        <?= $form->field($model, 'sugerido')->textInput() ?>
     </div>
 
     <div class="form-group">
-        <?= $form->field($model, 'precio_bulto')->textInput() ?>
+        <?= $form->field($model, 'precio_por_kg')->textInput() ?>
     </div>
 
+    <div class="form-group">
+        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
+    </div>
+
+    <div class="form-group">
+        <?= $form->field($model, 'porcentajekg')->textInput() ?>
+    </div>
+
+    <div class="form-group">
+        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
+    </div>
     <div class="form-group">
         <?= Html::submitButton('Actualizar', ['class' => 'btn btn-success']) ?>
     </div>

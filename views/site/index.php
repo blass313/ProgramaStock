@@ -8,11 +8,13 @@ use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\grid\grid;
 
 /* @var $this yii\web\View */
 
 
 $this->title = 'PAgina principal';
+
 ?>
 <div class="site-index">
     <h1>Stock de Mercaderia</h1>
@@ -61,17 +63,28 @@ $this->title = 'PAgina principal';
                     </div>
 
                     <div class="form-group">
-                        <?= $form->field($model, 'status')->textInput() ?>
+                        <?= $form->field($model, 'stock')->textInput() ?>
                     </div>
 
                     <div class="form-group">
-                        <?= $form->field($model, 'precio_unidad')->textInput() ?>
+                        <?= $form->field($model, 'sugerido')->textInput() ?>
                     </div>
 
                     <div class="form-group">
-                        <?= $form->field($model, 'precio_bulto')->textInput() ?>
+                        <?= $form->field($model, 'precio_por_kg')->textInput() ?>
                     </div>
 
+                    <div class="form-group">
+                        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?= $form->field($model, 'porcentajekg')->textInput() ?>
+                    </div>
+
+                    <div class="form-group">
+                        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
+                    </div>
                     <div class="form-group">
                         <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
                     </div>
@@ -104,11 +117,6 @@ $this->title = 'PAgina principal';
                     'action'=>'venta'
                 ]);
             ?>
-                    <?= $form->field($model,"name")->dropDownList(ArrayHelper::map(product::find()->all(), "cod","name"));?>
-                    <?= $form->field($model, 'status')->textInput(['type' => 'number']);?>
-                    <div class="form-group">
-                        <?= Html::submitButton('Generar Venta', ['class' => 'btn btn-success']) ?>
-                    </div>
             <?php
                 ActiveForm::end();
             Modal::end();
@@ -149,13 +157,38 @@ $this->title = 'PAgina principal';
                             'label'=>'Producto'
                         ],
                         'description',
-                        'categoria', 
                         [
-                            'attribute'=>'status',
-                            'label'=>'Stock'
+                            'attribute'=>'categoria',
+                            'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
                         ],
-                        'precio_unidad',
-                        'precio_bulto',
+                        'stock',                       
+                        'sugerido',
+                        [
+                            'label'=>'diferencia',
+                            'contentOptions'=>['color'=>grid::color( $model['sugerido'],$model['stock'])],
+                            'value'=>$dif = function($model){
+                                $diferencia = $model['sugerido']-$model['stock'];
+                                return $diferencia;
+                            },
+                        ],
+                        [
+                            'label'=>'Precio por Kg',
+                            'value'=>function($model){
+                                $porcentaje = $model['porcentajekg'];
+                                $precio = $model['precio_por_kg'];
+                                $total = (($precio*$porcentaje)/100)+$precio;
+                                return '$ '.$total;
+                            },
+                        ],
+                        [
+                            'label'=>'Precio por bolsa',
+                            'value'=>function($model){
+                                $porcentaje = $model['porcentajebolsa'];
+                                $precio = $model['precio_bolsa'];
+                                $total = (($precio*$porcentaje)/100)+$precio;
+                                return '$ '.$total;
+                            },
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'header'=> 'Accion',
@@ -178,10 +211,39 @@ $this->title = 'PAgina principal';
                     'cod',
                     'name',
                     'description',
-                    'categoria',
-                    'status',
-                    'precio_unidad',
-                    'precio_bulto',
+                    [
+                        'attribute'=>'categoria',
+                        'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
+                    ],
+                    'stock',
+                    'sugerido',
+                    [
+                        'label'=>'diferencia',
+                        'value'=>function($model){
+                            $diferencia = $model['sugerido']-$model['stock'];
+                            
+                            
+                            return $diferencia;
+                        },
+                    ],
+                    [
+                        'label'=>'Precio por Kg',
+                        'value'=>function($model){
+                            $porcenje = ($model['precio_por_kg']*$model['porcentajekg'])/100;
+                            
+                            
+                            return $porcenje;
+                        },
+                    ],
+                    [
+                        'label'=>'Precio por bolsa',
+                        'value'=>function($model){
+                            $porcenje = ($model['precio_bolsa']*$model['porcentajebolsa'])/100;
+                            
+                            
+                            return $porcenje;
+                        },
+                    ]
                 ],
             ]);
         }

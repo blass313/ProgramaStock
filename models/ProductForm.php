@@ -9,15 +9,18 @@
         public $name;
         public $description;
         public $categoria;
-        public $status;
-        public $precio_unidad;
-        public $precio_bulto;
+        public $stock;
+        public $sugerido;
+        public $precio_por_kg;
+        public $precio_bolsa;
+        public $porcentajekg;
+        public $porcentajebolsa;
 
         public function rules()
         {
             return[
-                [['cod','name','description','categoria','status','precio_unidad','precio_bulto'],'required','message' => 'campo requerido'],
-                [['cod','status'],'integer', 'message' => 'permite solo numeros'],
+                [['cod','name','description','categoria','stock','precio_por_kg','precio_bolsa','sugerido','porcentajekg','porcentajebolsa'],'required','message' => 'campo requerido'],
+                [['cod','stock'],'integer', 'message' => 'permite solo numeros'],
                 [['name','description','categoria'],'string', 'message' => 'caracteres no validos']
             ];
         }
@@ -29,9 +32,12 @@
                 'name'=>'Nombre:',
                 'description'=>'Descripcion:',
                 'categoria'=>'Categoria:',
-                'status'=>'Stock:',
-                'precio_unidad'=>'Precio unitario',
-                'precio_bulto'=>'Precio por bulto:',
+                'stock'=>'Stock:',
+                'sugerido'=>'Sugerido:',
+                'precio_por_kg'=>'Precio por kg:',
+                'precio_bolsa'=>'Precio por bolsa:',
+                'porcentajekg'=>'Porcentaje por kg:',
+                'porcentajebolsa'=>'porcentaje por bolsa:',
             ];
         }
     }

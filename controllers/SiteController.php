@@ -78,18 +78,24 @@ class SiteController extends Controller
                 $datos->name = $model->name;
                 $datos->description = $model->description;
                 $datos->categoria = $model->categoria;
-                $datos->status = $model->status;
-                $datos->precio_unidad = $model->precio_unidad;
-                $datos->precio_bulto = $model->precio_bulto;
+                $datos->stock = $model->stock;
+                $datos->sugerido = $model->sugerido;
+                $datos->precio_por_kg = $model->precio_por_kg;
+                $datos->precio_bolsa = $model->precio_bolsa;
+                $datos->porcentajekg = $model->porcentajekg;
+                $datos->porcentajebolsa = $model->porcentajebolsa;
 
                 if ($datos->insert()) {
                     $model->cod=null;
                     $model->name=null;
                     $model->description=null;
                     $model->categoria=null;
-                    $model->status=null;
-                    $model->precio_unidad=null;
-                    $model->precio_bulto=null;
+                    $model->stock=null;
+                    $model->sugerido=null;
+                    $model->precio_por_kg=null;
+                    $model->precio_bolsa=null;
+                    $model->porcentajebolsa=null;
+                    $model->porcentajekg=null;
                     
                 }
             }else {
@@ -129,9 +135,12 @@ class SiteController extends Controller
                     $datos->name = $model->name;
                     $datos->description = $model->description;
                     $datos->categoria = $model->categoria;
-                    $datos->status = $model->status;
-                    $datos->precio_unidad = $model->precio_unidad;
-                    $datos->precio_bulto = $model->precio_bulto;
+                    $datos->stock = $model->stock;
+                    $datos->sugerido = $model->sugerido;
+                    $datos->precio_por_kg = $model->precio_por_kg;
+                    $datos->precio_bolsa = $model->precio_bolsa;
+                    $datos->porcentajekg = $model->porcentajekg;
+                    $datos->porcentajebolsa = $model->porcentajebolsa;
     
                     if ($datos->update())
                     {
@@ -165,9 +174,12 @@ class SiteController extends Controller
                     $model->name = $datos->name;
                     $model->description = $datos->description;
                     $model->categoria = $datos->categoria;
-                    $model->status = $datos->status;
-                    $model->precio_unidad = $datos->precio_unidad;
-                    $model->precio_bulto = $datos->precio_bulto;
+                    $model->stock = $datos->stock;
+                    $model->sugerido = $datos->sugerido;
+                    $model->precio_por_kg = $datos->precio_por_kg;
+                    $model->precio_bolsa = $datos->precio_bolsa;
+                    $model->porcentajekg = $datos->porcentajekg;
+                    $model->porcentajebolsa = $datos->porcentajebolsa;
                 }
                 else
                 {
@@ -184,6 +196,11 @@ class SiteController extends Controller
             return $this->redirect(["index"]);
         }
         return $this->render("update", ["model" => $model, "msg" => $msg]);
+    }
+
+    public function actionVentas(){
+        $msj = null;
+        return $this->render('index',$msj);
     }
 
     /**

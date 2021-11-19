@@ -17,8 +17,8 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'description', 'precio_unidad', 'precio_bulto', 'categoria'], 'safe'],
+            [['id', 'stock','sugerido'], 'integer'],
+            [['name', 'description', 'precio_por_kg', 'precio_bolsa', 'categoria'], 'safe'],
             [['cod','categoria'],'safe']
         ];
     }
@@ -48,7 +48,7 @@ class ProductSearch extends Product
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=>[
-                'attributes'=>['cod','name']
+                'attributes'=>['cod','name','categoria']
             ]
         ]);
 
@@ -65,9 +65,12 @@ class ProductSearch extends Product
             'id' => $this->id,
             'cod' => $this->cod,
             'categoria' => $this->categoria,
-            'status' => $this->status,
-            'precio_unidad' => $this->precio_unidad,
-            'precio_bulto' => $this->precio_bulto,
+            'stock' => $this->stock,
+            'sugerido' => $this->sugerido,
+            'precio_por_kg' => $this->precio_por_kg,
+            'precio_bolsa' => $this->precio_bolsa,
+            'porcentajekg' => $this->porcentajekg,
+            'porcentajebolsa' => $this->porcentajebolsa,
             'name' => $this->name
         ]);
 
