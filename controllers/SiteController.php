@@ -70,6 +70,7 @@ class SiteController extends Controller
     {
         $model = new ProductForm;
         $msg = null;
+
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 $datos = new Product();
@@ -106,7 +107,6 @@ class SiteController extends Controller
         $searchModel = new ProductSearch();
         
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -197,10 +197,27 @@ class SiteController extends Controller
         }
         return $this->render("update", ["model" => $model, "msg" => $msg]);
     }
+    public static function Actioncolor($cod){
+        $BBDD = new Product();
 
-    public function actionVentas(){
-        $msj = null;
-        return $this->render('index',$msj);
+        $dato = $BBDD->find()->asArray()->where(['cod'=>$cod])->one();
+        if(isset($dato['stock'])&&isset($dato['sugerido'])){
+            $stock = $dato['stock'];
+            $sugerido = $dato['sugerido'];
+
+            $diferencia = $stock - $sugerido;
+
+            if ($diferencia < 0) {
+                $color = 'red';
+                return $color;
+            }elseif($diferencia == 0){
+                $color = 'yellow';
+                return $color;
+            }else {
+                $color = 'green';
+                return $color;
+            }
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\db\ActiveQuery;
 use app\grid\grid;
 
 /* @var $this yii\web\View */
@@ -141,7 +142,58 @@ $this->title = 'PAgina principal';
                     ]
             ]);
             Modal::end();
-        }
+
+            Modal::begin([
+                'title' => '<h2>Sugerido</h2>',
+                'headerOptions' => ['id' => 'modalHeader'],
+                'id' => 'Sugerido',
+                'size' => 'modal-lg',
+                'closeButton' => [
+                        'id'=>'close-button',
+                        'class'=>'close',
+                        'data-dismiss' =>'modal',
+                        'data-keyboard'=>'false',
+                        'data-backdrop'=>'static'
+                    ],
+                    'toggleButton' => [
+                        'label' => 'Sugerido','class' => "btn btn-success"
+                    ],
+                //keeps from closing modal with esc key or by clicking out of the modal.
+                // user must click cancel or X to close
+                'clientOptions' => [
+                        'backdrop' => true, 'keyboard' => true,
+                    ]
+            ]);?>
+            <?=
+                GridView::widget([
+                    'dataProvider' =>$dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns'=>[
+                        'cod',
+                        [
+                            'attribute'=>'name',
+                            'label'=>'Producto'
+                        ],
+                        [
+                            'attribute'=>'categoria',
+                            'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
+                        ],
+                        [
+                            'attribute'=>'stock',
+                        ],                      
+                        'sugerido',
+                        [
+                            'label'=>'diferencia',
+                            'value'=>$dif = function($model){
+                                $diferencia = $model['sugerido']-$model['stock'];
+                                return $diferencia;
+                            },
+                        ],
+                    ],
+                ]);?>
+        <?php
+            Modal::end();
+        }//isGuest
         ?>
         <?php
         if (!Yii::$app->user->isGuest) {
@@ -165,7 +217,6 @@ $this->title = 'PAgina principal';
                         'sugerido',
                         [
                             'label'=>'diferencia',
-                            'contentOptions'=>['color'=>grid::color( $model['sugerido'],$model['stock'])],
                             'value'=>$dif = function($model){
                                 $diferencia = $model['sugerido']-$model['stock'];
                                 return $diferencia;
