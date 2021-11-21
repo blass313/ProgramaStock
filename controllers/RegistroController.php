@@ -3,12 +3,38 @@
 
     use Yii;
     use yii\web\Controller;
-    use app\models\FormRegistro;
+
     use yii\widgets\ActiveForm;
+    use yii\filters\AccessControl;
+    use yii\filters\VerbFilter;
+
+    use app\models\FormRegistro;
     use app\models\Users;
 
     class RegistroController extends Controller
     {
+        public function behaviors()
+        {
+            return [
+                'access' => [
+                    'class' => AccessControl::className(),
+                    'only' => ['logout','registro'],
+                    'rules' => [
+                        [
+                            'actions' => ['logout','registro'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                ],
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'logout' => ['post'],
+                    ],
+                ],
+            ];
+        }
         public function  actionRegistro(){
 
             $model = new FormRegistro;

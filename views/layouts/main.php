@@ -37,8 +37,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'registro', 'url' => ['/registro/registro']],
+            ['label' => 'sugerido', 'url' => ['/sugerido/sugerido']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -50,7 +50,7 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+                )
         ],
     ]);
     NavBar::end();

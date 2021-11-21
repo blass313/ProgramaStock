@@ -1,302 +1,247 @@
 <?php
-namespace app\models;
-use Yii;
-use yii\helpers\ArrayHelper;
-use app\models\Product;
-use yii\bootstrap4\Dropdown;
-use yii\bootstrap4\Modal;
-use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\db\ActiveQuery;
-use app\grid\grid;
+    namespace app\models;
 
-/* @var $this yii\web\View */
+    use Yii;
+
+    use yii\helpers\Url;
+    use yii\helpers\ArrayHelper;
+    use yii\bootstrap4\Dropdown;
+    use yii\bootstrap4\Modal;
+    use yii\grid\GridView;
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+    use yii\db\ActiveQuery;
+
+    use app\models\Product;
+
+    /* @var $this yii\web\View */
 
 
-$this->title = 'PAgina principal';
-
+    $this->title = 'Pagina principal';
 ?>
+
 <div class="site-index">
-    <h1>Stock de Mercaderia</h1>
-    <div>
-        <?php
-            if (!Yii::$app->user->isGuest) {
-                Modal::begin([
-                    'title' => '<h2>Crear producto</h2>',
-                    'headerOptions' => ['id' => 'modalHeader'],
-                    'id' => 'AltaBaja',
-                    'size' => 'modal-sm',
-                    'closeButton' => [
-                            'id'=>'close-button',
-                            'class'=>'close',
-                            'data-dismiss' =>'modal',
-                        ],
-                        'toggleButton' => [
-                            'label' => 'Crear producto','class' => "btn btn-success"
-                        ],
-                    //keeps from closing modal with esc key or by clicking out of the modal.
-                    // user must click cancel or X to close
-                    'clientOptions' => [
-                            'backdrop' => true, 'keyboard' => true,
-                        ]
-                ]);
-        ?>
-            <div class="product-form">
-                <?php $form = ActiveForm::begin( [
-                                'enableClientValidation' => true,
-                                'method' => 'post',
-                                ]);?>
+<h1>Stock de Mercaderia</h1>
+<h3><?=$mensaje?></h3>
 
-                    <div class="form-group">
-                        <?= $form->field($model, 'cod')->textInput() ?>
-                    </div>
-                    <div class="form-group">
-                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'categoria')->textInput() ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'stock')->textInput() ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'sugerido')->textInput() ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'precio_por_kg')->textInput() ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'porcentajekg')->textInput() ?>
-                    </div>
-
-                    <div class="form-group">
-                        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
-                    </div>
-                    <div class="form-group">
-                        <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
-                    </div>
-                <?php ActiveForm::end(); ?>
-            </div>
-        <?php
-            Modal::end();
-        ?>
-        <?php
+<div>
+<?php
+    if (!Yii::$app->user->isGuest) {
             Modal::begin([
-                'title' => '<h2>Generar venta</h2>',
+                'title' => '<h2>Crear producto</h2>',
                 'headerOptions' => ['id' => 'modalHeader'],
-                'id' => 'Venta',
-                'size' => 'modal-lg',
+                'id' => 'AltaBaja',
+                'size' => 'modal-sm',
                 'closeButton' => [
-                        'id'=>'close-button',
-                        'class'=>'close',
-                        'data-dismiss' =>'modal',
-                    ],
-                    'toggleButton' => [
-                        'label' => 'generar venta','class' => "btn btn-success"
-                    ],
+                    'id'=>'close-button',
+                    'class'=>'close',
+                    'data-dismiss' =>'modal',
+                ],
+                'toggleButton' => [
+                    'label' => 'Crear producto','class' => "btn btn-success"
+                ],
                 //keeps from closing modal with esc key or by clicking out of the modal.
                 // user must click cancel or X to close
                 'clientOptions' => [
-                        'backdrop' => true, 'keyboard' => true,
-                    ]
+                'backdrop' => true, 'keyboard' => true,
+                ]
             ]);
-                $form = ActiveForm::begin([
-                    'action'=>'venta'
+        ?>
+        <div class="product-form">
+            <?php $form = ActiveForm::begin( [
+                'enableClientValidation' => true,
+                'method' => 'post',
                 ]);
             ?>
-            <?php
-                ActiveForm::end();
-            Modal::end();
 
+                <div class="form-group">
+                    <?= $form->field($model, 'cod')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'categoria')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'stock')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'sugerido')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'precio_por_kg')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'precio_bolsa')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'porcentajekg')->textInput() ?>
+                </div>
+
+                <div class="form-group">
+                    <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
+                </div>
+                
+                <div class="form-group">
+                    <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
+                </div>
+            <?php ActiveForm::end(); ?>
+        </div>
+
+        <?php
+            Modal::end();
+        ?>
+
+        <?php
             Modal::begin([
                 'title' => '<h2>Cargar mercaderia</h2>',
                 'headerOptions' => ['id' => 'modalHeader'],
                 'id' => 'cargarMercaderia',
                 'size' => 'modal-lg',
                 'closeButton' => [
-                        'id'=>'close-button',
-                        'class'=>'close',
-                        'data-dismiss' =>'modal',
-                    ],
-                    'toggleButton' => [
-                        'label' => 'Cargar mercaderia','class' => "btn btn-success"
-                    ],
-                //keeps from closing modal with esc key or by clicking out of the modal.
-                // user must click cancel or X to close
-                'clientOptions' => [
-                        'backdrop' => true, 'keyboard' => true,
-                    ]
-            ]);
-            Modal::end();
-
-            Modal::begin([
-                'title' => '<h2>Sugerido</h2>',
-                'headerOptions' => ['id' => 'modalHeader'],
-                'id' => 'Sugerido',
-                'size' => 'modal-lg',
-                'closeButton' => [
-                        'id'=>'close-button',
-                        'class'=>'close',
-                        'data-dismiss' =>'modal',
-                        'data-keyboard'=>'false',
-                        'data-backdrop'=>'static'
-                    ],
-                    'toggleButton' => [
-                        'label' => 'Sugerido','class' => "btn btn-success"
-                    ],
-                //keeps from closing modal with esc key or by clicking out of the modal.
-                // user must click cancel or X to close
-                'clientOptions' => [
-                        'backdrop' => true, 'keyboard' => true,
-                    ]
-            ]);?>
-            <?=
-                GridView::widget([
-                    'dataProvider' =>$dataProvider,
-                    'filterModel' => $searchModel,
-                    'columns'=>[
-                        'cod',
-                        [
-                            'attribute'=>'name',
-                            'label'=>'Producto'
-                        ],
-                        [
-                            'attribute'=>'categoria',
-                            'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
-                        ],
-                        [
-                            'attribute'=>'stock',
-                        ],                      
-                        'sugerido',
-                        [
-                            'label'=>'diferencia',
-                            'value'=>$dif = function($model){
-                                $diferencia = $model['sugerido']-$model['stock'];
-                                return $diferencia;
-                            },
-                        ],
-                    ],
+                    'id'=>'close-button',
+                    'class'=>'close',
+                    'data-dismiss' =>'modal',
+                ],
+                'toggleButton' => [
+                'label' => 'Cargar mercaderia','class' => "btn btn-success"
+                ],
                 ]);?>
-        <?php
+                <?=Html::beginForm(
+                    Url::toRoute("site/mercaderia"),
+                    'get',
+                    ['class'=>'form-block'])
+                ?>
+                <div class="form-group">
+                    <?=Html::dropDownList('producto',$selection = null,ArrayHelper::map(product::find()->all(), "cod","name"))?>
+                </div>
+                <div class="form-group">
+                    <?=Html::textInput('stock')?>
+                </div>
+                <div class="form-group">
+                    <?=Html::submitInput('Cargar stock',['class' => "btn btn-success"])?>
+                </div>
+            
+                <?=Html::endForm();?>
+                <?php
             Modal::end();
-        }//isGuest
-        ?>
-        <?php
+    }//isGuest
+    ?>
+
+    <?php
         if (!Yii::$app->user->isGuest) {
-        ?>
-            <?=
-                GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
-                    'columns'=>[
-                        'cod',
-                        [
-                            'attribute'=>'name',
-                            'label'=>'Producto'
-                        ],
-                        'description',
-                        [
-                            'attribute'=>'categoria',
-                            'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
-                        ],
-                        'stock',                       
-                        'sugerido',
-                        [
-                            'label'=>'diferencia',
-                            'value'=>$dif = function($model){
-                                $diferencia = $model['sugerido']-$model['stock'];
-                                return $diferencia;
-                            },
-                        ],
-                        [
-                            'label'=>'Precio por Kg',
-                            'value'=>function($model){
-                                $porcentaje = $model['porcentajekg'];
-                                $precio = $model['precio_por_kg'];
-                                $total = (($precio*$porcentaje)/100)+$precio;
-                                return '$ '.$total;
-                            },
-                        ],
-                        [
-                            'label'=>'Precio por bolsa',
-                            'value'=>function($model){
-                                $porcentaje = $model['porcentajebolsa'];
-                                $precio = $model['precio_bolsa'];
-                                $total = (($precio*$porcentaje)/100)+$precio;
-                                return '$ '.$total;
-                            },
-                        ],
-                        [
-                            'class' => 'yii\grid\ActionColumn',
-                            'header'=> 'Accion',
-                            'headerOptions'=>[
-                                                'width'=>'90'
-                            ],
-                            'template'=>'{update} // {delete}'
-                        ],
-                    ],
-                ]);
-            ?>
-        <?php
-        }else{
-        ?>
+    ?>
         <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns'=>[
                     'cod',
-                    'name',
+                    [
+                        'attribute'=>'name',
+                        'label'=>'Producto'
+                    ],
                     'description',
                     [
                         'attribute'=>'categoria',
                         'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
                     ],
-                    'stock',
+                    'stock',/*                   
                     'sugerido',
                     [
                         'label'=>'diferencia',
-                        'value'=>function($model){
-                            $diferencia = $model['sugerido']-$model['stock'];
-                            
-                            
-                            return $diferencia;
+                        'value'=>$dif = function($model){
+                        $diferencia = $model['sugerido']-$model['stock'];
+                        return $diferencia;
                         },
-                    ],
+                    ],*/
                     [
                         'label'=>'Precio por Kg',
                         'value'=>function($model){
-                            $porcenje = ($model['precio_por_kg']*$model['porcentajekg'])/100;
-                            
-                            
-                            return $porcenje;
+                            $porcentaje = $model['porcentajekg'];
+                            $precio = $model['precio_por_kg'];
+                            $total = (($precio*$porcentaje)/100)+$precio;
+                            return '$ '.$total;
                         },
                     ],
                     [
                         'label'=>'Precio por bolsa',
                         'value'=>function($model){
-                            $porcenje = ($model['precio_bolsa']*$model['porcentajebolsa'])/100;
-                            
-                            
-                            return $porcenje;
+                            $porcentaje = $model['porcentajebolsa'];
+                            $precio = $model['precio_bolsa'];
+                            $total = (($precio*$porcentaje)/100)+$precio;
+                            return '$ '.$total;
                         },
-                    ]
+                    ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header'=> 'Accion',
+                        'headerOptions'=>[
+                        'width'=>'90'
+                    ],
+                        'template'=>'{update} // {delete}'
+                    ],
                 ],
             ]);
-        }
+        ?>
+        <?php
+    }else{
+    ?>
+    <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns'=>[
+                'cod',
+                'name',
+                'description',
+                [
+                    'attribute'=>'categoria',
+                    'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
+                ],/*
+                'stock',
+                'sugerido',
+                [
+                    'label'=>'diferencia',
+                    'value'=>function($model){
+                    $diferencia = $model['sugerido']-$model['stock'];
+
+
+                    return $diferencia;
+                    },
+                ],*/
+                [
+                    'label'=>'Precio por Kg',
+                    'value'=>function($model){
+                    $porcenje = ($model['precio_por_kg']*$model['porcentajekg'])/100;
+
+
+                    return $porcenje;
+                    },
+                ],
+                [
+                    'label'=>'Precio por bolsa',
+                    'value'=>function($model){
+                    $porcenje = ($model['precio_bolsa']*$model['porcentajebolsa'])/100;
+
+
+                    return $porcenje;
+                    },
+                ]
+            ],
+        ]);
+    }
     ?>
 </div>

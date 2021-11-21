@@ -5,28 +5,25 @@ namespace app\controllers;
 use Yii;
 
 use yii\helpers\Html;
-use app\models\ProductSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+
+use app\models\ProductSearch;
 use app\models\LoginForm;
-use app\models\ContactForm;
 use app\models\Product;
 use app\models\ProductForm;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['logout','update'],
                 'rules' => [
                     [
                         'actions' => ['logout','update'],
@@ -43,10 +40,6 @@ class SiteController extends Controller
             ],
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
@@ -59,14 +52,8 @@ class SiteController extends Controller
             ],
         ];
     }
-
-
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
+    
+    public function actionIndex($mensaje = null)
     {
         $model = new ProductForm;
         $msg = null;
@@ -110,7 +97,8 @@ class SiteController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model' => $model
+            'model' => $model,
+            'mensaje'=>$mensaje
         ]);
     }
 
@@ -197,34 +185,29 @@ class SiteController extends Controller
         }
         return $this->render("update", ["model" => $model, "msg" => $msg]);
     }
-    public static function Actioncolor($cod){
-        $BBDD = new Product();
-
-        $dato = $BBDD->find()->asArray()->where(['cod'=>$cod])->one();
-        if(isset($dato['stock'])&&isset($dato['sugerido'])){
-            $stock = $dato['stock'];
-            $sugerido = $dato['sugerido'];
-
-            $diferencia = $stock - $sugerido;
-
-            if ($diferencia < 0) {
-                $color = 'red';
-                return $color;
-            }elseif($diferencia == 0){
-                $color = 'yellow';
-                return $color;
-            }else {
-                $color = 'green';
-                return $color;
+    public function actionMercaderia(){
+        $msj = null;
+        
+        if (Yii::$app->request->get("cod"))
+        {
+            $cod = Html::encode($_GET["cod"]);
+            $datos = product::find()
+                     ->where(['cod'=>$cod]);
+            $agregarMercaderia = $_REQUEST['stock'];
+            if($datos)
+            {
+                $total = $datos->stock + $agregarMercaderia;
+                $datos->stock = $total;
+                if ($datos->update()) {
+                    $msj = "datos cargados";
+                }else{
+                    $msj = "no se pudieron cargar";
+                }
             }
         }
+        return $this->redirect(['index',"mensaje"=>$msj]);
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -241,15 +224,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
-    public function actionRegistro(){
-        return $this->render('registro/registro');
-    }
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
