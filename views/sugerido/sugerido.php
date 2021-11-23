@@ -8,7 +8,9 @@
     use app\models\Product;
     use app\models\SugeridoSearch;
 ?>
-
+    <div>
+        <h1>Sugerido</h1>
+    </div>
 <?=
     GridView::widget([
     'dataProvider' =>$dataProvider,

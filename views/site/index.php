@@ -24,6 +24,7 @@
 <h1>Stock de Mercaderia</h1>
 <h3><?=$mensaje?></h3>
 
+
 <div>
 <?php
     if (!Yii::$app->user->isGuest) {
@@ -31,7 +32,7 @@
                 'title' => '<h2>Crear producto</h2>',
                 'headerOptions' => ['id' => 'modalHeader'],
                 'id' => 'AltaBaja',
-                'size' => 'modal-sm',
+                'size' => 'modal-lg',
                 'closeButton' => [
                     'id'=>'close-button',
                     'class'=>'close',
@@ -53,47 +54,70 @@
                 'method' => 'post',
                 ]);
             ?>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'cod')->textInput() ?>
+            <div class="form-row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'cod')->textInput() ?>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                    </div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+            <div class="form-row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+                    </div>
                 </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'categoria')->textInput() ?>
+                    </div>
+                </div>
+            </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'categoria')->textInput() ?>
+            <div class="form-row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'stock')->textInput() ?>
+                    </div>
                 </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'sugerido')->textInput() ?>
+                    </div>
+                </div>
+            </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'stock')->textInput() ?>
+            <div class="form-row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'precio_por_kg')->textInput() ?>
+                    </div>
                 </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
+                    </div>
+                </div>
+            </div>
 
-                <div class="form-group">
-                    <?= $form->field($model, 'sugerido')->textInput() ?>
+            <div class="form-row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'porcentajekg')->textInput() ?>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'precio_por_kg')->textInput() ?>
+                <div class="col-6">
+                    <div class="form-group">
+                        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'precio_bolsa')->textInput() ?>
-                </div>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'porcentajekg')->textInput() ?>
-                </div>
-
-                <div class="form-group">
-                    <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
-                </div>
-                
+            </div>
                 <div class="form-group">
                     <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
                 </div>
@@ -124,16 +148,23 @@
                     'get',
                     ['class'=>'form-block'])
                 ?>
-                <div class="form-group">
-                    <?=Html::dropDownList('producto',$selection = null,ArrayHelper::map(product::find()->all(), "cod","name"))?>
+                <div class="form-row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <?=Html::dropDownList('producto',$selection = null,ArrayHelper::map(product::find()->all(), "cod","name"))?>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <?=Html::textInput('stock')?>
+                <div class="col-4">
+                    <div class="form-group">
+                        <?=Html::textInput('stock')?>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <?=Html::submitInput('Cargar stock',['class' => "btn btn-success"])?>
+                <div class="col-4">
+                    <div class="form-group">
+                        <?=Html::submitInput('Cargar stock',['class' => "btn btn-success"])?>
+                    </div>
                 </div>
-            
+            </div>
                 <?=Html::endForm();?>
                 <?php
             Modal::end();

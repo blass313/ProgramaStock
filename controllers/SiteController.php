@@ -10,6 +10,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use yii\db\ActiveQuery;
 
 use app\models\ProductSearch;
 use app\models\LoginForm;
@@ -53,8 +54,7 @@ class SiteController extends Controller
         ];
     }
     
-    public function actionIndex($mensaje = null)
-    {
+    public function actionIndex($mensaje = null){
         $model = new ProductForm;
         $msg = null;
 
@@ -100,14 +100,14 @@ class SiteController extends Controller
             'model' => $model,
             'mensaje'=>$mensaje
         ]);
-    }
+    }//index
 
     public function actionDelete($id = null){
         $model = Product::findOne($id);
 
 		$model->delete();
         return $this->redirect('index');
-    }
+    }//delete
     
     public function actionUpdate(){
         $model = new ProductForm;
@@ -184,29 +184,10 @@ class SiteController extends Controller
             return $this->redirect(["index"]);
         }
         return $this->render("update", ["model" => $model, "msg" => $msg]);
-    }
+    }//update
+
     public function actionMercaderia(){
-        $msj = null;
-        
-        if (Yii::$app->request->get("cod"))
-        {
-            $cod = Html::encode($_GET["cod"]);
-            $datos = product::find()
-                     ->where(['cod'=>$cod]);
-            $agregarMercaderia = $_REQUEST['stock'];
-            if($datos)
-            {
-                $total = $datos->stock + $agregarMercaderia;
-                $datos->stock = $total;
-                if ($datos->update()) {
-                    $msj = "datos cargados";
-                }else{
-                    $msj = "no se pudieron cargar";
-                }
-            }
-        }
-        return $this->redirect(['index',"mensaje"=>$msj]);
-    }
+    }//Mercaderia
 
     public function actionLogin()
     {
