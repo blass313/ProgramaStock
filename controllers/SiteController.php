@@ -55,11 +55,10 @@ class SiteController extends Controller
     }
     
     public function actionIndex($mensaje = null){
-        $model = new ProductForm;
-        $msg = null;
+        $model = new Product();
 
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
+            if ($model->save()) {
                 $datos = new Product();
 
                 $datos->cod = $model->cod;
@@ -72,20 +71,8 @@ class SiteController extends Controller
                 $datos->precio_bolsa = $model->precio_bolsa;
                 $datos->porcentajekg = $model->porcentajekg;
                 $datos->porcentajebolsa = $model->porcentajebolsa;
-
-                if ($datos->insert()) {
-                    $model->cod=null;
-                    $model->name=null;
-                    $model->description=null;
-                    $model->categoria=null;
-                    $model->stock=null;
-                    $model->sugerido=null;
-                    $model->precio_por_kg=null;
-                    $model->precio_bolsa=null;
-                    $model->porcentajebolsa=null;
-                    $model->porcentajekg=null;
-                    
-                }
+                
+                $model = new Product();
             }else {
                 $model->getErrors();
             }
@@ -110,7 +97,7 @@ class SiteController extends Controller
     }//delete
     
     public function actionUpdate(){
-        $model = new ProductForm;
+        $model = new Product;
         $msg = null;
         if($model->load(Yii::$app->request->post()))
         {

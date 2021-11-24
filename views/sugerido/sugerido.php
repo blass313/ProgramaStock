@@ -1,12 +1,10 @@
 <?php
     namespace app\view;
-
-
+    
     use yii\helpers\ArrayHelper;
     use yii\grid\GridView;
 
     use app\models\Product;
-    use app\models\SugeridoSearch;
 ?>
     <div>
         <h1>Sugerido</h1>

@@ -30,20 +30,20 @@ class FormRegistro extends model{
     
     public function email_existe($attribute, $params){
         //Buscar el email en la tabla
-        $table = Users::find()->where("email=:email", [":email" => $this->email]);
+        $user = Users::find()->where("email=:email", [":email" => $this->email]);
   
         //Si el email existe mostrar el error
-        if ($table->count() == 1){
+        if ($user->count() == 1){
                 $this->addError($attribute, "El email seleccionado existe");
         }
     }
  
     public function username_existe($attribute, $params){
         //Buscar el username en la tabla
-         $table = Users::find()->where("username=:username", [":username" => $this->username]);
+         $user = Users::find()->where("username=:username", [":username" => $this->username]);
   
          //Si el username existe mostrar el error
-        if ($table->count() == 1){
+        if ($user->count() == 1){
                 $this->addError($attribute, "El usuario seleccionado existe");
         }
     }

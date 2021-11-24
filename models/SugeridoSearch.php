@@ -20,8 +20,7 @@
     }
         public function search($params)
         {
-            $query = Product::find()
-                     ->where('stock < sugerido');
+            $query = Product::find()->where('stock < sugerido');
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
                 'sort'=>[
