@@ -3,6 +3,7 @@
     
     use yii\helpers\ArrayHelper;
     use yii\grid\GridView;
+    use app\controllers\SiteController;
 
     use app\models\Product;
 ?>

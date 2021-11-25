@@ -22,9 +22,6 @@
 
 <div class="site-index">
 <h1>Stock de Mercaderia</h1>
-<h3><?=$mensaje?></h3>
-
-
 <div>
 <?php
     if (!Yii::$app->user->isGuest) {

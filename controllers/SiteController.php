@@ -19,8 +19,7 @@ use app\models\ProductForm;
 
 class SiteController extends Controller
 {
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -41,8 +40,8 @@ class SiteController extends Controller
             ],
         ];
     }
-    public function actions()
-    {
+
+    public function actions(){
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -53,7 +52,7 @@ class SiteController extends Controller
             ],
         ];
     }
-    
+
     public function actionIndex($mensaje = null){
         $model = new Product();
 
@@ -85,7 +84,6 @@ class SiteController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
-            'mensaje'=>$mensaje
         ]);
     }//index
 
@@ -95,7 +93,7 @@ class SiteController extends Controller
 		$model->delete();
         return $this->redirect('index');
     }//delete
-    
+
     public function actionUpdate(){
         $model = new Product;
         $msg = null;
@@ -175,9 +173,8 @@ class SiteController extends Controller
 
     public function actionMercaderia(){
     }//Mercaderia
-
-    public function actionLogin()
-    {
+    
+    public function actionLogin(){
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -192,8 +189,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionLogout()
-    {
+    public function actionLogout(){
         Yii::$app->user->logout();
 
         return $this->goHome();

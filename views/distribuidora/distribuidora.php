@@ -2,9 +2,12 @@
     use yii\grid\GridView;
     use yii\helpers\Html;
     use yii\bootstrap4\Modal;
-
+    use yii\helpers\ArrayHelper;
+    use yii\bootstrap4\Dropdown;
     use yii\widgets\ActiveForm;
     use kartik\date\DatePicker;
+
+    use app\models\Product;
 ?>
 
 <?php
@@ -42,7 +45,7 @@
         <div class="form-row">
             <div class="row">
                 <div class="col">
-                    <?= $form->field($model, 'nombre_distribuidora')->textInput() ?>
+                    <?= $form->field($model, 'nombre_distribuidora')->dropDownList(ArrayHelper::map(product::find()->all(), "categoria","categoria")) ?>
                 </div>
                 <div class="col">
                     <?= $form->field($model, 'monto')->textInput() ?>
@@ -65,11 +68,17 @@
 <?php    
     Modal::end();
 ?>
+
 <?=
-        GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'columns'=>[
-            ],
-        ]);
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns'=>[
+            'numero_boleta',
+            'fecha_de_factura',
+            'nombre_distribuidora',
+            'monto',
+            'estado'
+        ]//columna
+    ]);
 ?>

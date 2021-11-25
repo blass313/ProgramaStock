@@ -28,14 +28,19 @@ class ProductSearch extends Product
         return Model::scenarios();
     }
 
-    public function search($params)
+    public function search($params,$section = null)
     {
-        $query = Product::find();
+        if ($section == 'sugerido') {
+            $query = Product::find()->where('stock < sugerido');
+        }else{
+            $query = Product::find();
+        }
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=>[
-                'attributes'=>['cod','name','categoria']
+                'attributes'=>['cod','name']
             ]
         ]);
         $this->load($params);

@@ -7,9 +7,8 @@
     use yii\web\Controller;
     use yii\filters\VerbFilter;
 
-    use app\models\SugeridoSearch;
-    use app\models\Product;
-    use app\models\ProductForm;
+    use app\models\ProductSearch;
+
 
 class SugeridoController extends Controller{
     public function behaviors()
@@ -35,9 +34,9 @@ class SugeridoController extends Controller{
         ];
     }
     public function actionSugerido(){
-        
-        $searchModel = new SugeridoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $section = 'sugerido';
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section);
         return $this->render("/sugerido/sugerido", [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider
