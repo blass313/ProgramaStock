@@ -39,7 +39,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'registro', 'url' => ['/registro/registro']],
             ['label' => 'sugerido', 'url' => ['/sugerido/sugerido']],
-            ['label' => 'Facturacion del dia', 'url' => ['/facturacion']],
+            ['label' => 'Facturacion del dia', 'url' => ['/facturacion/facturacion']],
             ['label' => 'Control de distribuidores', 'url' => ['/distribuidora/distribuidora']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -68,13 +68,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </main>
-
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-left">&copy; My Company <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

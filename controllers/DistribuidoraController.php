@@ -3,12 +3,34 @@
 
     use Yii;
     use yii\web\Controller;
+    use yii\filters\VerbFilter;
+    use yii\filters\AccessControl;
 
     use app\models\Distribuidora;
-use app\models\DistribuidoraSearch;
+    use app\models\DistribuidoraSearch;
 
 class DistribuidoraController extends Controller{
-
+    public function behaviors(){
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout','update'],
+                'rules' => [
+                    [
+                        'actions' => ['logout','update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
     public function actionDistribuidora(){
 
         $model = new distribuidora();

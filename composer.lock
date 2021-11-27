@@ -4,29 +4,32 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea9c8618189abf1897f0f72c176ae971",
+    "content-hash": "65bd67c62806d20674ac50d28097f068",
     "packages": [
         {
-            "name": "bower-asset/bootstrap",
-            "version": "v5.1.3",
+            "name": "bower-asset/highcharts",
+            "version": "v9.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "1a6fdfae6be09b09eaced8f0e442ca6f7680a61e"
+                "url": "https://github.com/highcharts/highcharts-dist.git",
+                "reference": "e71c85f3046ef88f5daecb56c297e47d39e9f4ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/1a6fdfae6be09b09eaced8f0e442ca6f7680a61e",
-                "reference": "1a6fdfae6be09b09eaced8f0e442ca6f7680a61e"
+                "url": "https://api.github.com/repos/highcharts/highcharts-dist/zipball/e71c85f3046ef88f5daecb56c297e47d39e9f4ef",
+                "reference": "e71c85f3046ef88f5daecb56c297e47d39e9f4ef"
             },
-            "type": "bower-asset"
+            "type": "bower-asset",
+            "license": [
+                "https://www.highcharts.com/license"
+            ]
         },
         {
             "name": "bower-asset/inputmask",
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -478,6 +481,59 @@
             "time": "2021-10-28T03:58:09+00:00"
         },
         {
+            "name": "miloschuman/yii2-highcharts-widget",
+            "version": "v9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/miloschuman/yii2-highcharts.git",
+                "reference": "33fd2e82bfebafb76a55ff175ddd8c9cc886c02b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/miloschuman/yii2-highcharts/zipball/33fd2e82bfebafb76a55ff175ddd8c9cc886c02b",
+                "reference": "33fd2e82bfebafb76a55ff175ddd8c9cc886c02b",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/highcharts": "^9.0",
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.4"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "miloschuman\\highcharts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milo Schuman",
+                    "email": "miloschuman@gmail.com"
+                }
+            ],
+            "description": "Highcharts widget for Yii 2 Framework.",
+            "homepage": "https://github.com/miloschuman/yii2-highcharts",
+            "keywords": [
+                "extension",
+                "highcharts",
+                "highmaps",
+                "highstock",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/miloschuman/yii2-highcharts/issues",
+                "source": "https://github.com/miloschuman/yii2-highcharts/tree/v9.0"
+            },
+            "time": "2021-03-04T19:36:12+00:00"
+        },
+        {
             "name": "npm-asset/bootstrap",
             "version": "4.6.1",
             "dist": {
@@ -612,6 +668,7 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": "symfony/mailer",
             "time": "2021-10-18T15:26:12+00:00"
         },
         {
@@ -1022,52 +1079,6 @@
             "time": "2021-05-27T09:17:38+00:00"
         },
         {
-            "name": "twbs/bootstrap",
-            "version": "v3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "6d03173a1aad98e75f7d33e65b411c519176c59a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/6d03173a1aad98e75f7d33e65b411c519176c59a",
-                "reference": "6d03173a1aad98e75f7d33e65b411c519176c59a",
-                "shasum": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                },
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                }
-            ],
-            "description": "Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.",
-            "homepage": "http://getbootstrap.com",
-            "keywords": [
-                "bootstrap",
-                "css"
-            ],
-            "support": {
-                "issues": "https://github.com/twbs/bootstrap/issues",
-                "source": "https://github.com/twbs/bootstrap/tree/v3.0.3"
-            },
-            "time": "2013-12-05T16:09:10+00:00"
-        },
-        {
             "name": "yiisoft/yii2",
             "version": "2.0.43",
             "source": {
@@ -1190,56 +1201,6 @@
             "time": "2021-08-09T17:38:43+00:00"
         },
         {
-            "name": "yiisoft/yii2-bootstrap",
-            "version": "2.0.0-beta",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "d2518d1f6fb0b3e0e3aba50b9c35f56d580eb3c4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/d2518d1f6fb0b3e0e3aba50b9c35f56d580eb3c4",
-                "reference": "d2518d1f6fb0b3e0e3aba50b9c35f56d580eb3c4",
-                "shasum": ""
-            },
-            "require": {
-                "twbs/bootstrap": "3.0.*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "yii\\bootstrap\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Qiang Xue",
-                    "email": "qiang.xue@gmail.com",
-                    "homepage": "http://www.yiiframework.com/",
-                    "role": "Founder and project lead"
-                }
-            ],
-            "description": "The Twitter Bootstrap extension for the Yii framework",
-            "keywords": [
-                "bootstrap",
-                "yii2"
-            ],
-            "support": {
-                "forum": "http://www.yiiframework.com/forum/",
-                "irc": "irc://irc.freenode.net/yii",
-                "issues": "https://github.com/yiisoft/yii2/issues?labels=ext%3Abootstrap",
-                "source": "https://github.com/yiisoft/yii2",
-                "wiki": "http://www.yiiframework.com/wiki/"
-            },
-            "time": "2014-04-13T21:58:59+00:00"
-        },
-        {
             "name": "yiisoft/yii2-bootstrap4",
             "version": "2.0.10",
             "source": {
@@ -1338,82 +1299,6 @@
                 }
             ],
             "time": "2021-05-05T21:56:41+00:00"
-        },
-        {
-            "name": "yiisoft/yii2-bootstrap5",
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yiisoft/yii2-bootstrap5.git",
-                "reference": "258583d8a61c7a32d7164d9a6dfeb9b9ea0e83fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap5/zipball/258583d8a61c7a32d7164d9a6dfeb9b9ea0e83fc",
-                "reference": "258583d8a61c7a32d7164d9a6dfeb9b9ea0e83fc",
-                "shasum": ""
-            },
-            "require": {
-                "bower-asset/bootstrap": "^5.1.0",
-                "ext-json": "*",
-                "php": ">=7.0",
-                "yiisoft/yii2": "^2.0.42"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.5.14",
-                "yiisoft/yii2-coding-standards": "~2.0"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "yii\\bootstrap5\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Sergey Zhukovskiy",
-                    "email": "mylistryx@gmail.com",
-                    "homepage": "https://net23.ru/"
-                },
-                {
-                    "name": "Simon Karlen",
-                    "email": "simi.albi@outlook.com"
-                }
-            ],
-            "description": "The Twitter Bootstrap v5 extension for the Yii framework",
-            "keywords": [
-                "bootstrap",
-                "bootstrap5",
-                "yii2"
-            ],
-            "support": {
-                "issues": "https://github.com/yiisoft/yii2-bootstrap5/issues",
-                "source": "https://github.com/yiisoft/yii2-bootstrap5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/yiisoft",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/yiisoft",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/yiisoft/yii2-bootstrap5",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2021-10-21T20:37:19+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1933,22 +1818,22 @@
         },
         {
             "name": "codeception/module-yii2",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/module-yii2.git",
-                "reference": "09853feb15ad5e80e472c6881793a22f273a9921"
+                "reference": "aec2976c45136056f1b05c930cd376bb283d42e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/module-yii2/zipball/09853feb15ad5e80e472c6881793a22f273a9921",
-                "reference": "09853feb15ad5e80e472c6881793a22f273a9921",
+                "url": "https://api.github.com/repos/Codeception/module-yii2/zipball/aec2976c45136056f1b05c930cd376bb283d42e2",
+                "reference": "aec2976c45136056f1b05c930cd376bb283d42e2",
                 "shasum": ""
             },
             "require": {
                 "codeception/codeception": "^4.0",
                 "codeception/lib-innerbrowser": "^1.0",
-                "php": ">=5.6.0 <8.1"
+                "php": ">=5.6.0 <=8.1"
             },
             "type": "library",
             "autoload": {
@@ -1979,9 +1864,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Codeception/module-yii2/issues",
-                "source": "https://github.com/Codeception/module-yii2/tree/1.1.3"
+                "source": "https://github.com/Codeception/module-yii2/tree/1.1.4"
             },
-            "time": "2021-05-24T20:05:32+00:00"
+            "time": "2021-10-23T08:48:42+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
@@ -4178,7 +4063,6 @@
                     "type": "github"
                 }
             ],
-            "abandoned": true,
             "time": "2020-11-30T07:30:19+00:00"
         },
         {
@@ -5783,9 +5667,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kartik-v/yii2-widget-datepicker": 20,
-        "yiisoft/yii2-bootstrap5": 20,
-        "yiisoft/yii2-bootstrap": 20
+        "kartik-v/yii2-widget-datepicker": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

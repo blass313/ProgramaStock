@@ -11,8 +11,7 @@
 
 
 class SugeridoController extends Controller{
-    public function behaviors()
-    {
+    public function behaviors(){
         return [
             'access' => [
                 'class' => AccessControl::className(),

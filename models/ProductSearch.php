@@ -6,9 +6,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Product;
 
-/**
- * ProductSearch represents the model behind the search form of `app\models\Product`.
- */
 class ProductSearch extends Product
 {
     public function rules()
@@ -19,10 +16,6 @@ class ProductSearch extends Product
             [['cod','categoria'],'safe']
         ];
     }
-
-    /**
-     * {@inheritdoc}
-     */
     public function scenarios()
     {
         return Model::scenarios();

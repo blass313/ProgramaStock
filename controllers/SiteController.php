@@ -5,17 +5,13 @@ namespace app\controllers;
 use Yii;
 
 use yii\helpers\Html;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
-use yii\db\ActiveQuery;
 
 use app\models\ProductSearch;
 use app\models\LoginForm;
 use app\models\Product;
-use app\models\ProductForm;
 
 class SiteController extends Controller
 {
