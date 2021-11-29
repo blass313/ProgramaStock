@@ -49,7 +49,7 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionIndex($mensaje = null){
+    public function actionIndex(){
         $model = new Product();
 
         if ($model->load(Yii::$app->request->post())) {

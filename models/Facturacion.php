@@ -11,7 +11,8 @@ class Facturacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return[
-            [['fecha','tipo','monto'],'required','message' => 'campo requerido']
+            [['fecha','tipo','monto'],'required','message' => 'campo requerido'],
+            ['monto','integer']
         ];
     }
     public function attributeLabels()

@@ -10,11 +10,15 @@
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use miloschuman\highcharts\Highcharts;
+    use yii\grid\ActionColumn;
 
     use app\models\Facturacion;
 
-    $this->title = 'facturacion'
+    $this->title = 'facturacion';
+
+    $mes = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 ?>
+
 <?php
     Modal::begin([
         'title'=> '<h2>Facturacion</h2>',
@@ -27,7 +31,7 @@
             'data-dismiss' =>'modal',
         ],
         'toggleButton' => [
-        'label' => 'Cargar mercaderia','class' => "btn btn-success"
+        'label' => 'Ingreso del dia','class' => "btn btn-success"
         ],
     ]);//model::begin
         $form = ActiveForm::begin();?>
@@ -42,7 +46,7 @@
         <div class="form-row">
             <div class="row">
                 <div class="col">
-                    <?= $form->field($model, 'monto')->textInput() ?>
+                    <?= $form->field($model, 'monto')->textInput(['type' => 'number']) ?>
                 </div>
             </div>
         </div>
@@ -65,25 +69,32 @@
         'columns'=>[
             'fecha',
             'tipo',
-            'monto'
+            'monto',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=> 'Accion',
+                'headerOptions'=>[
+                'width'=>'90'
+            ],
+                'template'=>'{delete}'
+            ],
         ],
+
     ]);
 ?>
-                    <?=
-                        Highcharts::widget([
-                        'options' => [
-                            'fill'=>['black'],
-                            'title' => ['text' => 'Movimiento de gente'],
-                            'xAxis' => [
-                                'categories' => [
-                                ]
-                            ],
-                            'yAxis' => [
-                                'title' => ['text' => 'Cantidad']
-                            ],
-                            'series' => [
-                                ['name' => 'enero', 'data' => []],
-                            ]
-                        ]
-                        ]);
-                    ?>
+    <?=
+        Highcharts::widget([
+        'options' => [
+            'title' => ['text' => 'Movimiento de gente'],
+            'xAxis' => [
+                'categories' => $fecha
+            ],
+                'yAxis' => [
+                    'title' => ['text' => 'Cantidad']
+                ],
+                'series' => [
+                        ['name' => $mes[1], 'data' => $montos],
+                ]
+            ]
+        ]);
+    ?>
