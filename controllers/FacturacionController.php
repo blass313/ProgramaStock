@@ -13,10 +13,10 @@
             return [
                 'access' => [
                     'class' => AccessControl::className(),
-                    'only' => ['logout','update'],
+                    'only' => ['logout','facturacion'],
                     'rules' => [
                         [
-                            'actions' => ['logout','update'],
+                            'actions' => ['logout','facturacion'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -34,7 +34,9 @@
         function actionFacturacion(){
             $model = new facturacion();
             $monto = $this->actionconversorMonto();
-            $fecha = $this->actionConversorFecha();
+            $fechaIngreso = $this->actionFechaIngreso();
+            $fechaSalida = $this->actionFechaSalida();
+            $salida = $this->actionMontoSalida();
 
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
@@ -52,31 +54,51 @@
                     'model'=>$model,
                     'dataProvider'=>$dataProvider,
                     'searchModel'=>$searchModel,
-                    'montos'=>$monto,
-                    'fecha'=>$fecha
+                    'montosIngreso'=>$monto,
+                    'fechaIngreso'=>$fechaIngreso,
+                    'fechaSalida'=>$fechaSalida,
+                    'montoSalida'=>$salida
                 ]);
         }
 
         public function actionconversorMonto(){
             $montos = facturacion::find()
                                 ->select('monto')
-                                //->where(['tipo'=>'ingreso'])
+                                ->where(['tipo'=>'ingreso'])
                                 ->asArray()
                                 ->all();
             $montoConv = [];
             $i = 0;
             foreach ($montos as $monto) {
                 foreach ($monto as $m) {
-                    $montoConv[$i] = (int)$m;
+                    $montoConv[$i] = ((int)$m*30)/100;
                     $i++;
                 }
             }
             return $montoConv;
         }
+
+        public function actionMontoSalida(){
+            $montosSalida = facturacion::find()
+                                ->select('monto')
+                                ->where(['tipo'=>'salida'])
+                                ->asArray()
+                                ->all();
+            $montosSalidaTotal = [];
+            $i = 0;
+            foreach ($montosSalida as $salida) {
+                foreach ($salida as $S) {
+                    $montosSalidaTotal[$i] = (int)$S;
+                    $i++;
+                }
+            }
+            return $montosSalidaTotal;
+        }
     
-        function actionConversorFecha(){
+        function actionFechaIngreso(){
             $Fechas = facturacion::find()
                                 ->select('fecha')
+                                ->where(['tipo'=>'ingreso'])
                                 ->asArray()
                                 ->orderBy(['fecha' =>'asc'])
                                 ->all();
@@ -90,6 +112,25 @@
             }
             return $ArrayFecha;
         }
+
+        function actionFechaSalida(){
+            $Fechas = facturacion::find()
+                                ->select('fecha')
+                                ->where(['tipo'=>'salida'])
+                                ->asArray()
+                                ->orderBy(['fecha' =>'asc'])
+                                ->all();
+            $ArrayFecha = [];
+            $i = 0;
+            foreach ($Fechas as $Fecha) {
+                foreach ($Fecha as $f) {
+                    $ArrayFecha[$i]= $f;
+                    $i++;
+                }
+            }
+            return $ArrayFecha;
+        }
+
 
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);

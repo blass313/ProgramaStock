@@ -15,8 +15,6 @@
     use app\models\Facturacion;
 
     $this->title = 'facturacion';
-
-    $mes = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 ?>
 
 <?php
@@ -69,7 +67,19 @@
         'columns'=>[
             'fecha',
             'tipo',
-            'monto',
+            [
+                'attribute'=>'monto',
+                'label'=>'Monto neto'
+            ],
+            [
+                'label'=>'Ganancia del %30',
+                'value'=>function($model){
+                    $ganancia = null;
+                    $ganancia = ($model['monto']*30)/100;
+                    $MontoGanancia = ($model['tipo'] == 'ingreso') ? $ganancia = "$ ".($model['monto']*30)/100: $ganancia = "";
+                    return $MontoGanancia;
+                }
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=> 'Accion',
@@ -82,19 +92,67 @@
 
     ]);
 ?>
-    <?=
-        Highcharts::widget([
-        'options' => [
-            'title' => ['text' => 'Movimiento de gente'],
-            'xAxis' => [
-                'categories' => $fecha
-            ],
-                'yAxis' => [
-                    'title' => ['text' => 'Cantidad']
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+                <?=
+                Highcharts::widget([
+                'options' => [
+                    'chart'=>[ 
+                        'type'=> 'column'
+                    ],
+                    'title' => ['text' => 'Facturacion del dia(Ingreso)'],
+                    'xAxis' => [
+                        'categories' => $fechaIngreso,
+                    ],
+                        'yAxis' => [
+                            'title' => ['text' => 'Cantidad']
+                        ],
+                        'series' => [
+                                [
+                                    'name' => 'Ingreso', 
+                                    'data' => $montosIngreso,
+                                    'color'=>'green'
+                                ],
+                        ]
+                    ]
+                ]);
+            ?>
+        </div>
+        <div class="carousel-item">
+            <?=
+            Highcharts::widget([
+            'options' => [
+                'chart'=>[ 
+                    'type'=> 'column'
                 ],
-                'series' => [
-                        ['name' => $mes[1], 'data' => $montos],
+                'title' => ['text' => 'Facturacion del dia(Salida)'],
+                'xAxis' => [
+                    'categories' => $fechaSalida,
+                    'title' => ['text' => 'Fecha']
+                ],
+                    'yAxis' => [
+                        'title' => ['text' => 'Cantidad']
+                    ],
+                    'series' => [
+                            [
+                                'name' => 'Gasto',
+                                'data' => $montoSalida,
+                                'color'=>'red'
+                            ],
+                            //['name' => 'Ganancia', 'data' => ()],
+                    ]
                 ]
-            ]
-        ]);
-    ?>
+            ]);
+        ?>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
