@@ -10,7 +10,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return[
-            [['cod','name','description','categoria','stock','precio_por_kg','precio_bolsa','sugerido','porcentajekg','porcentajebolsa'],'required','message' => 'campo requerido'],
+            [['name','description','categoria','stock','kg','precio_bolsa','sugerido','porcentajekg','porcentajebolsa'],'required','message' => 'campo requerido'],
             [['cod','stock'],'integer', 'message' => 'permite solo numeros'],
             [['name','description','categoria'],'string', 'message' => 'caracteres no validos']
         ];
@@ -22,10 +22,10 @@ class Product extends \yii\db\ActiveRecord
             'cod'=> 'Cod:',
             'name'=>'Nombre:',
             'description'=>'Descripcion:',
-            'categoria'=>'Categoria:',
+            'categoria'=>'Proveedor:',
             'stock'=>'Stock:',
             'sugerido'=>'Sugerido:',
-            'precio_por_kg'=>'Precio por kg:',
+            'kg'=>'kg:',
             'precio_bolsa'=>'Precio por bolsa:',
             'porcentajekg'=>'Porcentaje por kg:',
             'porcentajebolsa'=>'porcentaje por bolsa:',

@@ -16,8 +16,8 @@
 
     $this->title = 'facturacion';
 ?>
-
 <?php
+
     Modal::begin([
         'title'=> '<h2>Facturacion</h2>',
         'headerOptions'=>['id'=>'modalHeader'],

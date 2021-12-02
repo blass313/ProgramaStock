@@ -4,12 +4,14 @@
     use yii\helpers\ArrayHelper;
     use yii\grid\GridView;
     use app\controllers\SiteController;
+    use yii\helpers\Html;
 
     use app\models\Product;
 ?>
     <div>
         <h1>Sugerido</h1>
     </div>
+    <?= Html::a('Exportar a PDF',['pdf'],['class'=>'btn btn-info'])?>
 <?=
     GridView::widget([
     'dataProvider' =>$dataProvider,
@@ -22,6 +24,7 @@
         ],
         [
             'attribute'=>'categoria',
+            'label'=>'Proveedor',
             'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
         ],
         [

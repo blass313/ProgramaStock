@@ -12,7 +12,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'stock','sugerido'], 'integer'],
-            [['name', 'description', 'precio_por_kg', 'precio_bolsa', 'categoria'], 'safe'],
+            [['name', 'description', 'kg', 'precio_bolsa', 'categoria'], 'safe'],
             [['cod','categoria'],'safe']
         ];
     }
@@ -48,7 +48,7 @@ class ProductSearch extends Product
             'categoria' => $this->categoria,
             'stock' => $this->stock,
             'sugerido' => $this->sugerido,
-            'precio_por_kg' => $this->precio_por_kg,
+            'kg' => $this->kg,
             'precio_bolsa' => $this->precio_bolsa,
             'porcentajekg' => $this->porcentajekg,
             'porcentajebolsa' => $this->porcentajebolsa,

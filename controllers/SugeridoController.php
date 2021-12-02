@@ -6,7 +6,8 @@
     use yii\filters\AccessControl;
     use yii\web\Controller;
     use yii\filters\VerbFilter;
-
+    use kartik\mpdf\Pdf;
+    use app\models\Product;
     use app\models\ProductSearch;
 
 
@@ -40,6 +41,12 @@ class SugeridoController extends Controller{
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider
         ]);
+    }
+    public function actionPdf(){
+            $section = 'sugerido';
+            $query = Product::find()->where('stock < sugerido');
+            $content = $this->renderPartial('pdf_view',['dataProvider'=>$query]);
+            $pdf = new Pdf();
     }
 }
 ?>

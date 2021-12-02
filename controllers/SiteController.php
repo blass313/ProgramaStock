@@ -8,6 +8,7 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
 
 use app\models\ProductSearch;
 use app\models\LoginForm;
@@ -62,7 +63,7 @@ class SiteController extends Controller
                 $datos->categoria = $model->categoria;
                 $datos->stock = $model->stock;
                 $datos->sugerido = $model->sugerido;
-                $datos->precio_por_kg = $model->precio_por_kg;
+                $datos->kg = $model->kg;
                 $datos->precio_bolsa = $model->precio_bolsa;
                 $datos->porcentajekg = $model->porcentajekg;
                 $datos->porcentajebolsa = $model->porcentajebolsa;
@@ -106,7 +107,7 @@ class SiteController extends Controller
                     $datos->categoria = $model->categoria;
                     $datos->stock = $model->stock;
                     $datos->sugerido = $model->sugerido;
-                    $datos->precio_por_kg = $model->precio_por_kg;
+                    $datos->kg = $model->kg;
                     $datos->precio_bolsa = $model->precio_bolsa;
                     $datos->porcentajekg = $model->porcentajekg;
                     $datos->porcentajebolsa = $model->porcentajebolsa;
@@ -145,7 +146,7 @@ class SiteController extends Controller
                     $model->categoria = $datos->categoria;
                     $model->stock = $datos->stock;
                     $model->sugerido = $datos->sugerido;
-                    $model->precio_por_kg = $datos->precio_por_kg;
+                    $model->kg = $datos->kg;
                     $model->precio_bolsa = $datos->precio_bolsa;
                     $model->porcentajekg = $datos->porcentajekg;
                     $model->porcentajebolsa = $datos->porcentajebolsa;
@@ -166,9 +167,6 @@ class SiteController extends Controller
         }
         return $this->render("update", ["model" => $model, "msg" => $msg]);
     }//update
-
-    public function actionMercaderia(){
-    }//Mercaderia
     
     public function actionLogin(){
         if (!Yii::$app->user->isGuest) {

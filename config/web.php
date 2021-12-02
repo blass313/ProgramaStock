@@ -1,5 +1,6 @@
 <?php
-
+    use kartik\mpdf\Pdf;
+    use yii\base\BaseObject;
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -32,7 +33,17 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
-        ],
+        ],/*
+        'components' => [
+            // setup Krajee Pdf component
+                'pdf' => [
+                    //'class' => Pdf::classname(),
+                    'format' => Pdf::FORMAT_A4,
+                    'orientation' => Pdf::ORIENT_PORTRAIT,
+                    'destination' => Pdf::DEST_BROWSER,
+                    // refer settings section for all configuration options
+                ]
+            ],
         /*'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
