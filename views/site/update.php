@@ -41,7 +41,7 @@ $this->title = 'Update producto';
     </div>
 
     <div class="form-group">
-        <?= $form->field($model, 'precio_por_kg')->textInput() ?>
+        <?= $form->field($model, 'kg')->textInput() ?>
     </div>
 
     <div class="form-group">

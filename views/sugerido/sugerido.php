@@ -25,7 +25,7 @@
         [
             'attribute'=>'categoria',
             'label'=>'Proveedor',
-            'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
+            'filter'=>$filtro = ArrayHelper::map(product::find()->all(), "categoria","categoria")
         ],
         [
             'attribute'=>'stock',
