@@ -8,25 +8,32 @@ use app\models\Product;
 
 class ProductSearch extends Product
 {
-    public function rules()
-    {
+    public function rules(){
         return [
             [['id', 'stock','sugerido'], 'integer'],
             [['name', 'description', 'kg', 'precio_bolsa', 'categoria'], 'safe'],
             [['cod','categoria'],'safe']
         ];
     }
+
     public function scenarios()
     {
         return Model::scenarios();
     }
 
-    public function search($params,$section = null)
-    {
+    public function search($params,$section = null,$pdfFilter = null){
+        
         if ($section == 'sugerido') {
             $query = Product::find()->where('stock < sugerido');
+            $pagination = false;
+        }elseif($section == 'pdf'){
+            $query = Product::find()
+                    ->where('stock < sugerido')
+                    ->andWhere(['categoria'=>$pdfFilter]);
+            $pagination = false;
         }else{
             $query = Product::find();
+            $pagination = 20;
         }
         
 
@@ -34,7 +41,10 @@ class ProductSearch extends Product
             'query' => $query,
             'sort'=>[
                 'attributes'=>['cod','name']
-            ]
+            ],
+            'pagination' => [
+                'pageSize' => $pagination,
+            ],
         ]);
         $this->load($params);
 

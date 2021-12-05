@@ -39,7 +39,6 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'registro', 'url' => ['/registro/registro']],
             ['label' => 'sugerido', 'url' => ['/sugerido/sugerido']],
-            ['label' => 'Crear reporte', 'url' => ['/sugerido/report']],
             ['label' => 'Facturacion del dia', 'url' => ['/facturacion/facturacion']],
             ['label' => 'Control de distribuidores', 'url' => ['/distribuidora/distribuidora']],
             Yii::$app->user->isGuest ? (

@@ -58,9 +58,9 @@ class SiteController extends Controller
                 $datos = new Product();
 
                 $datos->cod = $model->cod;
-                $datos->name = $model->name;
-                $datos->description = $model->description;
-                $datos->categoria = $model->categoria;
+                $datos->name = strtoupper($model->name);
+                $datos->description = strtoupper($model->description);
+                $datos->categoria = strtoupper($model->categoria);
                 $datos->stock = $model->stock;
                 $datos->sugerido = $model->sugerido;
                 $datos->kg = $model->kg;
@@ -102,9 +102,9 @@ class SiteController extends Controller
                 if($datos)
                 {
                     $datos->cod = $model->cod;
-                    $datos->name = $model->name;
-                    $datos->description = $model->description;
-                    $datos->categoria = $model->categoria;
+                    $datos->name = strtoupper($model->name); 
+                    $datos->description = strtoupper($model->description);
+                    $datos->categoria = strtoupper($model->categoria);
                     $datos->stock = $model->stock;
                     $datos->sugerido = $model->sugerido;
                     $datos->kg = $model->kg;

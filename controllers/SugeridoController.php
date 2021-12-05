@@ -34,21 +34,23 @@ class SugeridoController extends Controller {
             ],
         ];
     }
-    public function actionSugerido(){
+    public function actionSugerido($filtro = null){
         $section = 'sugerido';
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section);
         return $this->render("/sugerido/sugerido", [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'filtro'=>$filtro
         ]);
     }
 
     public function actionPdf($filtro = null){
-            $section = 'sugerido';
+            $filtro = $_GET['proveedor'];
+            $section = 'pdf';
             $searchModel = new ProductSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section);
-            $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
+            $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
 
             // setup kartik\mpdf\Pdf component
             $pdf = new Pdf([
@@ -71,15 +73,6 @@ class SugeridoController extends Controller {
             ]);
             // return the pdf output as per the destination setting
             return $pdf->render();
-        }
-        
-        public function actionArray(){
-            $product = Product::find()
-                        ->asArray()
-                        ->select('cod,name,description,stock,categoria')
-                        //->where('stock < sugerido')
-                        //->Where(['categoria'=>'ers'])
-                        ->all();
         }
     }
 ?>

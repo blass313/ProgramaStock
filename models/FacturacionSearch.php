@@ -29,8 +29,9 @@
             $query->andFilterWhere([
                 'id'=>$this->id,
                 'fecha'=>$this->fecha,
-                'tipo'=>$this->tipo,
-                'monto'=>$this->monto
+                'ingrso'=>$this->ingreso,
+                'salida'=>$this->salida,
+                'personas'=>$this->personas,
             ]);
             return $dataProvider;
         }//search

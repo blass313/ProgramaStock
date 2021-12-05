@@ -128,52 +128,6 @@ $this->title = 'Pagina principal';
         Modal::end();
     ?>
 
-    <?php
-        Modal::begin([
-            'title' => '<h2>Cargar mercaderia</h2>',
-            'headerOptions' => ['id' => 'modalHeader'],
-            'id' => 'cargarMercaderia',
-            'size' => 'modal-lg',
-            'closeButton' => [
-                'id'=>'close-button',
-                'class'=>'close',
-                'data-dismiss' =>'modal',
-            ],
-            'toggleButton' => [
-                'label' => 'Cargar mercaderia','class' => "btn btn-success"
-            ],
-        ]);
-    ?>
-
-    <?=
-        Html::beginForm(
-        Url::toRoute("site/mercaderia"),
-        'get',
-        ['class'=>'form-block'])
-    ?>
-        <div class="form-row">
-            <div class="col-4">
-                <div class="form-group">
-                    <?=Html::dropDownList('producto',$selection = null,ArrayHelper::map(product::find()->all(), "cod","name"))?>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <?=Html::textInput('stock')?>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="form-group">
-                    <?=Html::submitInput('Cargar stock',['class' => "btn btn-success"])?>
-                </div>
-            </div>
-        </div><!--form row-->
-    <?=
-        Html::endForm(); 
-    ?>
-    <?php
-        Modal::end();
-    ?>
     <?=
         GridView::widget([
             'dataProvider' => $dataProvider,
@@ -210,6 +164,14 @@ $this->title = 'Pagina principal';
                                         $diferencia = $model['sugerido']-$model['stock'];
                                         return $diferencia;
                                     },
+                    'contentOptions' =>function($model){
+                        $diferencia = $model['sugerido']-$model['stock'];
+                        if ($diferencia < 0) {
+                            return ['style' => 'color: green'];
+                        }else{
+                            return ['style' => 'color: red'];
+                        }
+                    }
                 ],
                 [
                     'label'=>'Precio por Kg',

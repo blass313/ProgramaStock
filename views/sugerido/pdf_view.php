@@ -13,8 +13,7 @@
         <img src="img/perro.png">
       </div>
       <h1>Forrajeria Lo de Lalo</h1>
-      <h4>Pedido para proveedor:</h4>
-      
+      <h4>Pedido para proveedor: <?=$proveedor?></h4>
       <div class="card" style="margin-top: 20px;">
         <div>Calle 11 entre 110 y 112</div>
         <div>(2324)-684826</div>
@@ -22,27 +21,38 @@
       </div>
     </header>
     <main>
-      <?=
-    GridView::widget([
-    'dataProvider' =>$dataProvider,
-    'columns'=>[
-        [
-            'attribute'=>'name',
-            'label'=>'Producto'
-        ],
-        [
-            'attribute'=>'description',
-            'label'=>'Categoria',
-        ],
-        [
-            'label'=>'Pedido',
-            'value'=>$dif = function($model){
-                $diferencia = $model['sugerido']-$model['stock'];
-                return $diferencia;
-            },
-        ],
-        ],
-    ]);?>
+        <?=
+            GridView::widget([
+            'dataProvider' =>$dataProvider,
+            'columns'=>[
+                [
+                  'label'=>'Cod',
+                  'value'=>function($model){
+                      if(isset($model['cod'])){
+                          return $model['cod'];
+                      }else {
+                          return 'Sin codigo';
+                      }
+                  }
+                ],
+                [
+                    'attribute'=>'name',
+                    'label'=>'Producto'
+                ],
+                [
+                    'attribute'=>'description',
+                    'label'=>'Categoria',
+                ],
+                [
+                    'label'=>'Pedido',
+                    'value'=>$dif = function($model){
+                        $diferencia = $model['sugerido']-$model['stock'];
+                        return $diferencia;
+                    },
+                ],
+                ],
+            ]);
+        ?>
     </main>
     <footer>
 
