@@ -53,6 +53,7 @@
                     'searchModel'=>$searchModel,
                 ]);
         }
+
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);
             $model->delete();

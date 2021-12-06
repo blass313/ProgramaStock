@@ -10,7 +10,7 @@
   <body class="card">
     <header style="margin-bottom: 50px; margin-top: 50px;">
       <div id="logo">
-        <img src="img/perro.png">
+        <img src="../views/sugerido/img/perro.png" width="80px">
       </div>
       <h1>Forrajeria Lo de Lalo</h1>
       <h4>Pedido para proveedor: <?=$proveedor?></h4>

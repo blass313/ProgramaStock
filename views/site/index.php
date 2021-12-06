@@ -166,7 +166,7 @@ $this->title = 'Pagina principal';
                                     },
                     'contentOptions' =>function($model){
                         $diferencia = $model['sugerido']-$model['stock'];
-                        if ($diferencia < 0) {
+                        if ($diferencia <= 0) {
                             return ['style' => 'color: green'];
                         }else{
                             return ['style' => 'color: red'];

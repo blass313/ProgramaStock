@@ -36,6 +36,7 @@
         ['class'=>'form-block'])
     ?>
             <div class="form-group">
+                <?='<label for="proveedor">Seleccione proveedor</label>'?>
                 <?=Html::dropDownList('proveedor',$selection = null,ArrayHelper::map(product::find()->all(), "categoria","categoria"),['class'=>'form-control form-control-lg'])?>
             </div>
             <div class="form-group">

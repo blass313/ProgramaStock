@@ -16,8 +16,9 @@
 
     $this->title = 'facturacion';
 ?>
+<h1>Facturacion</h1>
+<h3>Total de Caja:</h3>
 <?php
-
     Modal::begin([
         'title'=> '<h2>Facturacion</h2>',
         'headerOptions'=>['id'=>'modalHeader'],
@@ -75,12 +76,25 @@
                     return round(($model['ingreso']*30)/100);
                 }
             ],
-            [
-                'label'=>'caja',
-                'value'=>function($model){
-                    return round(((($model['salida']-(round(($model['ingreso']*30)/100))))*30)/100);
-                }
-            ]
         ]
+    ]);
+?>
+
+<?=
+    Highcharts::widget([
+        'options'=>'{
+        "chart": {"type": "column"},
+        "title": { "text": "Fruit Consumption" },
+        "xAxis": {
+            "categories": ["Apples", "Bananas", "Oranges"]
+        },
+        "yAxis": {
+            "title": { "text": "Fruit eaten" }
+        },
+        "series": [
+            { "name": "Jane", "data": [1, 0, 4] },
+            { "name": "John", "data": [5, 7,3] }
+        ]
+        }'
     ]);
 ?>
