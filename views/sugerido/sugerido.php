@@ -9,12 +9,12 @@
     use app\models\Product;
 ?>
     <div>
-        <h1>Sugerido<?=$filtro?></h1>
+        <h1>Sugerido</h1>
     </div>
     
     <?php
         Modal::begin([
-            'title' => '<h2>Crear PDf</h2>',
+            'title' => '<h2>Exportar a PDF</h2>',
             'headerOptions' => ['id' => 'modalHeader'],
             'id' => 'PDF',
             'size' => 'modal-sm',
@@ -60,7 +60,7 @@
                 if(isset($model['cod'])){
                     return $model['cod'];
                 }else {
-                    return 'Sin codigo';
+                    return 'S/C';
                 }
             }
         ],
@@ -84,5 +84,13 @@
                 return $diferencia;
             },
         ],
+        [
+            'label'=>'Total',
+            'value'=>function($model){
+                $total = ($model['sugerido']-$model['stock'])*$model['precio_bolsa'];
+                return '$ '.$total;
+            },
+            'headerOptions' => ['style' => 'width:15%'],
+        ]
         ],
     ]);?>

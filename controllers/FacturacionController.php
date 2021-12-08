@@ -60,7 +60,7 @@
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);
             $model->delete();
-            return $this->redirect('facturacion');
+            return $this->redirect('/facturacion/facturacion');
         }//delete
     }//class
 ?>

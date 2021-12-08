@@ -32,10 +32,10 @@
         <div class="form-row">
             <div class="col-6">
                 <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
-                    'options' => ['placeholder' => 'Fecha'],
+                    'options' => ['placeholder' => 'Fecha', 'autocomplete' => "off"],
                     'type' => DatePicker::TYPE_INPUT,
                     'pluginOptions' => [
-                        'autoclose' => true
+                        'autoclose' => true,
                     ],
                     'pluginOptions' => [
                         'autoclose' => true,
@@ -64,12 +64,8 @@
         </div>
         <?php
         ActiveForm::end();
+    Modal::end();
 ?>
-    <?php
-        Modal::end();
-    ?>
-
-
 <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
@@ -131,7 +127,7 @@
             "categories": ["Apples", "Bananas", "Oranges"]
         },
         "yAxis": {
-            "title": { "text": "Fruit eaten" }
+            "title": { "text": "Movimiento por mes" }
         },
         "series": [
             { "name": "Jane", "data": [1, 0, 4] },

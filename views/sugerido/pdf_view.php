@@ -17,7 +17,7 @@
       <div class="card" style="margin-top: 20px;">
         <div>Calle 11 entre 110 y 112</div>
         <div>(2324)-684826</div>
-        <div><a href="mailto:company@example.com">dariomur@hotmail.com</a></div>
+        <div><a href="mailto:dariomur@hotmail.com">dariomur@hotmail.com</a></div>
       </div>
     </header>
     <main>

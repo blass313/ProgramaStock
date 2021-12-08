@@ -1,7 +1,8 @@
 <?php
     namespace app\controllers;
 
-    use Yii;
+use app\models\Product;
+use Yii;
     use yii\filters\AccessControl;
     use yii\web\Controller;
     use yii\filters\VerbFilter;
@@ -39,7 +40,7 @@ class SugeridoController extends Controller {
         return $this->render("/sugerido/sugerido", [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'filtro'=>$filtro
+            'filtro'=>$filtro,
         ]);
     }
 
@@ -67,10 +68,11 @@ class SugeridoController extends Controller {
                 'methods' => [ 
                     'SetHeader'=>['Forrageria lalo'], 
                     'SetFooter'=>['{PAGENO}'],
-                ]
+                ],
+                'filename' => 'Pedido lo de lalo para'.$filtro
             ]);
             // return the pdf output as per the destination setting
             return $pdf->render();
         }
-    }
+}
 ?>

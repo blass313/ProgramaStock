@@ -21,7 +21,9 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "miloschuman/yii2-highcharts-widget": "*",
         "kartik-v/yii2-mpdf": "*",
-        "mpdf/mpdf":"*"
+        "mpdf/mpdf":"*",
+        "kartik-v/yii2-detail-view": "dev-master",
+        "kartik-v/yii2-widget-alert": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

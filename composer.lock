@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "699010bbade67076f3e888309835b9a2",
+    "content-hash": "e835395e340beb5c8a3ff883ce3dbf44",
     "packages": [
         {
             "name": "bower-asset/highcharts",
@@ -50,7 +50,7 @@
             "version": "3.6.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "e786e3d9707ffd9b0dd330ca135b66344dcef85a"
             },
             "dist": {
@@ -366,6 +366,119 @@
             "time": "2020-06-29T00:56:53+00:00"
         },
         {
+            "name": "kartik-v/yii2-detail-view",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-detail-view.git",
+                "reference": "5daa2efad035b67812ea3bd94d7568c0b5f3fcb1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/5daa2efad035b67812ea3bd94d7568c0b5f3fcb1",
+                "reference": "5daa2efad035b67812ea3bd94d7568c0b5f3fcb1",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-dialog": "~1.0",
+                "kartik-v/yii2-widget-activeform": ">=1.6.0"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\detail\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii 2 Detail View widget with special Bootstrap styles, ability to edit data, and more.",
+            "homepage": "https://github.com/kartik-v/yii2-detail-view",
+            "keywords": [
+                "detail",
+                "detail view",
+                "extension",
+                "form",
+                "grid",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kartik-v/yii2-detail-view/issues",
+                "source": "https://github.com/kartik-v/yii2-detail-view/tree/master"
+            },
+            "time": "2021-10-27T04:19:04+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-dialog",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-dialog.git",
+                "reference": "510c3a35ffe79987cde9a9366cedbff545fd92d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-dialog/zipball/510c3a35ffe79987cde9a9366cedbff545fd92d4",
+                "reference": "510c3a35ffe79987cde9a9366cedbff545fd92d4",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=3.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\dialog\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An asset bundle for bootstrap3-dialog for Yii 2.0 framework.",
+            "homepage": "https://github.com/kartik-v/yii2-dialog",
+            "keywords": [
+                "alert",
+                "bootstrap",
+                "dialog",
+                "extension",
+                "modal",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kartik-v/yii2-dialog/issues",
+                "source": "https://github.com/kartik-v/yii2-dialog/tree/v1.0.6"
+            },
+            "time": "2021-09-02T08:26:37+00:00"
+        },
+        {
             "name": "kartik-v/yii2-krajee-base",
             "version": "v3.0.1",
             "source": {
@@ -478,6 +591,128 @@
             "time": "2017-01-14T11:51:12+00:00"
         },
         {
+            "name": "kartik-v/yii2-widget-activeform",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-activeform.git",
+                "reference": "d54f986737d4c2b309bc72760f5aa55f78286e0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-activeform/zipball/d54f986737d4c2b309bc72760f5aa55f78286e0e",
+                "reference": "d54f986737d4c2b309bc72760f5aa55f78286e0e",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=3.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\form\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii2 active-form and active-field with full bootstrap styling support (sub repo split from yii2-widgets).",
+            "homepage": "https://github.com/kartik-v/yii2-widget-activeform",
+            "keywords": [
+                "activefield",
+                "activeform",
+                "extension",
+                "field",
+                "form",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kartik-v/yii2-widget-activeform/issues",
+                "source": "https://github.com/kartik-v/yii2-widget-activeform/tree/v1.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/yii2-widgets",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2021-09-01T11:43:26+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-alert",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-alert.git",
+                "reference": "6a45d7dc294eecd578cf8cb9acb671d1cafa0727"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-alert/zipball/6a45d7dc294eecd578cf8cb9acb671d1cafa0727",
+                "reference": "6a45d7dc294eecd578cf8cb9acb671d1cafa0727",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-widget-growl": ">=1.1.2"
+            },
+            "default-branch": true,
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\alert\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A widget to generate alert based notifications using bootstrap-alert plugin (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-alert",
+            "keywords": [
+                "alert",
+                "block",
+                "bootstrap",
+                "extension",
+                "flash",
+                "jquery",
+                "notification",
+                "plugin",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kartik-v/yii2-widget-alert/issues",
+                "source": "https://github.com/kartik-v/yii2-widget-alert/tree/v1.1.5"
+            },
+            "time": "2021-10-16T10:23:22+00:00"
+        },
+        {
             "name": "kartik-v/yii2-widget-datepicker",
             "version": "dev-master",
             "source": {
@@ -535,6 +770,64 @@
                 "source": "https://github.com/kartik-v/yii2-widget-datepicker/tree/v1.4.8"
             },
             "time": "2021-10-28T03:58:09+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-growl",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-growl.git",
+                "reference": "37e8f9f10d3bc9d71f3ef64c4aaa0e2fc83dd5dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-growl/zipball/37e8f9f10d3bc9d71f3ef64c4aaa0e2fc83dd5dc",
+                "reference": "37e8f9f10d3bc9d71f3ef64c4aaa0e2fc83dd5dc",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\growl\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "A widget to generate growl based notifications using bootstrap-growl plugin (sub repo split from yii2-widgets)",
+            "homepage": "https://github.com/kartik-v/yii2-widget-growl",
+            "keywords": [
+                "alert",
+                "bootstrap",
+                "extension",
+                "growl",
+                "jquery",
+                "notification",
+                "plugin",
+                "widget",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://github.com/kartik-v/yii2-widget-growl/issues",
+                "source": "https://github.com/kartik-v/yii2-widget-growl/tree/v1.1.2"
+            },
+            "time": "2021-05-19T12:44:49+00:00"
         },
         {
             "name": "miloschuman/yii2-highcharts-widget",
@@ -5837,7 +6130,9 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kartik-v/yii2-widget-datepicker": 20
+        "kartik-v/yii2-widget-datepicker": 20,
+        "kartik-v/yii2-detail-view": 20,
+        "kartik-v/yii2-widget-alert": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
