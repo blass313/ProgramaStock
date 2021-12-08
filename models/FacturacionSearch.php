@@ -7,8 +7,7 @@
     use app\models\Facturacion;
 
     class FacturacionSearch extends Facturacion{
-        public function scenarios()
-        {
+        public function scenarios(){
             return Model::scenarios();
         }
 
@@ -29,10 +28,13 @@
             $query->andFilterWhere([
                 'id'=>$this->id,
                 'fecha'=>$this->fecha,
-                'ingrso'=>$this->ingreso,
+                'ingreso'=>$this->ingreso,
                 'salida'=>$this->salida,
                 'personas'=>$this->personas,
-            ]);
+            ])
+
+            ->andFilterWhere(['like', 'fecha', $this->fecha])
+            ->andFilterWhere(['like', 'personas', $this->personas]);
             return $dataProvider;
         }//search
     }//class

@@ -42,8 +42,11 @@
                     $datos->ingreso = $model->ingreso;
                     $datos->salida = $model->salida;
                     $datos->personas = $model->personas;
+
+                    $model = new facturacion();
                 }
             }
+            
             $searchModel = new FacturacionSearch();
         
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

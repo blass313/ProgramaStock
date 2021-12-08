@@ -1,18 +1,13 @@
 <?php
     namespace app\models;
 
-    use Yii;
-
-    use yii\helpers\Url;
-    use yii\helpers\ArrayHelper;
     use yii\bootstrap4\Modal;
     use yii\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use miloschuman\highcharts\Highcharts;
-    use yii\grid\ActionColumn;
-
-    use app\models\Facturacion;
+    use kartik\date\DatePicker;
+    use yii\grid\DataColumn;
 
     $this->title = 'facturacion';
 ?>
@@ -20,9 +15,9 @@
 <h3>Total de Caja:</h3>
 <?php
     Modal::begin([
-        'title'=> '<h2>Facturacion</h2>',
-        'headerOptions'=>['id'=>'modalHeader'],
-        'id'=> 'Facturacion',
+        'title' => '<h2>Facturacion del dia</h2>',
+        'headerOptions' => ['id' => 'modalHeader'],
+        'id' => 'fecha',
         'size' => 'modal-lg',
         'closeButton' => [
             'id'=>'close-button',
@@ -30,13 +25,23 @@
             'data-dismiss' =>'modal',
         ],
         'toggleButton' => [
-        'label' => 'Ingreso del dia','class' => "btn btn-success"
+            'label' => 'Ingresar facturcion','class' => "btn btn-success"
         ],
-    ]);//model::begin
+    ]);
         $form = ActiveForm::begin();?>
         <div class="form-row">
             <div class="col-6">
-                <?= $form->field($model, 'fecha')->textInput() ?>
+                <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
+                    'options' => ['placeholder' => 'Fecha'],
+                    'type' => DatePicker::TYPE_INPUT,
+                    'pluginOptions' => [
+                        'autoclose' => true
+                    ],
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy/mm/dd'
+                    ]
+                ]); ?>
             </div>
             <div class="col-6">
                 <?= $form->field($model, 'ingreso')->textInput(['type' => 'number']) ?>
@@ -59,22 +64,59 @@
         </div>
         <?php
         ActiveForm::end();
-    Modal::end();
 ?>
+    <?php
+        Modal::end();
+    ?>
+
 
 <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns'=>[
-            'fecha',
+            [
+                'attribute'=>'fecha',
+                'label'=>'fecha',
+                //'format' => ['date', 'php: yyyy/mm/dd'],
+                'filter'=> DatePicker::widget([
+                    'name' => 'fecha',
+                    'type' => DatePicker::TYPE_INPUT,
+                    'readonly' => true,
+                    'pluginOptions' => [
+                        'autoclose' => false,
+                        'format' => 'yyyy/mm/dd'
+                    ],
+                ]),
+                'headerOptions' => ['style' => 'width:10%'],
+            ],
             'ingreso',
             'salida',
-            'personas',
+            [
+                'attribute' => 'personas',
+                'headerOptions' => ['style' => 'width:15%'],
+            ],
             [
                 'label'=>'Ganancias',
                 'value'=>function($model){
-                    return round(($model['ingreso']*30)/100);
+                    return '$ '.round(($model['ingreso']*30)/100);
                 }
+            ],
+            [
+                'label'=>'caja',
+                'value'=>function($model){
+                    $ganancia = round(($model['ingreso']*30)/100);
+                    return '$ '.($model['ingreso']-$ganancia-$model['salida']);
+                },
+                'headerOptions' => ['style' => 'width:10%'],
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=> 'Accion',
+                'headerOptions'=>[
+                        'width'=>'50',
+                    ],
+                'template'=>'{update} // {delete}'
             ],
         ]
     ]);
@@ -84,7 +126,7 @@
     Highcharts::widget([
         'options'=>'{
         "chart": {"type": "column"},
-        "title": { "text": "Fruit Consumption" },
+        "title": { "text": "Seguimiento de facturaciom" },
         "xAxis": {
             "categories": ["Apples", "Bananas", "Oranges"]
         },

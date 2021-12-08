@@ -3,14 +3,11 @@ namespace app\models;
 
 use Yii;
 
-use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap4\Modal;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use miloschuman\highcharts\Highcharts;
-
 use app\models\Product;
 
 /* @var $this yii\web\View */
@@ -205,7 +202,9 @@ $this->title = 'Pagina principal';
         ]);
     ?>
     <?php
-        }else{
+        }
+        /*
+        else{
     ?>
         <?=
             GridView::widget([
@@ -266,6 +265,6 @@ $this->title = 'Pagina principal';
                     ],
                 ]
             ]);
-        }
+        }*/
         ?>
 </div><!--site index-->

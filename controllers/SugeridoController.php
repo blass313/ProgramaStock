@@ -1,14 +1,11 @@
 <?php
     namespace app\controllers;
 
-    use yii\helpers\Html;
     use Yii;
     use yii\filters\AccessControl;
     use yii\web\Controller;
     use yii\filters\VerbFilter;
     use kartik\mpdf\Pdf;
-    use Mpdf\Mpdf;
-    use app\models\Product;
     use app\models\ProductSearch;
 
 
@@ -34,6 +31,7 @@ class SugeridoController extends Controller {
             ],
         ];
     }
+    
     public function actionSugerido($filtro = null){
         $section = 'sugerido';
         $searchModel = new ProductSearch();
