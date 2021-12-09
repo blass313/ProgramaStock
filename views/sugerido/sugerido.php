@@ -2,7 +2,7 @@
     namespace app\view;
     use yii\helpers\Url;
     use yii\helpers\ArrayHelper;
-    use yii\grid\GridView;
+    use kartik\grid\GridView;
     use yii\helpers\Html;
     use yii\bootstrap4\Modal;
 
@@ -53,7 +53,10 @@
     GridView::widget([
     'dataProvider' =>$dataProvider,
     'filterModel' => $searchModel,
+    'showPageSummary' => true,
+    'showFooter'=>true,
     'columns'=>[
+        //['class' => 'kartik\grid\SerialColumn'],
         [
             'label'=>'Cod',
             'value'=>function($model){
@@ -88,9 +91,14 @@
             'label'=>'Total',
             'value'=>function($model){
                 $total = ($model['sugerido']-$model['stock'])*$model['precio_bolsa'];
-                return '$ '.$total;
+                return $total;
             },
             'headerOptions' => ['style' => 'width:15%'],
-        ]
+            'mergeHeader' => true,
+            'width' => '150px',
+            'hAlign' => 'right',
+            'format' => ['decimal', 2],
+            'pageSummary' => true
+            ],
         ],
     ]);?>

@@ -69,7 +69,7 @@ class SugeridoController extends Controller {
                     'SetHeader'=>['Forrageria lalo'], 
                     'SetFooter'=>['{PAGENO}'],
                 ],
-                'filename' => 'Pedido lo de lalo para'.$filtro
+                'filename' => 'Pedido lo de lalo para '.$filtro.'.pdf'
             ]);
             // return the pdf output as per the destination setting
             return $pdf->render();

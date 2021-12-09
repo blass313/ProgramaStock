@@ -5,11 +5,11 @@ use Yii;
 
 use yii\helpers\ArrayHelper;
 use yii\bootstrap4\Modal;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\Alert;
-
+use kartik\editable\Editable;
 use app\models\Product;
 
 /* @var $this yii\web\View */
@@ -147,12 +147,13 @@ $this->title = 'Pagina principal';
                     'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
                 ],
                 [
+                    'format'=>'html',
                     'attribute'=>'stock',
                     'value'=>function($model){
                                 if ($model['stock'] == 0) {
                                     return 'Sin Stock';
                                 }else {
-                                    return $model['stock'];
+                                    return Html::a($model['stock'], '#');
                                 }
                             }
                 ],                 
@@ -180,7 +181,7 @@ $this->title = 'Pagina principal';
                             $stock = $model['kg'];
                             $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
 
-                            return '$ '.round($total);
+                            return round($total);
                     }
                 ],
                 [
@@ -189,8 +190,10 @@ $this->title = 'Pagina principal';
                                 $porcentaje = $model['porcentajebolsa'];
                                 $precio = $model['precio_bolsa'];
                                 $total = (($precio*$porcentaje)/100)+$precio;
-                                return '$ '.round($total);
-                    }
+                                return round($total);
+                    },
+                    'headerOptions' => ['style' => 'width:15%'],
+                    'format' => ['decimal', 0],
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
@@ -205,68 +208,5 @@ $this->title = 'Pagina principal';
     ?>
     <?php
         }
-        /*
-        else{
-    ?>
-        <?=
-            GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-                'columns'=>[
-                    //'cod',
-                    [
-                        'attribute'=>'name',
-                        'label'=>'Producto'
-                    ],
-                        'description',
-                    [
-                        'label'=>'Kg',
-                        'attribute'=>'kg',
-                    ],
-                    [
-                        'attribute'=>'categoria',
-                        'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
-                    ],
-                    [
-                        'attribute'=>'stock',
-                        'value'=>function($model){
-                                    if ($model['stock'] == 0) {
-                                        return 'Sin Stock';
-                                    }else {
-                                        return $model['stock'];
-                                    }
-                                }
-                    ],                 
-                    'sugerido',
-                    [
-                        'label'=>'diferencia',
-                        'value'=>$dif = function($model){
-                                            $diferencia = $model['sugerido']-$model['stock'];
-                                            return $diferencia;
-                                        },
-                    ],
-                    [
-                        'label'=>'Precio por Kg',
-                        'value'=>function($model){
-                                $porcentaje = $model['porcentajekg'];
-                                $precio = $model['precio_bolsa'];
-                                $stock = $model['kg'];
-                                $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
-    
-                                return '$ '.round($total);
-                        }
-                    ],
-                    [
-                        'label'=>'Precio por bolsa',
-                        'value'=>function($model){
-                                    $porcentaje = $model['porcentajebolsa'];
-                                    $precio = $model['precio_bolsa'];
-                                    $total = (($precio*$porcentaje)/100)+$precio;
-                                    return '$ '.round($total);
-                        }
-                    ],
-                ]
-            ]);
-        }*/
         ?>
 </div><!--site index-->

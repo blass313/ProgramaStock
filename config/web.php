@@ -33,17 +33,7 @@ $config = [
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
-        ],/*
-        'components' => [
-            // setup Krajee Pdf component
-                'pdf' => [
-                    //'class' => Pdf::classname(),
-                    'format' => Pdf::FORMAT_A4,
-                    'orientation' => Pdf::ORIENT_PORTRAIT,
-                    'destination' => Pdf::DEST_BROWSER,
-                    // refer settings section for all configuration options
-                ]
-            ],
+        ],
         /*'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -63,6 +53,16 @@ $config = [
         ],
         */
     ],
+    'modules' => [
+        'gridview' =>  [
+             'class' => '\kartik\grid\Module'
+             // enter optional module parameters below - only if you need to  
+             // use your own export download action or custom translation 
+             // message source
+             // 'downloadAction' => 'gridview/export/download',
+             // 'i18n' => []
+         ]
+        ],
     'params' => $params,
 ];
 
