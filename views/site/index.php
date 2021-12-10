@@ -11,6 +11,7 @@ use yii\widgets\ActiveForm;
 use kartik\widgets\Alert;
 use kartik\editable\Editable;
 use app\models\Product;
+use kartik\grid\EditableColumn;
 
 /* @var $this yii\web\View */
 
@@ -135,12 +136,22 @@ $this->title = 'Pagina principal';
                 //'cod',
                 [
                     'attribute'=>'name',
-                    'label'=>'Producto'
+                    'label'=>'Producto',
+                    'width' => '130px',
+                    'hAlign' => 'center',
                 ],
-                    'description',
+                    [
+                        'attribute'=>'description',
+                        'headerOptions' => ['style' => 'width:15%'],
+                        'width' => '100px',
+                        'hAlign' => 'center',
+                    ],
                 [
                     'label'=>'Kg',
                     'attribute'=>'kg',
+                    'format' => ['decimal', 1],
+                    'width' => '100px',
+                    'hAlign' => 'center',
                 ],
                 [
                     'attribute'=>'categoria',
@@ -150,14 +161,26 @@ $this->title = 'Pagina principal';
                     'format'=>'html',
                     'attribute'=>'stock',
                     'value'=>function($model){
-                                if ($model['stock'] == 0) {
+                                if ($model['stock'] == 0 || $model['stock'] == null) {
                                     return 'Sin Stock';
                                 }else {
-                                    return Html::a($model['stock'], '#');
+                                    return $model['stock'];
                                 }
-                            }
+                            },
+                    'class'=>'kartik\grid\EditableColumn',
+                    'headerOptions' => ['style' => 'width:15%'],
+                    'mergeHeader' => true,
+                    'width' => '50px',
+                    'hAlign' => 'center',
                 ],                 
-                'sugerido',
+                [
+                    'attribute'=>'sugerido',
+                    'class'=>'kartik\grid\EditableColumn',
+                    'headerOptions' => ['style' => 'width:15%'],
+                    'mergeHeader' => true,
+                    'width' => '50px',
+                    'hAlign' => 'center',
+                ],
                 [
                     'label'=>'diferencia',
                     'value'=>$dif = function($model){
@@ -171,7 +194,11 @@ $this->title = 'Pagina principal';
                         }else{
                             return ['style' => 'color: red'];
                         }
-                    }
+                    },
+                    'headerOptions' => ['style' => 'width:15%'],
+                    'mergeHeader' => true,
+                    'width' => '30px',
+                    'hAlign' => 'center',
                 ],
                 [
                     'label'=>'Precio por Kg',
@@ -179,10 +206,24 @@ $this->title = 'Pagina principal';
                             $porcentaje = $model['porcentajekg'];
                             $precio = $model['precio_bolsa'];
                             $stock = $model['kg'];
-                            $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
-
-                            return round($total);
-                    }
+                            if ($porcentaje != 0) {
+                                if ($stock != 0) {
+                                    $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
+    
+                                    return round($total);
+                                }else{
+                                    $total = 0;
+                                    return $total;
+                                }
+                            }else {
+                                $total = 0;
+                                return $total;
+                            }
+                    },
+                    'headerOptions' => ['style' => 'width:15%'],
+                    'mergeHeader' => true,
+                    'width' => '30px',
+                    'hAlign' => 'right',
                 ],
                 [
                     'label'=>'Precio por bolsa',
@@ -193,15 +234,17 @@ $this->title = 'Pagina principal';
                                 return round($total);
                     },
                     'headerOptions' => ['style' => 'width:15%'],
-                    'format' => ['decimal', 0],
+                    'mergeHeader' => true,
+                    'width' => '30px',
+                    'hAlign' => 'right',
                 ],
                 [
-                    'class' => 'yii\grid\ActionColumn',
+                    'class' => '\yii\grid\ActionColumn',
                     'header'=> 'Accion',
                     'headerOptions'=>[
                             'width'=>'90'
                         ],
-                    'template'=>'{update} // {delete}'
+                    'template'=>'{update} // {delete}',
                 ],
             ],
         ]);

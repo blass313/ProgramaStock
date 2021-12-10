@@ -25,7 +25,7 @@
         "kartik-v/yii2-detail-view": "dev-master",
         "kartik-v/yii2-widget-alert": "dev-master",
         "kartik-v/yii2-dynagrid": "dev-master",
-        "kartik-v/yii2-editable": "dev-master"
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

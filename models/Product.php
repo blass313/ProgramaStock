@@ -10,8 +10,8 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return[
-            [['name','description','categoria','stock','kg','precio_bolsa','sugerido','porcentajekg','porcentajebolsa'],'required','message' => 'campo requerido'],
-            [['cod','stock'],'integer', 'message' => 'permite solo numeros'],
+            [['name','description','categoria'],'required','message' => 'campo requerido'],
+            [['cod','stock','kg','precio_bolsa','sugerido','porcentajekg','porcentajebolsa'],'double', 'message' => 'permite solo numeros'],
             [['name','description','categoria'],'string', 'message' => 'caracteres no validos']
         ];
     }

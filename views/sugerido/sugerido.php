@@ -65,27 +65,51 @@
                 }else {
                     return 'S/C';
                 }
-            }
+            },
+            'headerOptions' => ['style' => 'width:15%'],
+            'mergeHeader' => true,
+            'width' => '80px',
+            'hAlign' => 'center',
         ],
         [
             'attribute'=>'name',
-            'label'=>'Producto'
+            'label'=>'Producto',
+            'headerOptions' => ['style' => 'width:15%'],
+            'width' => '120px',
+            'hAlign' => 'center',
         ],
         [
             'attribute'=>'categoria',
             'label'=>'Proveedor',
-            'filter'=> $filtro = ArrayHelper::map(product::find()->where('stock < sugerido')->all(), "categoria","categoria")
+            'filter'=> $filtro = ArrayHelper::map(product::find()->where('stock < sugerido')->all(), "categoria","categoria"),
+            'headerOptions' => ['style' => 'width:15%'],
+            'width' => '120px',
+            'hAlign' => 'center',
         ],
         [
             'attribute'=>'stock',
+            'headerOptions' => ['style' => 'width:15%'],
+            'mergeHeader' => true,
+            'width' => '100px',
+            'hAlign' => 'center',
         ],                      
-            'sugerido',
+        [
+            'attribute'=>'sugerido',
+            'headerOptions' => ['style' => 'width:15%'],
+            'mergeHeader' => true,
+            'width' => '100px',
+            'hAlign' => 'center',
+        ],
         [
             'label'=>'diferencia',
             'value'=>$dif = function($model){
                 $diferencia = $model['sugerido']-$model['stock'];
                 return $diferencia;
             },
+            'headerOptions' => ['style' => 'width:15%'],
+            'mergeHeader' => true,
+            'width' => '100px',
+            'hAlign' => 'center',
         ],
         [
             'label'=>'Total',

@@ -11,7 +11,8 @@ class Facturacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return[
-            [['fecha','ingreso','salida','personas'],'required','message' => 'campo requerido'],
+            [['fecha'],'required','message' => 'campo requerido'],
+            [['ingreso','salida','personas'],'double','message' => 'Solo permite numeros']
         ];
     }
     public function attributeLabels()

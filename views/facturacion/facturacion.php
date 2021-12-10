@@ -2,7 +2,7 @@
     namespace app\models;
 
     use yii\bootstrap4\Modal;
-    use yii\grid\GridView;
+    use kartik\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use miloschuman\highcharts\Highcharts;
@@ -70,6 +70,8 @@
     GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showPageSummary' => true,
+        'showFooter'=>true,
         'columns'=>[
             [
                 'attribute'=>'fecha',
@@ -86,25 +88,52 @@
                 ]),
                 'headerOptions' => ['style' => 'width:10%'],
             ],
-            'ingreso',
-            'salida',
+            [
+                'attribute'=>'ingreso',
+                'value'=>function($model){
+                    if ($model['ingreso'] != 0) {
+                        return $model['ingreso'];
+                    }else{
+                        return 'Sin movimiento';
+                    }
+                }
+            ],
+            [
+                'attribute'=>'salida',
+                'value'=>function($model){
+                    if ($model['salida'] != 0) {
+                        return $model['salida'];
+                    }else{
+                        return 'Sin movimiento';
+                    }
+                }
+            ],
             [
                 'attribute' => 'personas',
+                'value'=>function($model){
+                    if ($model['personas'] != 0) {
+                        return $model['personas'];
+                    }else{
+                        return 'sin ingresos';
+                    }
+                },
                 'headerOptions' => ['style' => 'width:15%'],
+                'pageSummary' => true
             ],
             [
                 'label'=>'Ganancias',
                 'value'=>function($model){
-                    return '$ '.round(($model['ingreso']*30)/100);
+                    return round(($model['ingreso']*30)/100);
                 }
             ],
             [
                 'label'=>'caja',
                 'value'=>function($model){
                     $ganancia = round(($model['ingreso']*30)/100);
-                    return '$ '.($model['ingreso']-$ganancia-$model['salida']);
+                    return ($model['ingreso']-$ganancia-$model['salida']);
                 },
                 'headerOptions' => ['style' => 'width:10%'],
+                'pageSummary' => true
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
