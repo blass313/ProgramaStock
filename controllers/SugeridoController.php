@@ -44,12 +44,21 @@ class SugeridoController extends Controller {
         ]);
     }
 
-    public function actionPdf($filtro = null){
-            $filtro = $_GET['proveedor'];
-            $section = 'pdf';
-            $searchModel = new ProductSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
-            $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
+    public function actionPdf($filtro = null, $sector = null){
+            if($sector == 'sugerido'){
+                $filtro = $_GET['proveedor'];
+                $section = 'pdf';
+                $searchModel = new ProductSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
+                $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
+                $nombre = 'Pedido lo de lalo para '.$filtro.'.pdf';
+            
+            }/*elseif ($sector == '') {
+                $searchModel = new ProductSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
+                $nombre = 'Stock general';
+            }*/
 
             // setup kartik\mpdf\Pdf component
             $pdf = new Pdf([
@@ -69,7 +78,7 @@ class SugeridoController extends Controller {
                     'SetHeader'=>['Forrageria lalo'], 
                     'SetFooter'=>['{PAGENO}'],
                 ],
-                'filename' => 'Pedido lo de lalo para '.$filtro.'.pdf'
+                'filename' => $nombre
             ]);
             // return the pdf output as per the destination setting
             return $pdf->render();

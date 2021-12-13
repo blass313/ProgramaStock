@@ -16,8 +16,7 @@ class ProductSearch extends Product
         ];
     }
 
-    public function scenarios()
-    {
+    public function scenarios(){
         return Model::scenarios();
     }
 

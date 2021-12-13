@@ -54,7 +54,7 @@
     'dataProvider' =>$dataProvider,
     'filterModel' => $searchModel,
     'showPageSummary' => true,
-    'showFooter'=>true,
+    'showHeader'=>true,
     'columns'=>[
         //['class' => 'kartik\grid\SerialColumn'],
         [

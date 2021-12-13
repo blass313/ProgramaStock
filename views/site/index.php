@@ -11,14 +11,10 @@ use yii\widgets\ActiveForm;
 use kartik\widgets\Alert;
 use kartik\editable\Editable;
 use app\models\Product;
-use kartik\grid\EditableColumn;
-
 /* @var $this yii\web\View */
-
 
 $this->title = 'Pagina principal';
 ?><!--use-->
-
 <div class="site-index">
     <h1>Stock de Mercaderia</h1>
     <?php
@@ -127,12 +123,20 @@ $this->title = 'Pagina principal';
     <?php
         Modal::end();
     ?>
-
     <?=
         GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'pjax'=>true,
+            'rowOptions' => function ($model, $index, $widget, $grid){
+                if($model->stock == 0){
+                    return ['style' => 'background-color: rgba(255, 0, 0, 0.2)'];
+                }else {
+                    return ['style' => 'background-color: rgba(0, 255, 0, 0.2)'];
+                }
+          },
             'columns'=>[
+                ['class'=>'yii\grid\serialColumn'],
                 //'cod',
                 [
                     'attribute'=>'name',
@@ -155,14 +159,15 @@ $this->title = 'Pagina principal';
                 ],
                 [
                     'attribute'=>'categoria',
-                    'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria")
+                    'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria"),
+                    'hAlign' => 'center',
                 ],
                 [
                     'format'=>'html',
                     'attribute'=>'stock',
                     'value'=>function($model){
                                 if ($model['stock'] == 0 || $model['stock'] == null) {
-                                    return 'Sin Stock';
+                                    return '-';
                                 }else {
                                     return $model['stock'];
                                 }
@@ -224,6 +229,7 @@ $this->title = 'Pagina principal';
                     'mergeHeader' => true,
                     'width' => '30px',
                     'hAlign' => 'right',
+                    'format' => ['decimal', 2],
                 ],
                 [
                     'label'=>'Precio por bolsa',
@@ -237,14 +243,17 @@ $this->title = 'Pagina principal';
                     'mergeHeader' => true,
                     'width' => '30px',
                     'hAlign' => 'right',
+                    'format' => ['decimal', 2],
                 ],
                 [
+                    
                     'class' => '\yii\grid\ActionColumn',
                     'header'=> 'Accion',
                     'headerOptions'=>[
+                        //'format'=>'html',
                             'width'=>'90'
                         ],
-                    'template'=>'{update} // {delete}',
+                    'template'=>'{update}  {delete}',
                 ],
             ],
         ]);

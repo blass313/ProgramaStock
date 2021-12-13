@@ -8,14 +8,14 @@ use yii\helpers\Html;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use kartik\mpdf\Pdf;
+use yii\helpers\Json;
 
 use app\models\ProductSearch;
 use app\models\LoginForm;
 use app\models\Product;
 
-class SiteController extends Controller
-{
+class SiteController extends Controller{
+    
     public function behaviors(){
         return [
             'access' => [
@@ -52,7 +52,6 @@ class SiteController extends Controller
 
     public function actionIndex(){
         $model = new Product();
-
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 $datos = new Product();
@@ -73,9 +72,12 @@ class SiteController extends Controller
                 $model->getErrors();
             }
         }
-
         $searchModel = new ProductSearch();
-        
+
+        if (Yii::$app->request->post('hasEditable')) {
+            $this->actionUpdateStock();
+        }
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -94,13 +96,14 @@ class SiteController extends Controller
     public function actionUpdate(){
         $model = new Product;
         $msg = null;
-        if($model->load(Yii::$app->request->post()))
-        {
-            if($model->validate())
-            {
+
+        if($model->load(Yii::$app->request->post())){
+
+            if($model->validate()){
+
                 $datos = product::findOne($_GET["id"]);
-                if($datos)
-                {
+
+                if($datos){
                     $datos->cod = $model->cod;
                     $datos->name = strtoupper($model->name); 
                     $datos->description = strtoupper($model->description);
@@ -126,17 +129,14 @@ class SiteController extends Controller
                     $msg = "El producto seleccionado no ha sido encontrado";
                 }
             }
-            else
-            {
+            else{
                 $model->getErrors();
             }
         }
 
-        if (Yii::$app->request->get("id"))
-        {
+        if (Yii::$app->request->get("id")){
             $id = Html::encode($_GET["id"]);
-            if ((int) $id)
-            {
+            if ((int) $id){
                 $datos = product::findOne($id);
                 if($datos)
                 {
@@ -151,18 +151,15 @@ class SiteController extends Controller
                     $model->porcentajekg = $datos->porcentajekg;
                     $model->porcentajebolsa = $datos->porcentajebolsa;
                 }
-                else
-                {
+                else{
                     return $this->redirect(["index"]);
                 }
             }
-            else
-            {
+            else{
                 return $this->redirect(["index"]);
             }
         }
-        else
-        {
+        else{
             return $this->redirect(["index"]);
         }
         return $this->render("update", ["model" => $model, "msg" => $msg]);
@@ -183,9 +180,33 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
     public function actionLogout(){
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionUpdateStock() {
+        $model = new Product();
+
+        if (isset($_POST['hasEditable'])) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            if ($model->load($_POST)) {
+                $value = $model->stock;
+                $model->save();
+                
+                return ['output'=>$value, 'message'=>''];
+
+            }
+            // else if nothing to do always return an empty JSON encoded output
+            else {
+                return ['output'=>'', 'message'=>''];
+            }
+        }
+        
+        // Else return to rendering a normal view
+        //return $this->render('view', ['model'=>$model]);
     }
 }
