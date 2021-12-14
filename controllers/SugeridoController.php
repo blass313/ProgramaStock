@@ -45,20 +45,12 @@ class SugeridoController extends Controller {
     }
 
     public function actionPdf($filtro = null, $sector = null){
-            if($sector == 'sugerido'){
                 $filtro = $_GET['proveedor'];
                 $section = 'pdf';
                 $searchModel = new ProductSearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
                 $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
                 $nombre = 'Pedido lo de lalo para '.$filtro.'.pdf';
-            
-            }/*elseif ($sector == '') {
-                $searchModel = new ProductSearch();
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
-                $nombre = 'Stock general';
-            }*/
 
             // setup kartik\mpdf\Pdf component
             $pdf = new Pdf([

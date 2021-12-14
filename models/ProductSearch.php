@@ -30,6 +30,9 @@ class ProductSearch extends Product
                     ->where('stock < sugerido')
                     ->andWhere(['categoria'=>$pdfFilter]);
             $pagination = false;
+        }elseif($section == 'general'){
+            $query = Product::find()->orderBy(['name'=>SORT_ASC]);
+            $pagination = false;
         }else{
             $query = Product::find();
             $pagination = 20;

@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+use kartik\mpdf\Pdf;
 
 use app\models\ProductSearch;
 use app\models\LoginForm;
@@ -194,8 +195,9 @@ class SiteController extends Controller{
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
             if ($model->load($_POST)) {
-                $value = $model->stock;
-                $model->save();
+                $actualizado = new Product();
+                $$actualizado->stock = $model->stock;
+                $actualizado->save();
                 
                 return ['output'=>$value, 'message'=>''];
 
@@ -208,5 +210,36 @@ class SiteController extends Controller{
         
         // Else return to rendering a normal view
         //return $this->render('view', ['model'=>$model]);
+    }
+
+    public function actionPdf($filtro = null, $sector = null){
+        $section = 'general';
+        $searchModel = new ProductSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
+        $content = $this->renderPartial('pdf_StockGeneral',['dataProvider'=>$dataProvider]);
+        $nombre = 'Stock General.pdf';
+
+        // setup kartik\mpdf\Pdf component
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_CORE,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // portrait orientation
+            'orientation' => Pdf::ORIENT_PORTRAIT, 
+            // stream to browser inline
+            'destination' => Pdf::DEST_DOWNLOAD, 
+            'content' => $content,
+            'cssInline' => '.kv-heading-1{font-size:18px}', 
+            // set mPDF properties on the fly
+            'options' => ['title' => 'Stock general'],
+            // call mPDF methods on the fly
+            'methods' => [ 
+                'SetHeader'=>['..'], 
+                'SetFooter'=>['{PAGENO}'],
+            ],
+            'filename' => $nombre
+        ]);
+        // return the pdf output as per the destination setting
+        return $pdf->render();
     }
 }

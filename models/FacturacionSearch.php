@@ -31,10 +31,10 @@
                 'ingreso'=>$this->ingreso,
                 'salida'=>$this->salida,
                 'personas'=>$this->personas,
-            ])
+            ]);
 
-            ->andFilterWhere(['like', 'fecha', $this->fecha])
-            ->andFilterWhere(['like', 'personas', $this->personas]);
+            $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'description', $this->description]);
             return $dataProvider;
         }//search
     }//class

@@ -5,9 +5,7 @@
     use kartik\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
-    use miloschuman\highcharts\Highcharts;
     use kartik\date\DatePicker;
-    use yii\grid\DataColumn;
 
     $this->title = 'facturacion';
 ?>
@@ -70,9 +68,18 @@
     GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        //'floatPageSummary' => true,
         'showPageSummary' => true,
-        'showFooter'=>true,
         'columns'=>[
+            [
+                'class'=>'kartik\grid\SerialColumn',
+                'contentOptions'=>['class'=>'kartik-sheet-style'],
+                'width'=>'36px',
+                'pageSummary'=>'Total',
+                'pageSummaryOptions' => ['colspan' => 2],
+                'header'=>'',
+                'headerOptions'=>['class'=>'kartik-sheet-style']
+            ],
             [
                 'attribute'=>'fecha',
                 'label'=>'fecha',
@@ -96,7 +103,8 @@
                     }else{
                         return 'Sin movimiento';
                     }
-                }
+                },
+                'pageSummary' => true
             ],
             [
                 'attribute'=>'salida',
@@ -106,7 +114,8 @@
                     }else{
                         return 'Sin movimiento';
                     }
-                }
+                },
+                'pageSummary' => true
             ],
             [
                 'attribute' => 'personas',
@@ -124,7 +133,8 @@
                 'label'=>'Ganancias',
                 'value'=>function($model){
                     return round(($model['ingreso']*30)/100);
-                }
+                },
+                'pageSummary' => true
             ],
             [
                 'label'=>'caja',

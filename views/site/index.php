@@ -8,10 +8,10 @@ use yii\bootstrap4\Modal;
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\widgets\Alert;
-use kartik\editable\Editable;
 use app\models\Product;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
+
 
 $this->title = 'Pagina principal';
 ?><!--use-->
@@ -19,6 +19,7 @@ $this->title = 'Pagina principal';
     <h1>Stock de Mercaderia</h1>
     <?php
         if (!Yii::$app->user->isGuest) {
+            echo Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger']);
             Modal::begin([
                 'title' => '<h2>Crear producto</h2>',
                 'headerOptions' => ['id' => 'modalHeader'],
@@ -136,7 +137,15 @@ $this->title = 'Pagina principal';
                 }
           },
             'columns'=>[
-                ['class'=>'yii\grid\serialColumn'],
+                [
+                    'class'=>'kartik\grid\SerialColumn',
+                    'contentOptions'=>['class'=>'kartik-sheet-style'],
+                    'width'=>'36px',
+                    'pageSummary'=>'Total',
+                    'pageSummaryOptions' => ['colspan' => 6],
+                    'header'=>'',
+                    'headerOptions'=>['class'=>'kartik-sheet-style']
+                ],
                 //'cod',
                 [
                     'attribute'=>'name',
@@ -173,6 +182,13 @@ $this->title = 'Pagina principal';
                                 }
                             },
                     'class'=>'kartik\grid\EditableColumn',
+                    'editableOptions' => [
+                        'header' => 'Buy Amount',
+                        'name'=>$model,
+                        'options' => [
+                            'pluginOptions' => ['min' => 0, 'max' => 5000]
+                        ]
+                    ],
                     'headerOptions' => ['style' => 'width:15%'],
                     'mergeHeader' => true,
                     'width' => '50px',
@@ -250,7 +266,6 @@ $this->title = 'Pagina principal';
                     'class' => '\yii\grid\ActionColumn',
                     'header'=> 'Accion',
                     'headerOptions'=>[
-                        //'format'=>'html',
                             'width'=>'90'
                         ],
                     'template'=>'{update}  {delete}',

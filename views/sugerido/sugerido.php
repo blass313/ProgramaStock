@@ -24,7 +24,7 @@
                 'data-dismiss' =>'modal',
             ],
             'toggleButton' => [
-                'label' => 'generar pedido PDF','class' => "btn btn-success"
+                'label' => 'generar pedido PDF','class' => "btn btn-danger"
             ],
         ]);
     ?>

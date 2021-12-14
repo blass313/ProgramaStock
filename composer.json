@@ -23,7 +23,7 @@
         "kartik-v/yii2-mpdf": "*",
         "mpdf/mpdf":"*",
         "kartik-v/yii2-detail-view": "dev-master",
-        "kartik-v/yii2-widget-alert": "dev-master",
+        "kartik-v/yii2-widget-alert": "*",
         "kartik-v/yii2-dynagrid": "dev-master",
         "kartik-v/yii2-editable": "*"
     },
