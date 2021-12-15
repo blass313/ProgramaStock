@@ -5,7 +5,7 @@
     use yii\helpers\Html;
     use yii\filters\VerbFilter;
     use yii\filters\AccessControl;
-
+    use yii\helpers\Url;
     use app\models\FacturacionSearch;
     use app\models\Facturacion;
 
@@ -61,7 +61,7 @@
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);
             $model->delete();
-            return $this->redirect('facturacion');
+            return $this->redirect('facturacion/facturacion');
         }//delete
 
         public function actionUpdate(){

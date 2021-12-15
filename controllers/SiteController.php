@@ -10,11 +10,11 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use kartik\mpdf\Pdf;
-
+use kartik\widgets\Alert;
 use app\models\ProductSearch;
 use app\models\LoginForm;
 use app\models\Product;
-
+use kartik\widgets\AlertBlock;
 class SiteController extends Controller{
     
     public function behaviors(){
@@ -118,11 +118,26 @@ class SiteController extends Controller{
     
                     if ($datos->update())
                     {
-                        $msg = "El producto ha sido actualizado correctamente";
+                    $msg =  Alert::widget([
+                                'type' => Alert::TYPE_SUCCESS,
+                                'title' => 'Carga Exitosa',
+                                'icon' => 'fas fa-check-circle',
+                                'body' => 'El items a sido modificado con exito',
+                                'showSeparator' => true,
+                                'delay' => 5000,
+                                'options'=>['style'=>'display: block']
+                            ]);
                     }
                     else
                     {
-                        $msg = "El producto no ha podido ser actualizado";
+                        $msg =  Alert::widget([
+                                    'type' => Alert::TYPE_DANGER,
+                                    'title' => 'Fallo al cargar los datos',
+                                    'icon' => 'fas fa-times-circle',
+                                    'body' => 'Algo salio mal y no se pudo cargar el producto',
+                                    'showSeparator' => true,
+                                    'delay' => 8000
+                                ]);
                     }
                 }
                 else
@@ -191,25 +206,26 @@ class SiteController extends Controller{
     public function actionUpdateStock() {
         $model = new Product();
 
-        if (isset($_POST['hasEditable'])) {
+        if (isset($_POST['id'])) {
+
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
             if ($model->load($_POST)) {
-                $actualizado = new Product();
-                $$actualizado->stock = $model->stock;
-                $actualizado->save();
-                
-                return ['output'=>$value, 'message'=>''];
+                $datos = product::findOne($_GET["id"]);
 
+                if($datos){
+                    $datos->stock = $model->stock;
+                    $datos->update();
+                    return ['output'=>'', 'message'=>''];
+                }
             }
-            // else if nothing to do always return an empty JSON encoded output
             else {
                 return ['output'=>'', 'message'=>''];
             }
         }
         
         // Else return to rendering a normal view
-        //return $this->render('view', ['model'=>$model]);
+        return $this->render('view', ['model'=>$model]);
     }
 
     public function actionPdf($filtro = null, $sector = null){
@@ -229,12 +245,12 @@ class SiteController extends Controller{
             // stream to browser inline
             'destination' => Pdf::DEST_DOWNLOAD, 
             'content' => $content,
-            'cssInline' => '.kv-heading-1{font-size:18px}', 
+            'cssInline' => '.w1{font-weight: bold}', 
             // set mPDF properties on the fly
             'options' => ['title' => 'Stock general'],
             // call mPDF methods on the fly
             'methods' => [ 
-                'SetHeader'=>['..'], 
+                //'SetHeader'=>['..'], 
                 'SetFooter'=>['{PAGENO}'],
             ],
             'filename' => $nombre

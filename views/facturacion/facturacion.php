@@ -69,6 +69,7 @@
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         //'floatPageSummary' => true,
+        'pageSummaryPosition'=>GridView::POS_TOP,
         'showPageSummary' => true,
         'columns'=>[
             [

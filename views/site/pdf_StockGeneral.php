@@ -20,13 +20,18 @@
             'columns'=>[
                 [
                     'attribute'=>'name',
-                    'label'=>'Producto'
+                    'label'=>'Producto',
+                    'headerOptions' => ['style' => 'font-weight: bold'],
                 ],
                 [
                     'attribute'=>'description',
                     'label'=>'Categoria',
                 ],
-                'kg',
+                [
+                  'attribute'=>'kg',
+                  'hAlign'=>'center',
+                  'vAlign' => 'center',
+                ],
                 [
                   'label'=>'Precio por Kg',
                   'value'=>function($model){

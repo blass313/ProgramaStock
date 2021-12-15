@@ -25,7 +25,7 @@ AppAsset::register($this);
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
-<header>
+<header style="display: block;">
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,

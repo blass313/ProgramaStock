@@ -53,7 +53,9 @@
     GridView::widget([
     'dataProvider' =>$dataProvider,
     'filterModel' => $searchModel,
+    'pageSummaryPosition'=>GridView::POS_TOP,
     'showPageSummary' => true,
+    'responsive'=>true,
     'showHeader'=>true,
     'columns'=>[
         //['class' => 'kartik\grid\SerialColumn'],
@@ -66,6 +68,7 @@
                     return 'S/C';
                 }
             },
+            'pageSummary' => 'Total',
             'headerOptions' => ['style' => 'width:15%'],
             'mergeHeader' => true,
             'width' => '80px',

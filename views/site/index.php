@@ -9,17 +9,15 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Product;
-use yii\helpers\Url;
+
 /* @var $this yii\web\View */
-
-
 $this->title = 'Pagina principal';
 ?><!--use-->
 <div class="site-index">
     <h1>Stock de Mercaderia</h1>
     <?php
         if (!Yii::$app->user->isGuest) {
-            echo Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger']);
+            echo Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger btn-lg btn-block']);
             Modal::begin([
                 'title' => '<h2>Crear producto</h2>',
                 'headerOptions' => ['id' => 'modalHeader'],
@@ -31,7 +29,7 @@ $this->title = 'Pagina principal';
                     'data-dismiss' =>'modal',
                 ],
                 'toggleButton' => [
-                    'label' => 'Crear producto','class' => "btn btn-success"
+                    'label' => 'Crear producto','class' => "btn btn-success btn-lg btn-block"
                 ],
                 'clientOptions' => [
                     'backdrop' => true, 'keyboard' => true,
@@ -153,12 +151,12 @@ $this->title = 'Pagina principal';
                     'width' => '130px',
                     'hAlign' => 'center',
                 ],
-                    [
-                        'attribute'=>'description',
-                        'headerOptions' => ['style' => 'width:15%'],
-                        'width' => '100px',
-                        'hAlign' => 'center',
-                    ],
+                [
+                    'attribute'=>'description',
+                    'headerOptions' => ['style' => 'width:15%'],
+                    'width' => '100px',
+                    'hAlign' => 'center',
+                ],
                 [
                     'label'=>'Kg',
                     'attribute'=>'kg',
@@ -172,6 +170,7 @@ $this->title = 'Pagina principal';
                     'hAlign' => 'center',
                 ],
                 [
+
                     'format'=>'html',
                     'attribute'=>'stock',
                     'value'=>function($model){
@@ -182,13 +181,6 @@ $this->title = 'Pagina principal';
                                 }
                             },
                     'class'=>'kartik\grid\EditableColumn',
-                    'editableOptions' => [
-                        'header' => 'Buy Amount',
-                        'name'=>$model,
-                        'options' => [
-                            'pluginOptions' => ['min' => 0, 'max' => 5000]
-                        ]
-                    ],
                     'headerOptions' => ['style' => 'width:15%'],
                     'mergeHeader' => true,
                     'width' => '50px',
