@@ -1,17 +1,19 @@
 <?php
-namespace app\models;
+    namespace app\models;
 
-use Yii;
+    use Yii;
 
-use yii\helpers\ArrayHelper;
-use yii\bootstrap4\Modal;
-use kartik\grid\GridView;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use app\models\Product;
+    use yii\helpers\ArrayHelper;
+    use yii\bootstrap4\Modal;
+    use kartik\grid\GridView;
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+    use app\models\Product;
+    use yii\widgets\Pjax;
 
-/* @var $this yii\web\View */
-$this->title = 'Pagina principal';
+
+    /* @var $this yii\web\View */
+    $this->title = 'Pagina principal';
 ?><!--use-->
 <div class="site-index">
     <h1>Stock de Mercaderia</h1>
@@ -122,11 +124,16 @@ $this->title = 'Pagina principal';
     <?php
         Modal::end();
     ?>
+    <?php Pjax::begin(['id' => 'Product']) ?>
     <?=
+
         GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'pjax'=>true,
+            'pjaxSettings'=>[
+                'neverTimeout'=>true,
+            ],
             'rowOptions' => function ($model, $index, $widget, $grid){
                 if($model->stock == 0){
                     return ['style' => 'background-color: rgba(255, 0, 0, 0.2)'];
@@ -136,13 +143,13 @@ $this->title = 'Pagina principal';
           },
             'columns'=>[
                 [
-                    'class'=>'kartik\grid\SerialColumn',
-                    'contentOptions'=>['class'=>'kartik-sheet-style'],
+                    'attribute'=>'id',
+                    'contentOptions'=>['class'=>'font-weight-bold'],
                     'width'=>'36px',
                     'pageSummary'=>'Total',
                     'pageSummaryOptions' => ['colspan' => 6],
                     'header'=>'',
-                    'headerOptions'=>['class'=>'kartik-sheet-style']
+                    'headerOptions'=>['class'=>'table-success'],
                 ],
                 //'cod',
                 [
@@ -150,10 +157,13 @@ $this->title = 'Pagina principal';
                     'label'=>'Producto',
                     'width' => '130px',
                     'hAlign' => 'center',
+                    'headerOptions'=>['class'=>'table-success'],
+                    'contentOptions'=>['class'=>'font-weight-bold'],
                 ],
                 [
                     'attribute'=>'description',
-                    'headerOptions' => ['style' => 'width:15%'],
+                    'headerOptions'=>['class'=>'table-success'],
+                    'contentOptions'=>['class'=>'font-weight-bold'],
                     'width' => '100px',
                     'hAlign' => 'center',
                 ],
@@ -163,25 +173,28 @@ $this->title = 'Pagina principal';
                     'format' => ['decimal', 1],
                     'width' => '100px',
                     'hAlign' => 'center',
+                    'headerOptions'=>['class'=>'table-success'],
                 ],
                 [
                     'attribute'=>'categoria',
                     'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria"),
                     'hAlign' => 'center',
+                    'headerOptions'=>['class'=>'table-success'],
+                    'contentOptions'=>['class'=>'font-weight-bold'],
                 ],
                 [
 
                     'format'=>'html',
                     'attribute'=>'stock',
                     'value'=>function($model){
-                                if ($model['stock'] == 0 || $model['stock'] == null) {
+                                if (empty($model['stock'])) {
                                     return '-';
                                 }else {
                                     return $model['stock'];
                                 }
                             },
                     'class'=>'kartik\grid\EditableColumn',
-                    'headerOptions' => ['style' => 'width:15%'],
+                    'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '50px',
                     'hAlign' => 'center',
@@ -189,7 +202,7 @@ $this->title = 'Pagina principal';
                 [
                     'attribute'=>'sugerido',
                     'class'=>'kartik\grid\EditableColumn',
-                    'headerOptions' => ['style' => 'width:15%'],
+                    'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '50px',
                     'hAlign' => 'center',
@@ -208,7 +221,7 @@ $this->title = 'Pagina principal';
                             return ['style' => 'color: red'];
                         }
                     },
-                    'headerOptions' => ['style' => 'width:15%'],
+                    'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '30px',
                     'hAlign' => 'center',
@@ -233,7 +246,7 @@ $this->title = 'Pagina principal';
                                 return $total;
                             }
                     },
-                    'headerOptions' => ['style' => 'width:15%'],
+                    'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '30px',
                     'hAlign' => 'right',
@@ -247,7 +260,7 @@ $this->title = 'Pagina principal';
                                 $total = (($precio*$porcentaje)/100)+$precio;
                                 return round($total);
                     },
-                    'headerOptions' => ['style' => 'width:15%'],
+                    'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '30px',
                     'hAlign' => 'right',
@@ -265,6 +278,7 @@ $this->title = 'Pagina principal';
             ],
         ]);
     ?>
+    <?php Pjax::end() ?>
     <?php
         }
         ?>

@@ -14,7 +14,6 @@ use kartik\widgets\Alert;
 use app\models\ProductSearch;
 use app\models\LoginForm;
 use app\models\Product;
-use kartik\widgets\AlertBlock;
 class SiteController extends Controller{
     
     public function behaviors(){
@@ -53,31 +52,19 @@ class SiteController extends Controller{
 
     public function actionIndex(){
         $model = new Product();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
-                $datos = new Product();
-
-                $datos->cod = $model->cod;
-                $datos->name = strtoupper($model->name);
-                $datos->description = strtoupper($model->description);
-                $datos->categoria = strtoupper($model->categoria);
-                $datos->stock = $model->stock;
-                $datos->sugerido = $model->sugerido;
-                $datos->kg = $model->kg;
-                $datos->precio_bolsa = $model->precio_bolsa;
-                $datos->porcentajekg = $model->porcentajekg;
-                $datos->porcentajebolsa = $model->porcentajebolsa;
-                
-                $model = new Product();
+		
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
+            $model = new Product(); //reset model
             }else {
                 $model->getErrors();
             }
-        }
-        $searchModel = new ProductSearch();
 
         if (Yii::$app->request->post('hasEditable')) {
-            $this->actionUpdateStock();
-        }
+                $this->stock(Yii::$app->request->post('editableAttribute'));
+            }
+
+        $searchModel = new ProductSearch();
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -124,7 +111,7 @@ class SiteController extends Controller{
                                 'icon' => 'fas fa-check-circle',
                                 'body' => 'El items a sido modificado con exito',
                                 'showSeparator' => true,
-                                'delay' => 5000,
+                                'delay' => 2000,
                                 'options'=>['style'=>'display: block']
                             ]);
                     }
@@ -136,7 +123,7 @@ class SiteController extends Controller{
                                     'icon' => 'fas fa-times-circle',
                                     'body' => 'Algo salio mal y no se pudo cargar el producto',
                                     'showSeparator' => true,
-                                    'delay' => 8000
+                                    'delay' => 2000
                                 ]);
                     }
                 }
@@ -203,31 +190,6 @@ class SiteController extends Controller{
         return $this->goHome();
     }
 
-    public function actionUpdateStock() {
-        $model = new Product();
-
-        if (isset($_POST['id'])) {
-
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-            if ($model->load($_POST)) {
-                $datos = product::findOne($_GET["id"]);
-
-                if($datos){
-                    $datos->stock = $model->stock;
-                    $datos->update();
-                    return ['output'=>'', 'message'=>''];
-                }
-            }
-            else {
-                return ['output'=>'', 'message'=>''];
-            }
-        }
-        
-        // Else return to rendering a normal view
-        return $this->render('view', ['model'=>$model]);
-    }
-
     public function actionPdf($filtro = null, $sector = null){
         $section = 'general';
         $searchModel = new ProductSearch();
@@ -258,4 +220,13 @@ class SiteController extends Controller{
         // return the pdf output as per the destination setting
         return $pdf->render();
     }
-}
+
+    public function stock($row){
+            $datos = product::findOne(Yii::$app->request->post('editableKey'));
+            $datos->$row = $_POST['Product'][Yii::$app->request->post('editableIndex')][$row];
+            $datos->save();
+            $salida = ['output'=>'','message'=>''];
+            $out = Json::encode($salida);
+            return $this->redirect('index');
+        }
+    }

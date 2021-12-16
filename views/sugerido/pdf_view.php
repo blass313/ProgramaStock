@@ -37,7 +37,7 @@
                 ],
                 [
                     'attribute'=>'name',
-                    'label'=>'Producto'
+                    'label'=>'Producto',
                 ],
                 [
                     'attribute'=>'description',

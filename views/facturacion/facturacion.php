@@ -71,6 +71,7 @@
         //'floatPageSummary' => true,
         'pageSummaryPosition'=>GridView::POS_TOP,
         'showPageSummary' => true,
+        //'headerOptions'=>['class'=>"table-info"],
         'columns'=>[
             [
                 'class'=>'kartik\grid\SerialColumn',
@@ -79,7 +80,7 @@
                 'pageSummary'=>'Total',
                 'pageSummaryOptions' => ['colspan' => 2],
                 'header'=>'',
-                'headerOptions'=>['class'=>'kartik-sheet-style']
+                'headerOptions' => ['class' => 'table-info'],
             ],
             [
                 'attribute'=>'fecha',
@@ -94,7 +95,7 @@
                         'format' => 'yyyy/mm/dd'
                     ],
                 ]),
-                'headerOptions' => ['style' => 'width:10%'],
+                'headerOptions' => ['class' => 'table-info'],
             ],
             [
                 'attribute'=>'ingreso',
@@ -102,10 +103,14 @@
                     if ($model['ingreso'] != 0) {
                         return $model['ingreso'];
                     }else{
-                        return 'Sin movimiento';
-                    }
+                        return 0;
+                    } 
                 },
-                'pageSummary' => true
+                'pageSummary' => true,
+                'hAlign' => 'right',
+                'format'=>['decimal',2],
+                'headerOptions' => ['class' => 'table-info'],
+                'mergeHeader' => true,
             ],
             [
                 'attribute'=>'salida',
@@ -113,10 +118,14 @@
                     if ($model['salida'] != 0) {
                         return $model['salida'];
                     }else{
-                        return 'Sin movimiento';
+                        return 0;
                     }
                 },
-                'pageSummary' => true
+                'pageSummary' => true,
+                'hAlign' => 'right',
+                'format'=>['decimal',2],
+                'headerOptions' => ['class' => 'table-info'],
+                'mergeHeader' => true,
             ],
             [
                 'attribute' => 'personas',
@@ -124,18 +133,26 @@
                     if ($model['personas'] != 0) {
                         return $model['personas'];
                     }else{
-                        return 'sin ingresos';
+                        return 0;
                     }
                 },
                 'headerOptions' => ['style' => 'width:15%'],
-                'pageSummary' => true
+                'pageSummary' => true,
+                'hAlign' => 'right',
+                'format'=>['decimal',2],
+                'headerOptions' => ['class' => 'table-info'],
+                'mergeHeader' => true,
             ],
             [
                 'label'=>'Ganancias',
                 'value'=>function($model){
                     return round(($model['ingreso']*30)/100);
                 },
-                'pageSummary' => true
+                'pageSummary' => true,
+                'hAlign' => 'right',
+                'format'=>['decimal',2],
+                'headerOptions' => ['class' => 'table-info'],
+                'mergeHeader' => true,
             ],
             [
                 'label'=>'caja',
@@ -143,14 +160,18 @@
                     $ganancia = round(($model['ingreso']*30)/100);
                     return ($model['ingreso']-$ganancia-$model['salida']);
                 },
-                'headerOptions' => ['style' => 'width:10%'],
-                'pageSummary' => true
+                'headerOptions' => ['class' => 'table-info'],
+                'pageSummary' => true,
+                'hAlign' => 'right',
+                'format'=>['decimal',2],
+                'mergeHeader' => true,
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=> 'Accion',
                 'headerOptions'=>[
                         'width'=>'50',
+                        'class' => 'table-info'
                     ],
                 'template'=>'{update} // {delete}'
             ],

@@ -35,7 +35,7 @@ class ProductSearch extends Product
             $pagination = false;
         }else{
             $query = Product::find();
-            $pagination = 20;
+            $pagination = false;
         }
         
 

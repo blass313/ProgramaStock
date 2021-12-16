@@ -82,6 +82,13 @@
             'hAlign' => 'center',
         ],
         [
+            'attribute'=>'description',
+            'label'=>'Descripcion',
+            'headerOptions' => ['style' => 'width:15%'],
+            'width' => '120px',
+            'hAlign' => 'center',
+        ],
+        [
             'attribute'=>'categoria',
             'label'=>'Proveedor',
             'filter'=> $filtro = ArrayHelper::map(product::find()->where('stock < sugerido')->all(), "categoria","categoria"),
