@@ -15,7 +15,7 @@
       <h1>Forrajeria Lo de Lalo</h1>
       <h4>Pedido para proveedor: <?=$proveedor?></h4>
       <div class="card" style="margin-top: 20px;">
-        <div>Calle 11 entre 110 y 112</div>
+        <div>Calle 11 entre 112 y 114</div>
         <div>(2324)-684826</div>
         <div><a href="mailto:dariomur@hotmail.com">dariomur@hotmail.com</a></div>
       </div>
@@ -26,19 +26,10 @@
             'dataProvider' =>$dataProvider,
             'columns'=>[
                 [
-                  'label'=>'Cod',
-                  'value'=>function($model){
-                      if(isset($model['cod'])){
-                          return $model['cod'];
-                      }else {
-                          return 'Sin codigo';
-                      }
-                  }
-                ],
-                [
                     'attribute'=>'name',
                     'label'=>'Producto',
                 ],
+                'kg',
                 [
                     'attribute'=>'description',
                     'label'=>'Categoria',

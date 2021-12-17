@@ -28,13 +28,14 @@ class ProductSearch extends Product
         }elseif($section == 'pdf'){
             $query = Product::find()
                     ->where('stock < sugerido')
-                    ->andWhere(['categoria'=>$pdfFilter]);
+                    ->andWhere(['categoria'=>$pdfFilter])
+                    ->orderBy(['name'=>SORT_ASC]);
             $pagination = false;
         }elseif($section == 'general'){
             $query = Product::find()->orderBy(['name'=>SORT_ASC]);
             $pagination = false;
         }else{
-            $query = Product::find();
+            $query = Product::find()->orderBy(['name'=>SORT_ASC]);
             $pagination = false;
         }
         

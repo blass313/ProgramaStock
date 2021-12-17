@@ -130,6 +130,7 @@
         GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'showFooter'=>true,
             'pjax'=>true,
             'pjaxSettings'=>[
                 'neverTimeout'=>true,
@@ -143,22 +144,13 @@
           },
             'columns'=>[
                 [
-                    'attribute'=>'id',
-                    'contentOptions'=>['class'=>'font-weight-bold'],
-                    'width'=>'36px',
-                    'pageSummary'=>'Total',
-                    'pageSummaryOptions' => ['colspan' => 6],
-                    'header'=>'',
-                    'headerOptions'=>['class'=>'table-success'],
-                ],
-                //'cod',
-                [
                     'attribute'=>'name',
                     'label'=>'Producto',
                     'width' => '130px',
                     'hAlign' => 'center',
                     'headerOptions'=>['class'=>'table-success'],
                     'contentOptions'=>['class'=>'font-weight-bold'],
+                    'width' => '12%',
                 ],
                 [
                     'attribute'=>'description',
@@ -166,14 +158,18 @@
                     'contentOptions'=>['class'=>'font-weight-bold'],
                     'width' => '100px',
                     'hAlign' => 'center',
+                    'filter'=>false,
+                    'mergeHeader' => true,
                 ],
                 [
                     'label'=>'Kg',
                     'attribute'=>'kg',
                     'format' => ['decimal', 1],
                     'width' => '100px',
-                    'hAlign' => 'center',
+                    'hAlign' => 'right',
                     'headerOptions'=>['class'=>'table-success'],
+                    'filter'=>false,
+                    'mergeHeader' => true,
                 ],
                 [
                     'attribute'=>'categoria',
@@ -183,7 +179,6 @@
                     'contentOptions'=>['class'=>'font-weight-bold'],
                 ],
                 [
-
                     'format'=>'html',
                     'attribute'=>'stock',
                     'value'=>function($model){
@@ -197,7 +192,8 @@
                     'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '50px',
-                    'hAlign' => 'center',
+                    'hAlign' => 'right',
+                    'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
                 ],                 
                 [
                     'attribute'=>'sugerido',
@@ -205,7 +201,8 @@
                     'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
                     'width' => '50px',
-                    'hAlign' => 'center',
+                    'hAlign' => 'right',
+                    'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
                 ],
                 [
                     'label'=>'diferencia',
@@ -216,15 +213,26 @@
                     'contentOptions' =>function($model){
                         $diferencia = $model['sugerido']-$model['stock'];
                         if ($diferencia <= 0) {
-                            return ['style' => 'color: green'];
+                            return ['style' => 'color: green; font-size: 20px; font-weight: bolder;'];
                         }else{
-                            return ['style' => 'color: red'];
+                            return ['style' => 'color: red; font-size: 20px; font-weight: bolder;'];
                         }
                     },
                     'headerOptions'=>['class'=>'table-success'],
                     'mergeHeader' => true,
-                    'width' => '30px',
-                    'hAlign' => 'center',
+                    'mergeHeader' => true,
+                    'width' => '10%',
+                    'hAlign' => 'right',
+                ],
+                [
+                    'attribute'=>'precio_bolsa',
+                    'width' => '10%',
+                    'class'=>'kartik\grid\EditableColumn',
+                    'hAlign' => 'right',
+                    'filter'=>false,
+                    'headerOptions'=>['class'=>'table-success'],
+                    'mergeHeader' => true,
+                    'contentOptions'=>['style'=>'font-size: 20px'],
                 ],
                 [
                     'label'=>'Precio por Kg',
@@ -251,6 +259,7 @@
                     'width' => '30px',
                     'hAlign' => 'right',
                     'format' => ['decimal', 2],
+                    'contentOptions'=>['style'=>'font-size: 20px'],
                 ],
                 [
                     'label'=>'Precio por bolsa',
@@ -265,6 +274,7 @@
                     'width' => '30px',
                     'hAlign' => 'right',
                     'format' => ['decimal', 2],
+                    'contentOptions'=>['style'=>'font-size: 20px'],
                 ],
                 [
                     

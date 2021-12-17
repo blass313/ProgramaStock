@@ -37,7 +37,7 @@
     ?>
             <div class="form-group">
                 <?='<label for="proveedor">Seleccione proveedor</label>'?>
-                <?=Html::dropDownList('proveedor',$selection = null,ArrayHelper::map(product::find()->all(), "categoria","categoria"),['class'=>'form-control form-control-lg'])?>
+                <?=Html::dropDownList('proveedor',$selection = null,ArrayHelper::map(product::find()->where('stock < sugerido')->all(), "categoria","categoria"),['class'=>'form-control form-control-lg'])?>
             </div>
             <div class="form-group">
                 <?=Html::submitInput('Exportar a PDF',['class' => "btn btn-info btn-lg"])?>
@@ -58,22 +58,6 @@
     'responsive'=>true,
     'showHeader'=>true,
     'columns'=>[
-        //['class' => 'kartik\grid\SerialColumn'],
-        [
-            'label'=>'Cod',
-            'value'=>function($model){
-                if(isset($model['cod'])){
-                    return $model['cod'];
-                }else {
-                    return 'S/C';
-                }
-            },
-            'pageSummary' => 'Total',
-            'headerOptions' => ['style' => 'width:15%'],
-            'mergeHeader' => true,
-            'width' => '80px',
-            'hAlign' => 'center',
-        ],
         [
             'attribute'=>'name',
             'label'=>'Producto',
@@ -96,6 +80,7 @@
             'width' => '120px',
             'hAlign' => 'center',
         ],
+        /*
         [
             'attribute'=>'stock',
             'headerOptions' => ['style' => 'width:15%'],
@@ -110,6 +95,7 @@
             'width' => '100px',
             'hAlign' => 'center',
         ],
+        */
         [
             'label'=>'diferencia',
             'value'=>$dif = function($model){
@@ -120,6 +106,8 @@
             'mergeHeader' => true,
             'width' => '100px',
             'hAlign' => 'center',
+            
+            'contentOptions'=>['class'=>'font-weight-bold'],
         ],
         [
             'label'=>'Total',
