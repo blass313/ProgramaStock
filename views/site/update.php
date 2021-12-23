@@ -10,7 +10,9 @@ use kartik\widgets\Alert;
 
 $this->title = 'Update producto';
 ?>
-<h3><?= $msg ?></h3>
+    <span>
+        <?= $msg ?>
+    </span>
 <?php 
     $form = ActiveForm::begin( [
                 'enableClientValidation' => true,

@@ -5,12 +5,17 @@
 
     use yii\helpers\ArrayHelper;
     use yii\bootstrap4\Modal;
-    use kartik\grid\GridView;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
-    use app\models\Product;
     use yii\widgets\Pjax;
+    use yii\helpers\Url;
 
+    use app\models\Product;
+
+    use kartik\editable\Editable;
+    use kartik\dynagrid\DynaGrid;
+
+    use kartik\grid\GridView;
 
     /* @var $this yii\web\View */
     $this->title = 'Pagina principal';
@@ -19,6 +24,8 @@
     <h1>Stock de Mercaderia</h1>
     <?php
         if (!Yii::$app->user->isGuest) {
+            
+            echo Html::a('Generar cambios','index',['class' => "btn btn-info btn-lg btn-block"]);
             echo Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger btn-lg btn-block']);
             Modal::begin([
                 'title' => '<h2>Crear producto</h2>',
@@ -38,11 +45,11 @@
                 ]
             ]);
     ?><!--Modal-->
-
         <div class="product-form">
             <?php 
-                $form = ActiveForm::begin( [
+                $form = ActiveForm::begin([
                             'enableClientValidation' => true,
+                            "action" => Url::toRoute("site/create"),
                             'method' => 'post',
                             ]);
             ?>
@@ -124,171 +131,191 @@
     <?php
         Modal::end();
     ?>
-    <?php Pjax::begin(['id' => 'Product']) ?>
-    <?=
-
-        GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'showFooter'=>true,
-            'pjax'=>true,
-            'pjaxSettings'=>[
-                'neverTimeout'=>true,
-            ],
-            'rowOptions' => function ($model, $index, $widget, $grid){
-                if($model->stock == 0){
-                    return ['style' => 'background-color: rgba(255, 0, 0, 0.2)'];
-                }else {
-                    return ['style' => 'background-color: rgba(0, 255, 0, 0.2)'];
-                }
-          },
-            'columns'=>[
-                [
-                    'attribute'=>'name',
-                    'label'=>'Producto',
-                    'width' => '130px',
-                    'hAlign' => 'center',
-                    'headerOptions'=>['class'=>'table-success'],
-                    'contentOptions'=>['class'=>'font-weight-bold'],
-                    'width' => '12%',
+    <div id="tabla">
+        <?php Pjax::begin(['id' => 'Product']) ?>
+        
+        <?=
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'responsiveWrap'=>true,
+                'floatHeader'=>true,
+                'pjax'=>true,
+                'pjaxSettings'=>[
+                    'neverTimeout'=>true,
                 ],
-                [
-                    'attribute'=>'description',
-                    'headerOptions'=>['class'=>'table-success'],
-                    'contentOptions'=>['class'=>'font-weight-bold'],
-                    'width' => '100px',
-                    'hAlign' => 'center',
-                    'filter'=>false,
-                    'mergeHeader' => true,
+                'options'=>[
+                    'class' => "table table-md",
                 ],
-                [
-                    'label'=>'Kg',
-                    'attribute'=>'kg',
-                    'format' => ['decimal', 1],
-                    'width' => '100px',
-                    'hAlign' => 'right',
-                    'headerOptions'=>['class'=>'table-success'],
-                    'filter'=>false,
-                    'mergeHeader' => true,
-                ],
-                [
-                    'attribute'=>'categoria',
-                    'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria"),
-                    'hAlign' => 'center',
-                    'headerOptions'=>['class'=>'table-success'],
-                    'contentOptions'=>['class'=>'font-weight-bold'],
-                ],
-                [
-                    'format'=>'html',
-                    'attribute'=>'stock',
-                    'value'=>function($model){
-                                if (empty($model['stock'])) {
-                                    return '-';
+                'rowOptions' => function ($model, $index, $widget, $grid){
+                    if($model->stock == 0 ){
+                        return ['style' => 'background-color: rgba(255, 0, 0, 0.2)'];
+                    }else {
+                        return ['style' => 'background-color: rgba(0, 255, 0, 0.2)'];
+                    }
+            },
+                'columns'=>[
+                    [
+                        'format'=>'html',
+                        'attribute'=>'name',
+                        'label'=>'Producto',
+                        'width' => '15%',
+                        'hAlign' => 'center',
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'contentOptions'=>['class'=>'font-weight-bold'],
+                        'options'=>['id'=>'product'],
+                        'width' => '12%',
+                        //'mergeHeader' => $validar,
+                    ],
+                    [
+                        'attribute'=>'description',
+                        'filter'=>ArrayHelper::map(product::find()->all(), "description","description"),
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'contentOptions'=>['class'=>'font-weight-bold'],
+                        'width' => '10%',
+                        'hAlign' => 'center',
+                        //'mergeHeader' => true,
+                    ],
+                    [
+                        'label'=>'Kg',
+                        'attribute'=>'kg',
+                        'format' => ['decimal', 1],
+                        'width' => '5%',
+                        'hAlign' => 'right',
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                    ],
+                    [
+                        'attribute'=>'categoria',
+                        'filter'=>ArrayHelper::map(product::find()->all(), "categoria","categoria"),
+                        'hAlign' => 'center',
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'contentOptions'=>['class'=>'font-weight-bold'],
+                        'width' => '12%',
+                        //'mergeHeader' => true,
+                    ],
+                    [
+                        'format'=>'html',
+                        'attribute'=>'stock',
+                        'value'=>function($model){
+                                    if (empty($model['stock'])) {
+                                        return 0;
+                                    }else {
+                                        return $model['stock'];
+                                    }
+                                },
+                        'class'=>'kartik\grid\EditableColumn',
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                        'width' => '5%',
+                        'hAlign' => 'right',
+                        'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
+                        'editableOptions'=>[
+                                'header' => 'Stock', 
+                                'inputType' => \kartik\editable\Editable::INPUT_SPIN,
+                                'options' => [
+                                    'pluginOptions' => ['min' => 0, 'max' => 5000],
+                                    'class'=>'enviar'
+                                ],
+                            ]
+                    ],                 
+                    [
+                        'attribute'=>'sugerido',
+                        'class'=>'kartik\grid\EditableColumn',
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                        'width' => '5%',
+                        'hAlign' => 'right',
+                        'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
+                        'editableOptions'=>[
+                            'header' => 'Sugerido', 
+                            'inputType' => \kartik\editable\Editable::INPUT_SPIN,
+                            'options' => [
+                                'pluginOptions' => ['min' => 0, 'max' => 5000],
+                            ],
+                        ]
+                    ],
+                    [
+                        'label'=>'diferencia',
+                        'value'=>$dif = function($model){
+                                            $diferencia = $model['sugerido']-$model['stock'];
+                                            return $diferencia;
+                                        },
+                        'contentOptions' =>function($model){
+                            $diferencia = $model['sugerido']-$model['stock'];
+                            if ($diferencia <= 0) {
+                                return ['style' => 'color: green; font-size: 20px; font-weight: bolder;'];
+                            }else{
+                                return ['style' => 'color: red; font-size: 20px; font-weight: bolder;'];
+                            }
+                        },
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                        'mergeHeader' => true,
+                        'width' => '5%',
+                        'hAlign' => 'right',
+                    ],
+                    [
+                        'attribute'=>'precio_bolsa',
+                        'width' => '12%',
+                        'class'=>'kartik\grid\EditableColumn',
+                        'hAlign' => 'right',
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                        'contentOptions'=>['style'=>'font-size: 20px'],
+                        'format' => ['decimal', 1], 
+                    ],
+                    [
+                        'label'=>'Precio por Kg',
+                        'value'=>function($model){
+                                $porcentaje = $model['porcentajekg'];
+                                $precio = $model['precio_bolsa'];
+                                $stock = $model['kg'];
+                                if ($porcentaje != 0) {
+                                    if ($stock != 0) {
+                                        $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
+        
+                                        return round($total);
+                                    }else{
+                                        $total = 0;
+                                        return $total;
+                                    }
                                 }else {
-                                    return $model['stock'];
-                                }
-                            },
-                    'class'=>'kartik\grid\EditableColumn',
-                    'headerOptions'=>['class'=>'table-success'],
-                    'mergeHeader' => true,
-                    'width' => '50px',
-                    'hAlign' => 'right',
-                    'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
-                ],                 
-                [
-                    'attribute'=>'sugerido',
-                    'class'=>'kartik\grid\EditableColumn',
-                    'headerOptions'=>['class'=>'table-success'],
-                    'mergeHeader' => true,
-                    'width' => '50px',
-                    'hAlign' => 'right',
-                    'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
-                ],
-                [
-                    'label'=>'diferencia',
-                    'value'=>$dif = function($model){
-                                        $diferencia = $model['sugerido']-$model['stock'];
-                                        return $diferencia;
-                                    },
-                    'contentOptions' =>function($model){
-                        $diferencia = $model['sugerido']-$model['stock'];
-                        if ($diferencia <= 0) {
-                            return ['style' => 'color: green; font-size: 20px; font-weight: bolder;'];
-                        }else{
-                            return ['style' => 'color: red; font-size: 20px; font-weight: bolder;'];
-                        }
-                    },
-                    'headerOptions'=>['class'=>'table-success'],
-                    'mergeHeader' => true,
-                    'mergeHeader' => true,
-                    'width' => '10%',
-                    'hAlign' => 'right',
-                ],
-                [
-                    'attribute'=>'precio_bolsa',
-                    'width' => '10%',
-                    'class'=>'kartik\grid\EditableColumn',
-                    'hAlign' => 'right',
-                    'filter'=>false,
-                    'headerOptions'=>['class'=>'table-success'],
-                    'mergeHeader' => true,
-                    'contentOptions'=>['style'=>'font-size: 20px'],
-                ],
-                [
-                    'label'=>'Precio por Kg',
-                    'value'=>function($model){
-                            $porcentaje = $model['porcentajekg'];
-                            $precio = $model['precio_bolsa'];
-                            $stock = $model['kg'];
-                            if ($porcentaje != 0) {
-                                if ($stock != 0) {
-                                    $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
-    
-                                    return round($total);
-                                }else{
                                     $total = 0;
                                     return $total;
                                 }
-                            }else {
-                                $total = 0;
-                                return $total;
-                            }
-                    },
-                    'headerOptions'=>['class'=>'table-success'],
-                    'mergeHeader' => true,
-                    'width' => '30px',
-                    'hAlign' => 'right',
-                    'format' => ['decimal', 2],
-                    'contentOptions'=>['style'=>'font-size: 20px'],
+                        },
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                        'width' => '12%',
+                        'hAlign' => 'right',
+                        'format' => ['decimal', 2],
+                        'contentOptions'=>['style'=>'font-size: 20px'],
+                    ],
+                    [
+                        'label'=>'Precio por bolsa',
+                        'value'=>function($model){
+                                    $porcentaje = $model['porcentajebolsa'];
+                                    $precio = $model['precio_bolsa'];
+                                    $total = (($precio*$porcentaje)/100)+$precio;
+                                    return round($total);
+                        },
+                        'headerOptions'=>['class'=>'table-warning'],
+                        'mergeHeader' => true,
+                        'width' => '12%',
+                        'hAlign' => 'right',
+                        'format' => ['decimal', 2],
+                        'contentOptions'=>['style'=>'font-size: 20px'],
+                    ],
+                    [
+                        'class' => '\kartik\grid\ActionColumn',
+                        'headerOptions'=>['class'=>'table-warning'],
+                    ]
                 ],
-                [
-                    'label'=>'Precio por bolsa',
-                    'value'=>function($model){
-                                $porcentaje = $model['porcentajebolsa'];
-                                $precio = $model['precio_bolsa'];
-                                $total = (($precio*$porcentaje)/100)+$precio;
-                                return round($total);
-                    },
-                    'headerOptions'=>['class'=>'table-success'],
-                    'mergeHeader' => true,
-                    'width' => '30px',
-                    'hAlign' => 'right',
-                    'format' => ['decimal', 2],
-                    'contentOptions'=>['style'=>'font-size: 20px'],
-                ],
-                [
-                    
-                    'class' => '\yii\grid\ActionColumn',
-                    'header'=> 'Accion',
-                    'headerOptions'=>[
-                            'width'=>'90'
-                        ],
-                    'template'=>'{update}  {delete}',
-                ],
-            ],
-        ]);
-    ?>
-    <?php Pjax::end() ?>
+            ]);
+        ?>
+        <?php Pjax::end() ?>
+    </div>
     <?php
         }
         ?>

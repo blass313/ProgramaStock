@@ -10,7 +10,9 @@ use kartik\date\DatePicker;
 
 $this->title = 'Update';
 ?>
-<h3><?= $msg ?></h3>
+<span>
+    <?= $msg ?>
+</span>
 <?php 
        $form = ActiveForm::begin([
                 'enableClientValidation' => true,

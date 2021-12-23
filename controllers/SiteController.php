@@ -9,11 +9,14 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
+
 use kartik\mpdf\Pdf;
 use kartik\widgets\Alert;
+
 use app\models\ProductSearch;
 use app\models\LoginForm;
 use app\models\Product;
+
 class SiteController extends Controller{
     
     public function behaviors(){
@@ -52,16 +55,10 @@ class SiteController extends Controller{
 
     public function actionIndex(){
         $model = new Product();
-		
-        if ($model->load(Yii::$app->request->post()) && $model->save())
-        {
-            $model = new Product(); //reset model
-            }else {
-                $model->getErrors();
-            }
 
         if (Yii::$app->request->post('hasEditable')) {
                 $this->stock(Yii::$app->request->post('editableAttribute'));
+                $model = new Product();
             }
 
         $searchModel = new ProductSearch();
@@ -73,6 +70,17 @@ class SiteController extends Controller{
             'model' => $model,
         ]);
     }//index
+
+    public function actionCreate(){
+        $model = new Product();
+		
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
+            $model = new Product(); //reset model
+            }else {
+                $model->getErrors();
+            }
+            return $this->redirect('index');
+    }
 
     public function actionDelete($id = null){
         $model = Product::findOne($id);
@@ -112,7 +120,6 @@ class SiteController extends Controller{
                                 'body' => 'El items a sido modificado con exito',
                                 'showSeparator' => true,
                                 'delay' => 2000,
-                                'options'=>['style'=>'display: block']
                             ]);
                     }
                     else
@@ -129,7 +136,14 @@ class SiteController extends Controller{
                 }
                 else
                 {
-                    $msg = "El producto seleccionado no ha sido encontrado";
+                    $msg = Alert::widget([
+                        'type' => Alert::TYPE_WARNING,
+                        'title' => 'Cuidado!',
+                        'icon' => 'fas fa-exclamation-circle',
+                        'body' => 'El producto no se encontro',
+                        'showSeparator' => true,
+                        'delay' => 2000
+                    ]);
                 }
             }
             else{
@@ -197,36 +211,38 @@ class SiteController extends Controller{
         $content = $this->renderPartial('pdf_StockGeneral',['dataProvider'=>$dataProvider]);
         $nombre = 'Stock General.pdf';
 
-        // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
             'mode' => Pdf::MODE_CORE,
-            // A4 paper format
             'format' => Pdf::FORMAT_A4,
-            // portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT, 
-            // stream to browser inline
             'destination' => Pdf::DEST_DOWNLOAD, 
             'content' => $content,
-            'cssInline' => '.w1{font-weight: bold}', 
-            // set mPDF properties on the fly
             'options' => ['title' => 'Stock general'],
-            // call mPDF methods on the fly
             'methods' => [ 
-                //'SetHeader'=>['..'], 
                 'SetFooter'=>['{PAGENO}'],
             ],
             'filename' => $nombre
         ]);
-        // return the pdf output as per the destination setting
         return $pdf->render();
     }
 
-    public function stock($row){
-            $datos = product::findOne(Yii::$app->request->post('editableKey'));
-            $datos->$row = $_POST['Product'][Yii::$app->request->post('editableIndex')][$row];
-            $datos->save();
-            $salida = ['output'=>'','message'=>''];
-            $out = Json::encode($salida);
-            return $this->redirect('index');
+
+    public function stock($row) {
+        $datos = product::findOne(Yii::$app->request->post('editableKey'));
+        if (isset($_POST['hasEditable'])) {
+
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            if ($datos->load($_POST)) {
+                $datos->$row = $_POST['Product'][Yii::$app->request->post('editableIndex')][$row];
+                $datos->save();
+                $salida = ['output'=>'','message'=>''];
+                $out = Json::encode($salida);
+                return ['output'=>$out, 'message'=>''];
+            }
+            else {
+                return ['output'=>'', 'message'=>''];
+            }
         }
     }
+}

@@ -1,7 +1,6 @@
 
 main > .container {
-    margin-top: 30px;
-    padding: 70px 15px 20px;
+    padding: 80px 70px 15px 20px;
 }
 
 .footer {
@@ -71,7 +70,7 @@ a.desc:after {
         display:block;
         text-align: left;
         width: 100%;
-        padding: 10px 0;
+        padding: 0 0;
     }
 }
 

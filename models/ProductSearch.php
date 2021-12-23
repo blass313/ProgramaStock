@@ -42,9 +42,7 @@ class ProductSearch extends Product
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>[
-                'attributes'=>['cod','name']
-            ],
+            'sort'=>false,
             'pagination' => [
                 'pageSize' => $pagination,
             ],

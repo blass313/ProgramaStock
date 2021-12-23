@@ -1,11 +1,15 @@
 <?php
     namespace app\controllers;
     use Yii;
+
+    use kartik\widgets\Alert;
+
     use yii\web\Controller;
     use yii\helpers\Html;
     use yii\filters\VerbFilter;
     use yii\filters\AccessControl;
     use yii\helpers\Url;
+
     use app\models\FacturacionSearch;
     use app\models\Facturacion;
 
@@ -37,13 +41,6 @@
 
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
-                    $datos = new facturacion();
-
-                    $datos->fecha = $model->fecha;
-                    $datos->ingreso = $model->ingreso;
-                    $datos->salida = $model->salida;
-                    $datos->personas = $model->personas;
-
                     $model = new facturacion();
                 }
             }
@@ -61,7 +58,7 @@
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);
             $model->delete();
-            return $this->redirect('facturacion/facturacion');
+            return $this->redirect('/facturacion');
         }//delete
 
         public function actionUpdate(){
@@ -80,16 +77,32 @@
                         $dato->salida = $model->salida;
                         $dato->personas = $model->personas;
 
-                        if ($dato->update()) {
-
-                                $msg = "El producto ha sido actualizado correctamente";
-
-                            }else{
-                                $msg = "El producto no ha podido ser actualizado";
-                            }
+                        if ($dato->update())
+                        {
+                        $msg =  Alert::widget([
+                                    'type' => Alert::TYPE_SUCCESS,
+                                    'title' => 'Carga Exitosa',
+                                    'icon' => 'fas fa-check-circle',
+                                    'body' => 'El items a sido modificado con exito',
+                                    'showSeparator' => true,
+                                    'delay' => 2000,
+                                    'options'=>['style'=>'display: block']
+                                ]);
+                        }
+                        else
+                        {
+                            $msg =  Alert::widget([
+                                        'type' => Alert::TYPE_DANGER,
+                                        'title' => 'Fallo al cargar los datos',
+                                        'icon' => 'fas fa-times-circle',
+                                        'body' => 'Algo salio mal y no se pudo cargar el producto',
+                                        'showSeparator' => true,
+                                        'delay' => 2000
+                                    ]);
                         }
                     }
                 }
+            }
 
                 if (Yii::$app->request->get('id')){
                     $id = Html::encode($_GET['id']);

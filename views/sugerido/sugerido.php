@@ -5,6 +5,7 @@
     use kartik\grid\GridView;
     use yii\helpers\Html;
     use yii\bootstrap4\Modal;
+    use kartik\dynagrid\DynaGrid;
 
     use app\models\Product;
 ?>
@@ -55,6 +56,7 @@
     'filterModel' => $searchModel,
     'pageSummaryPosition'=>GridView::POS_TOP,
     'showPageSummary' => true,
+    'floatHeader'=>true,
     'responsive'=>true,
     'showHeader'=>true,
     'columns'=>[
@@ -64,6 +66,7 @@
             'headerOptions' => ['style' => 'width:15%'],
             'width' => '120px',
             'hAlign' => 'center',
+            'pageSummary'=>'Monto Total',
         ],
         [
             'attribute'=>'description',
@@ -121,6 +124,7 @@
             'hAlign' => 'right',
             'format' => ['decimal', 2],
             'pageSummary' => true
-            ],
         ],
+        ['class'=>'kartik\grid\CheckboxColumn'],
+    ],
     ]);?>

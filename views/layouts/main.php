@@ -18,58 +18,64 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
+<div class="container-fluid">
 <?php $this->beginBody() ?>
 
-<header style="display: block;">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'registro', 'url' => ['/registro/registro']],
-            ['label' => 'sugerido', 'url' => ['/sugerido/sugerido']],
-            ['label' => 'Facturacion del dia', 'url' => ['/facturacion/facturacion']],
-            //['label' => 'Control de distribuidores', 'url' => ['/distribuidora/distribuidora']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-                )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+<header>
+    <div>
+        <?php
+        NavBar::begin([
+            'brandLabel' => Yii::$app->name,
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            ],
+        ]);
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav'],
+            'items' => [
+                ['label' => 'registro', 'url' => ['/registro/registro']],
+                ['label' => 'sugerido', 'url' => ['/sugerido/sugerido']],
+                ['label' => 'Facturacion del dia', 'url' => ['/facturacion/facturacion']],
+                //['label' => 'Control de distribuidores', 'url' => ['/distribuidora/distribuidora']],
+                Yii::$app->user->isGuest ? (
+                    ['label' => 'Login', 'url' => ['/site/login']]
+                ) : (
+                    '<li>'
+                    . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>'
+                    )
+            ],
+        ]);
+        NavBar::end();
+        ?>
+    </div>
 </header>
 
 <main role="main" class="flex-shrink-0">
-    <div class="container-fluid">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
+        <div style="padding-top: 70px;">
+            <?= $content ?>
+        </div>
 </main>
 
 <?php $this->endBody() ?>
+</div>
 </body>
 </html>
 <?php $this->endPage() ?>

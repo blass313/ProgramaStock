@@ -67,10 +67,10 @@
 <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        //'floatPageSummary' => true,
         'pageSummaryPosition'=>GridView::POS_TOP,
+        //'floatPageSummary' => true,
         'showPageSummary' => true,
+        'floatHeader' => true,
         //'headerOptions'=>['class'=>"table-info"],
         'columns'=>[
             [
@@ -167,14 +167,9 @@
                 'mergeHeader' => true,
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
-                'header'=> 'Accion',
-                'headerOptions'=>[
-                        'width'=>'50',
-                        'class' => 'table-info'
-                    ],
-                'template'=>'{update} // {delete}'
-            ],
+                'class' => '\kartik\grid\ActionColumn',
+                'headerOptions'=>['class'=>'table-info'],
+            ]
         ]
     ]);
 ?>

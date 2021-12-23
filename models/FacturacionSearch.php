@@ -16,7 +16,11 @@
             $query = Facturacion::find();
 
             $dataProvider = new ActiveDataProvider([
-                'query' => $query
+                'query' => $query,
+                'sort' => false,
+                'pagination' => [
+                    'pageSize' => false,
+                ],
             ]);
 
             $this->load($params);
@@ -33,8 +37,8 @@
                 'personas'=>$this->personas,
             ]);
 
-            $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            $query->andFilterWhere(['like', 'fecha:', $this->fecha]);
+                  
             return $dataProvider;
         }//search
     }//class
