@@ -12,9 +12,6 @@
 
     use app\models\Product;
 
-    use kartik\editable\Editable;
-    use kartik\dynagrid\DynaGrid;
-
     use kartik\grid\GridView;
 
     /* @var $this yii\web\View */
@@ -24,126 +21,134 @@
     <h1>Stock de Mercaderia</h1>
     <?php
         if (!Yii::$app->user->isGuest) {
-            
-            echo Html::a('Generar cambios','index',['class' => "btn btn-info btn-lg btn-block"]);
-            echo Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger btn-lg btn-block']);
-            Modal::begin([
-                'title' => '<h2>Crear producto</h2>',
-                'headerOptions' => ['id' => 'modalHeader'],
-                'id' => 'AltaBaja',
-                'size' => 'modal-lg',
-                'closeButton' => [
-                    'id'=>'close-button',
-                    'class'=>'close',
-                    'data-dismiss' =>'modal',
-                ],
-                'toggleButton' => [
-                    'label' => 'Crear producto','class' => "btn btn-success btn-lg btn-block"
-                ],
-                'clientOptions' => [
-                    'backdrop' => true, 'keyboard' => true,
-                ]
-            ]);
-    ?><!--Modal-->
-        <div class="product-form">
-            <?php 
-                $form = ActiveForm::begin([
-                            'enableClientValidation' => true,
-                            "action" => Url::toRoute("site/create"),
-                            'method' => 'post',
-                            ]);
-            ?>
-
-            <div class="form-row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'cod')->textInput() ?>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-                    </div>
-                </div>
-            </div><!--form row-->
-
-            <div class="form-row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'categoria')->textInput() ?>
-                    </div>
-                </div>
-            </div><!--form row-->
-
-            <div class="form-row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'stock')->textInput() ?>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'sugerido')->textInput() ?>
-                    </div>
-                </div>
-            </div><!--form row-->
-
-            <div class="form-row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'kg')->textInput() ?>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
-                    </div>
-                </div>
-            </div><!--form row-->
-
-            <div class="form-row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'porcentajekg')->textInput() ?>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
-                    </div>
-                </div>
-            </div><!--form row-->
-
-            <div class="form-group">
-                <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
-            </div>
-            <?php 
-                ActiveForm::end(); 
-            ?>
-        </div><!--product-form-->
-
-    <?php
-        Modal::end();
     ?>
+        <div class="form-row">
+            <div class="col-6">
+                <div class="form-group">
+                    <?= Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger btn-lg btn-block']); ?>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <?php
+                        Modal::begin([
+                            'title' => '<h2>Crear producto</h2>',
+                            'headerOptions' => ['id' => 'modalHeader'],
+                            'id' => 'AltaBaja',
+                            'size' => 'modal-lg',
+                            'closeButton' => [
+                                'id'=>'close-button',
+                                'class'=>'close',
+                                'data-dismiss' =>'modal',
+                            ],
+                            'toggleButton' => [
+                                'label' => 'Crear producto','class' => "btn btn-success btn-lg btn-block"
+                            ],
+                            'clientOptions' => [
+                                'backdrop' => true, 'keyboard' => true,
+                            ]
+                        ]);
+                    ?><!--Modal-->
+                        <div class="product-form">
+                            <?php 
+                                $form = ActiveForm::begin([
+                                            'enableClientValidation' => true,
+                                            "action" => Url::toRoute("site/create"),
+                                            'method' => 'post',
+                                            ]);
+                            ?>
+
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <?= $form->field($model, 'cod')->textInput() ?>
+                                        </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                                    </div>
+                                </div>
+                            </div><!--form row-->
+
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'categoria')->textInput() ?>
+                                    </div>
+                                </div>
+                            </div><!--form row-->
+
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'stock')->textInput() ?>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'sugerido')->textInput() ?>
+                                    </div>
+                                </div>
+                            </div><!--form row-->
+
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'kg')->textInput() ?>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
+                                    </div>
+                                </div>
+                            </div><!--form row-->
+
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'porcentajekg')->textInput() ?>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
+                                    </div>
+                                </div>
+                            </div><!--form row-->
+
+                            <div class="form-group">
+                                <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>
+                            </div>
+                            <?php 
+                                ActiveForm::end(); 
+                            ?>
+                        </div><!--product-form-->
+
+                    <?php
+                        Modal::end();
+                    ?>
+                </div>
+            </div>
+        </div>
     <div id="tabla">
-        <?php Pjax::begin(['id' => 'Product']) ?>
+        <?php Pjax::begin() ?>
         
         <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
-                'responsiveWrap'=>true,
+                'summary' => '',
                 'floatHeader'=>true,
-                'pjax'=>true,
-                'pjaxSettings'=>[
-                    'neverTimeout'=>true,
-                ],
+                'responsiveWrap'=>true,
+                'showHeader'=> true,
                 'options'=>[
                     'class' => "table table-md",
                 ],
@@ -165,7 +170,7 @@
                         'contentOptions'=>['class'=>'font-weight-bold'],
                         'options'=>['id'=>'product'],
                         'width' => '12%',
-                        //'mergeHeader' => $validar,
+                        'filter' => true,
                     ],
                     [
                         'attribute'=>'description',
@@ -174,7 +179,6 @@
                         'contentOptions'=>['class'=>'font-weight-bold'],
                         'width' => '10%',
                         'hAlign' => 'center',
-                        //'mergeHeader' => true,
                     ],
                     [
                         'label'=>'Kg',
@@ -192,7 +196,6 @@
                         'headerOptions'=>['class'=>'table-warning'],
                         'contentOptions'=>['class'=>'font-weight-bold'],
                         'width' => '12%',
-                        //'mergeHeader' => true,
                     ],
                     [
                         'format'=>'html',
@@ -211,13 +214,16 @@
                         'hAlign' => 'right',
                         'contentOptions'=>['style'=>'font-size: 20px; font-weight: bolder;'],
                         'editableOptions'=>[
-                                'header' => 'Stock', 
-                                'inputType' => \kartik\editable\Editable::INPUT_SPIN,
-                                'options' => [
-                                    'pluginOptions' => ['min' => 0, 'max' => 5000],
-                                    'class'=>'enviar'
+                            'header' => 'Stock', 
+                            'inputType' => \kartik\editable\Editable::INPUT_SPIN,
+                            'options' => [
+                                'pluginOptions' => [
+                                    'min' => 0, 
+                                    'max' => 5000,
                                 ],
-                            ]
+                            ],
+                            
+                        ],
                     ],                 
                     [
                         'attribute'=>'sugerido',
@@ -231,7 +237,7 @@
                             'header' => 'Sugerido', 
                             'inputType' => \kartik\editable\Editable::INPUT_SPIN,
                             'options' => [
-                                'pluginOptions' => ['min' => 0, 'max' => 5000],
+                                'pluginOptions' => ['min' => 0],
                             ],
                         ]
                     ],

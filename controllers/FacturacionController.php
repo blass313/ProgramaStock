@@ -36,7 +36,7 @@
             ];
         }
 
-        function actionFacturacion(){
+        function actionFacturacion($rows = null, $formFecha = null){
             $model = new facturacion();
 
             if ($model->load(Yii::$app->request->post())) {
@@ -44,7 +44,9 @@
                     $model = new facturacion();
                 }
             }
-            
+
+            $rows = $this->actionFacturacionMes();
+
             $searchModel = new FacturacionSearch();
         
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -52,13 +54,15 @@
                     'model'=>$model,
                     'dataProvider'=>$dataProvider,
                     'searchModel'=>$searchModel,
+                    "rows" => $rows,
+                    "formFecha" => $formFecha
                 ]);
         }
 
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);
             $model->delete();
-            return $this->redirect('/facturacion');
+            return $this->redirect(['facturacion']);
         }//delete
 
         public function actionUpdate(){
@@ -86,7 +90,6 @@
                                     'body' => 'El items a sido modificado con exito',
                                     'showSeparator' => true,
                                     'delay' => 2000,
-                                    'options'=>['style'=>'display: block']
                                 ]);
                         }
                         else
@@ -124,5 +127,17 @@
                     }
             return $this->render('update',['model'=>$model,'msg'=>$msg]);
         }//update
+
+        public function actionFacturacionMes()
+        {
+            $table = new Facturacion();
+            return $table->find()->all();
+        }
+
+        public function rangoFecha(){
+            $formFecha = new FacturacionSearch;
+
+            return $this->redirect(['facturacion','formFecha'=>$formFecha]);
+        }
     }//class
 ?>

@@ -42,7 +42,7 @@ class ProductSearch extends Product
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>false,
+            'sort' => ['attributes' => ['name']],
             'pagination' => [
                 'pageSize' => $pagination,
             ],
@@ -65,10 +65,7 @@ class ProductSearch extends Product
             'porcentajebolsa' => $this->porcentajebolsa,
             'name' => $this->name
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-                ->andFilterWhere(['like', 'description', $this->description]);
-
+        
         return $dataProvider;
     }
 }

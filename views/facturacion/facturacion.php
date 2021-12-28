@@ -6,72 +6,173 @@
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use kartik\date\DatePicker;
+    use yii\widgets\Pjax;
+    use kartik\daterange\DateRangePicker;
+    use yii\helpers\Url;
 
     $this->title = 'facturacion';
 ?>
 <h1>Facturacion</h1>
-<h3>Total de Caja:</h3>
-<?php
-    Modal::begin([
-        'title' => '<h2>Facturacion del dia</h2>',
-        'headerOptions' => ['id' => 'modalHeader'],
-        'id' => 'fecha',
-        'size' => 'modal-lg',
-        'closeButton' => [
-            'id'=>'close-button',
-            'class'=>'close',
-            'data-dismiss' =>'modal',
-        ],
-        'toggleButton' => [
-            'label' => 'Ingresar facturcion','class' => "btn btn-success"
-        ],
-    ]);
-        $form = ActiveForm::begin();?>
-        <div class="form-row">
-            <div class="col-6">
-                <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
-                    'options' => ['placeholder' => 'Fecha', 'autocomplete' => "off"],
-                    'type' => DatePicker::TYPE_INPUT,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                    ],
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy/mm/dd'
-                    ]
-                ]); ?>
-            </div>
-            <div class="col-6">
-                <?= $form->field($model, 'ingreso')->textInput(['type' => 'number']) ?>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col">
-                <?= $form->field($model, 'salida')->textInput(['type' => 'number']) ?>
-            </div>
-            <div class="col-6">
-                <?= $form->field($model, 'personas')->textInput(['type' => 'number']) ?>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="row">
-                <div class="col">
-                        <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>  
-                </div>
-            </div>
-        </div>
+
+<div class="form-row">
+    <div class="col-6">
+        <div class="form-group">
         <?php
-        ActiveForm::end();
-    Modal::end();
-?>
+            Modal::begin([
+                'title' => '<h2>Facturacion por mes</h2>',
+                'headerOptions' => ['id' => 'modalHeader'],
+                'id' => 'Mes',
+                'size' => 'modal-lg',
+                'closeButton' => [
+                    'id'=>'close-button',
+                    'class'=>'close',
+                    'data-dismiss' =>'modal',
+                ],
+                'toggleButton' => [
+                    'label' => 'Movimientos por rango','class'=>'btn btn-info btn-lg btn-block'
+                ],
+            ]);
+        ?>
+    <div class="form-group">
+        <div class="form-row">
+            <?php 
+                $fechas = ActiveForm::begin([
+                    "method" => "get",
+                    //"action" => Url::toRoute("facturacion/rangoFecha"),
+                    "enableClientValidation" => true,
+                ]);
+            ?>
+                        <div class="col-6">
+                            <?= $fechas->field($model, 'fecha')->widget(DatePicker::class, [
+                                'options' => ['placeholder' => 'Fecha', 'autocomplete' => "off"],
+                                'type' => DatePicker::TYPE_INPUT,
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                ],
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                    'format' => 'yyyy/mm/dd'
+                                ]
+                            ]);
+                            ?>
+                        </div>
+                        <div class="col-6">
+                            <?= $fechas->field($model, 'fecha')->widget(DatePicker::class, [
+                                'options' => ['placeholder' => 'Fecha', 'autocomplete' => "off"],
+                                'type' => DatePicker::TYPE_INPUT,
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                ],
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                    'format' => 'yyyy/mm/dd'
+                                ]
+                            ]);
+                            ?>
+                        </div>
+                    </div>
+                    <?= Html::submitButton("Buscar", ["class" => "btn btn-primary"]) ?>
+                
+                <?php ActiveForm::end(); ?>
+                </div>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Ingreso</th>
+                    <th>Salida</th>
+                    <th>Personas</th>
+                    <th>Ganancia</th>
+                    <th>Caja</th>
+                    
+                </tr>
+                <?php
+                    foreach($rows as $row):
+                ?>
+                    <tr>
+                        <td><?=$row->fecha;?></td>
+                        <td><?=$row->ingreso;?></td>
+                        <td><?=$row->salida;?></td>
+                        <td><?=$row->personas;?></td>
+                    </tr>
+                <?php
+                    endforeach;
+                ?>
+            </table>
+        <?php
+            Modal::end();
+        ?>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            <?php
+                Modal::begin([
+                    'title' => '<h2>Facturacion del dia</h2>',
+                    'headerOptions' => ['id' => 'modalHeader'],
+                    'id' => 'fecha',
+                    'size' => 'modal-lg',
+                    'closeButton' => [
+                        'id'=>'close-button',
+                        'class'=>'close',
+                        'data-dismiss' =>'modal',
+                    ],
+                    'toggleButton' => [
+                        'label' => 'Ingresar facturacion','class'=>'btn btn-danger btn-lg btn-block'
+                    ],
+                ]);
+                    $form = ActiveForm::begin();?>
+                    <div class="form-row">
+                        <div class="col-6">
+                            <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
+                                'options' => ['placeholder' => 'Fecha', 'autocomplete' => "off"],
+                                'type' => DatePicker::TYPE_INPUT,
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                ],
+                                'pluginOptions' => [
+                                    'autoclose' => true,
+                                    'format' => 'yyyy/mm/dd'
+                                ]
+                            ]); ?>
+                        </div>
+                        <div class="col-6">
+                            <?= $form->field($model, 'ingreso')->textInput(['type' => 'number']) ?>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <?= $form->field($model, 'salida')->textInput(['type' => 'number']) ?>
+                        </div>
+                        <div class="col-6">
+                            <?= $form->field($model, 'personas')->textInput(['type' => 'number']) ?>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="row">
+                            <div class="col">
+                                    <?= Html::submitButton('Cargar', ['class' => 'btn btn-success']) ?>  
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    ActiveForm::end();
+                Modal::end();
+            ?>
+        </div>
+    </div>
+</div>
+
+<div id="tabla">
+<?php Pjax::begin() ?>
 <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'summary' => '',
+        'floatHeader'=>true,
         'pageSummaryPosition'=>GridView::POS_TOP,
-        //'floatPageSummary' => true,
         'showPageSummary' => true,
         'floatHeader' => true,
-        //'headerOptions'=>['class'=>"table-info"],
         'columns'=>[
             [
                 'class'=>'kartik\grid\SerialColumn',
@@ -85,16 +186,16 @@
             [
                 'attribute'=>'fecha',
                 'label'=>'fecha',
-                //'format' => ['date', 'php: yyyy/mm/dd'],
-                'filter'=> DatePicker::widget([
-                    'name' => 'fecha',
-                    'type' => DatePicker::TYPE_INPUT,
-                    'readonly' => true,
+                'filter' => DatePicker::widget([
+                    'model'=>$searchModel,
+                    'attribute'=>'fecha',
                     'pluginOptions' => [
-                        'autoclose' => false,
-                        'format' => 'yyyy/mm/dd'
-                    ],
+                        'autoclose' => true,
+                        'format' => 'yyyy/mm/dd',
+                        'autocomplete'=>'off'
+                    ]
                 ]),
+                'format' => 'html',
                 'headerOptions' => ['class' => 'table-info'],
             ],
             [
@@ -110,7 +211,6 @@
                 'hAlign' => 'right',
                 'format'=>['decimal',2],
                 'headerOptions' => ['class' => 'table-info'],
-                'mergeHeader' => true,
             ],
             [
                 'attribute'=>'salida',
@@ -139,9 +239,9 @@
                 'headerOptions' => ['style' => 'width:15%'],
                 'pageSummary' => true,
                 'hAlign' => 'right',
-                'format'=>['decimal',2],
+                'format'=>['decimal',0],
                 'headerOptions' => ['class' => 'table-info'],
-                'mergeHeader' => true,
+                //'mergeHeader' => true,
             ],
             [
                 'label'=>'Ganancias',
@@ -173,3 +273,5 @@
         ]
     ]);
 ?>
+<?php Pjax::end() ?>
+</div>

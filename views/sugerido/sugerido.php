@@ -12,7 +12,7 @@
     <div>
         <h1>Sugerido</h1>
     </div>
-    
+    <div class="form-group">
     <?php
         Modal::begin([
             'title' => '<h2>Exportar a PDF</h2>',
@@ -49,15 +49,17 @@
     <?php
         Modal::end();
     ?>
+    </div>
+<div id="tabla">
 
 <?=
     GridView::widget([
     'dataProvider' =>$dataProvider,
     'filterModel' => $searchModel,
     'pageSummaryPosition'=>GridView::POS_TOP,
+    'summary' => '',
     'showPageSummary' => true,
     'floatHeader'=>true,
-    'responsive'=>true,
     'showHeader'=>true,
     'columns'=>[
         [
@@ -83,22 +85,6 @@
             'width' => '120px',
             'hAlign' => 'center',
         ],
-        /*
-        [
-            'attribute'=>'stock',
-            'headerOptions' => ['style' => 'width:15%'],
-            'mergeHeader' => true,
-            'width' => '100px',
-            'hAlign' => 'center',
-        ],                      
-        [
-            'attribute'=>'sugerido',
-            'headerOptions' => ['style' => 'width:15%'],
-            'mergeHeader' => true,
-            'width' => '100px',
-            'hAlign' => 'center',
-        ],
-        */
         [
             'label'=>'diferencia',
             'value'=>$dif = function($model){
@@ -128,3 +114,4 @@
         ['class'=>'kartik\grid\CheckboxColumn'],
     ],
     ]);?>
+</div>

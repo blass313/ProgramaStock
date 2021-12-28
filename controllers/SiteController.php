@@ -57,9 +57,8 @@ class SiteController extends Controller{
         $model = new Product();
 
         if (Yii::$app->request->post('hasEditable')) {
-                $this->stock(Yii::$app->request->post('editableAttribute'));
-                $model = new Product();
-            }
+            $this->stock(Yii::$app->request->post('editableAttribute'));
+        }
 
         $searchModel = new ProductSearch();
 
@@ -75,7 +74,7 @@ class SiteController extends Controller{
         $model = new Product();
 		
         if ($model->load(Yii::$app->request->post()) && $model->save()){
-            $model = new Product(); //reset model
+            $model = new Product();
             }else {
                 $model->getErrors();
             }
@@ -86,7 +85,7 @@ class SiteController extends Controller{
         $model = Product::findOne($id);
 
 		$model->delete();
-        return $this->redirect('index');
+        return $this->redirect(['index']);
     }//delete
 
     public function actionUpdate(){
@@ -226,11 +225,9 @@ class SiteController extends Controller{
         return $pdf->render();
     }
 
-
     public function stock($row) {
         $datos = product::findOne(Yii::$app->request->post('editableKey'));
         if (isset($_POST['hasEditable'])) {
-
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
             if ($datos->load($_POST)) {

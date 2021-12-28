@@ -1,4 +1,8 @@
-
+#tabla{
+    overflow: scroll; 
+    height: 550px;
+    position:absolute;
+}
 main > .container {
     padding: 80px 70px 15px 20px;
 }
