@@ -139,8 +139,6 @@
             </div>
         </div>
     <div id="tabla">
-        <?php Pjax::begin() ?>
-        
         <?=
             GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -174,7 +172,7 @@
                     ],
                     [
                         'attribute'=>'description',
-                        'filter'=>ArrayHelper::map(product::find()->all(), "description","description"),
+                        //'filter'=>ArrayHelper::map(product::find()->all(), "description","description"),
                         'headerOptions'=>['class'=>'table-warning'],
                         'contentOptions'=>['class'=>'font-weight-bold'],
                         'width' => '10%',
@@ -320,7 +318,6 @@
                 ],
             ]);
         ?>
-        <?php Pjax::end() ?>
     </div>
     <?php
         }

@@ -3,7 +3,6 @@ $(document).ready(function() {
         e.preventDefault();
         $('#w1-filters').toggle();
     });
-
     function calculateDifference (popOver, rowIndex, diferenciaTd) {
         const input = $(popOver.find('input.kv-editable-input'));
         const inputType = input.attr('id').split('-')[2];
@@ -32,4 +31,25 @@ $(document).ready(function() {
             calculateDifference(popOver, rowIndex, diferenciaTd);
         });
     });
+/*
+    $('#busquedaFecha').submit(function (e) { 
+        e.preventDefault();
+            var data = $(this).serializeArray();
+            /*
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                data: data
+            })
+            .done(function(response) {
+                if (response.data.success == true) {
+                    alert("Wow you commented");
+                }
+            })
+            .fail(function() {
+                console.log("error");
+            });
+    });*/
 });

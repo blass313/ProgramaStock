@@ -7,6 +7,8 @@
     
     class FacturacionSearch extends Facturacion
     {
+        public $fechaDesde;
+        public $fechaHasta;
 
         public function rules()
         {

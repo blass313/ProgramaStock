@@ -37,15 +37,20 @@
         }
 
         function actionFacturacion($rows = null, $formFecha = null){
-            $model = new facturacion();
+            $model = new facturacion;
+            $formFecha = new FacturacionSearch;
 
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
                     $model = new facturacion();
                 }
             }
-
-            $rows = $this->actionFacturacionMes();
+            
+            if(!empty($formFecha->load(Yii::$app->request->get()))){
+                $rows = $this->actionSearchMes($model,$formFecha);
+            }else {
+                $rows = $this->actionFacturacionMes();
+            }
 
             $searchModel = new FacturacionSearch();
         
@@ -134,10 +139,22 @@
             return $table->find()->all();
         }
 
-        public function rangoFecha(){
-            $formFecha = new FacturacionSearch;
-
-            return $this->redirect(['facturacion','formFecha'=>$formFecha]);
+        public function actionSearchMes($model,$formFecha){
+            if ($formFecha->validate()){
+                $desde = Html::encode($formFecha->fechaDesde);
+                $hasta = Html::encode($formFecha->fechaHasta);
+                if (!empty($desde) && !empty($hasta)) {
+                    $query = "SELECT * FROM facturacion WHERE fecha BETWEEN '$desde' AND '$hasta'";
+                    return $model->findBySql($query)->all();
+                }else {
+                    $query = "SELECT * FROM facturacion";
+                    return $model->findBySql($query)->asArray()->all();;
+                }
+                
+            }else{
+                $formFecha->getErrors();
+            }
+            
         }
     }//class
 ?>
