@@ -31,25 +31,4 @@ $(document).ready(function() {
             calculateDifference(popOver, rowIndex, diferenciaTd);
         });
     });
-/*
-    $('#busquedaFecha').submit(function (e) { 
-        e.preventDefault();
-            var data = $(this).serializeArray();
-            /*
-            var url = $(this).attr('action');
-            $.ajax({
-                url: url,
-                type: 'get',
-                dataType: 'json',
-                data: data
-            })
-            .done(function(response) {
-                if (response.data.success == true) {
-                    alert("Wow you commented");
-                }
-            })
-            .fail(function() {
-                console.log("error");
-            });
-    });*/
 });

@@ -36,22 +36,14 @@
             ];
         }
 
-        function actionFacturacion($rows = null, $formFecha = null){
+        function actionFacturacion(){
             $model = new facturacion;
-            $formFecha = new FacturacionSearch;
 
             if ($model->load(Yii::$app->request->post())) {
                 if ($model->save()) {
                     $model = new facturacion();
                 }
             }
-            
-            if(!empty($formFecha->load(Yii::$app->request->get()))){
-                $rows = $this->actionSearchMes($model,$formFecha);
-            }else {
-                $rows = $this->actionFacturacionMes();
-            }
-
             $searchModel = new FacturacionSearch();
         
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -59,6 +51,21 @@
                     'model'=>$model,
                     'dataProvider'=>$dataProvider,
                     'searchModel'=>$searchModel,
+                ]);
+        }
+
+        public function actionRangofacturacion($rows = null, $formFecha = null){
+            $model = new facturacion;
+            $formFecha = new FacturacionSearch;
+
+            if(!empty($formFecha->load(Yii::$app->request->get()))){
+                $rows = $this->actionSearchMes($model,$formFecha);
+            }else {
+                $rows = $this->actionFacturacionMes();
+            }
+            return $this->render(
+                '/facturacion/Rangofacturacion',
+                [    
                     "rows" => $rows,
                     "formFecha" => $formFecha
                 ]);
@@ -133,14 +140,13 @@
             return $this->render('update',['model'=>$model,'msg'=>$msg]);
         }//update
 
-        public function actionFacturacionMes()
-        {
+        public function actionFacturacionMes(){
             $table = new Facturacion();
             return $table->find()->all();
         }
 
         public function actionSearchMes($model,$formFecha){
-            if ($formFecha->validate()){
+        if ($formFecha->validate()){
                 $desde = Html::encode($formFecha->fechaDesde);
                 $hasta = Html::encode($formFecha->fechaHasta);
                 if (!empty($desde) && !empty($hasta)) {
@@ -154,7 +160,6 @@
             }else{
                 $formFecha->getErrors();
             }
-            
         }
     }//class
 ?>

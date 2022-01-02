@@ -41,9 +41,10 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav'],
             'items' => [
-                ['label' => 'registro', 'url' => ['/registro/registro']],
-                ['label' => 'sugerido', 'url' => ['/sugerido/sugerido']],
-                ['label' => 'Facturacion del dia', 'url' => ['/facturacion/facturacion']],
+                ['label' => 'REGISTRO', 'url' => ['/registro/registro']],
+                ['label' => 'SUGERIDO', 'url' => ['/sugerido/sugerido']],
+                ['label' => 'FACTURACION POR DIA', 'url' => ['/facturacion/facturacion']],
+                ['label' => 'FACTURACION POR RANGO', 'url' => ['/facturacion/rangofacturacion']],
                 //['label' => 'Control de distribuidores', 'url' => ['/distribuidora/distribuidora']],
                 Yii::$app->user->isGuest ? (
                     ['label' => 'Login', 'url' => ['/site/login']]

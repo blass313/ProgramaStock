@@ -24,10 +24,13 @@
         }
 
         public function search($params){
-            $query = Facturacion::find();
+            $query = Facturacion::find()->orderBy(['fecha'=>SORT_DESC]);
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
+                'pagination' => [
+                    'pageSize' => false,
+                ],
             ]);
     
             $this->load($params);
