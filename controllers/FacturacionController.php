@@ -71,6 +71,29 @@
                 ]);
         }
 
+        public function actionResumenmes(){
+            $model = new facturacion;
+            $model2 = new FacturacionSearch();
+            if(!empty($model2->load(Yii::$app->request->get()))){
+                $año = Html::encode($model2->año);
+
+                $query = "SELECT MONTH(Fecha) AS Mes, YEAR(Fecha) AS Ano, fecha, SUM(ingreso) AS ingreso, SUM(salida) AS salida,SUM(personas) AS personas FROM facturacion WHERE YEAR(Fecha) = '$año' GROUP BY Mes, Ano ORDER BY fecha";
+                $row = $model->findBySql($query)->asArray()->all();
+    
+                $query2 = "SELECT * FROM facturacion";
+                $row2 = $model->findBySql($query2)->asArray()->all();
+
+                return $this->render('/facturacion/resumenmes',['row'=>$row, 'row2'=>$row2,'model'=>$model,'model2'=>$model2]);                
+            }else {
+                $query = "SELECT MONTH(Fecha) AS Mes, YEAR(Fecha) AS Ano, fecha, SUM(ingreso) AS ingreso, SUM(salida) AS salida,SUM(personas) AS personas FROM facturacion GROUP BY Mes, Ano ORDER BY fecha";
+                $row = $model->findBySql($query)->asArray()->all();
+    
+                $query2 = "SELECT * FROM facturacion";
+                $row2 = $model->findBySql($query2)->asArray()->all();
+                return $this->render('/facturacion/resumenmes',['row'=>$row, 'row2'=>$row2,'model'=>$model,'model2'=>$model2]);
+            }
+        }
+
         public function actionDelete($id = null){
             $model = facturacion::findOne($id);
             $model->delete();
@@ -146,7 +169,8 @@
         }
 
         public function actionSearchMes($model,$formFecha){
-        if ($formFecha->validate()){
+        
+            if ($formFecha->validate()){
                 $desde = Html::encode($formFecha->fechaDesde);
                 $hasta = Html::encode($formFecha->fechaHasta);
                 if (!empty($desde) && !empty($hasta)) {
@@ -154,7 +178,7 @@
                     return $model->findBySql($query)->all();
                 }else {
                     $query = "SELECT * FROM facturacion";
-                    return $model->findBySql($query)->asArray()->all();;
+                    return $model->findBySql($query)->asArray()->all();
                 }
                 
             }else{

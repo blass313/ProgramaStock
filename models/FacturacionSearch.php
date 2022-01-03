@@ -9,12 +9,13 @@
     {
         public $fechaDesde;
         public $fechaHasta;
+        public $año;
 
         public function rules()
         {
             return [
                 [['id', 'ingreso', 'salida', 'personas'], 'integer'],
-                [['fecha','fechaDesde','fechaHasta'], 'safe'],
+                [['fecha','fechaDesde','fechaHasta','año'], 'safe'],
                 
             ];
         }

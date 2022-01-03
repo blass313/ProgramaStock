@@ -11,7 +11,7 @@ class Facturacion extends \yii\db\ActiveRecord
     public function rules()
     {
         return[
-            [['fecha'],'required','message' => 'campo requerido'],
+            [['fecha','año'],'required','message' => 'campo requerido'],
             [['ingreso','salida','personas'],'double','message' => 'Solo permite numeros']
         ];
     }
@@ -21,7 +21,8 @@ class Facturacion extends \yii\db\ActiveRecord
             'fecha'=>'Fecha:',
             'ingreso'=>'Ingreso:',
             'salida'=>'Salida:',
-            'personas'=>'Personas:'
+            'personas'=>'Personas:',
+            'año'=>'año:'
         ];
     }
 }

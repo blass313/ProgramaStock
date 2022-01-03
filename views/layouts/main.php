@@ -45,6 +45,7 @@ AppAsset::register($this);
                 ['label' => 'SUGERIDO', 'url' => ['/sugerido/sugerido']],
                 ['label' => 'FACTURACION POR DIA', 'url' => ['/facturacion/facturacion']],
                 ['label' => 'FACTURACION POR RANGO', 'url' => ['/facturacion/rangofacturacion']],
+                ['label' => 'RESUMEN DEL MES', 'url' => ['/facturacion/resumenmes']],
                 //['label' => 'Control de distribuidores', 'url' => ['/distribuidora/distribuidora']],
                 Yii::$app->user->isGuest ? (
                     ['label' => 'Login', 'url' => ['/site/login']]

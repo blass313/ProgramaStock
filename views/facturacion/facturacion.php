@@ -9,7 +9,7 @@
 
     $this->title = 'facturacion';
 ?>
-<h1>Facturacion</h1>
+<h1>Facturacion por dia</h1>
 <div>
     <div class="form-row">
         <div class="col-4">
