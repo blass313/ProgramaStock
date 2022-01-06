@@ -19,28 +19,13 @@ class ProductSearch extends Product
     public function scenarios(){
         return Model::scenarios();
     }
-
-    public function search($params,$section = null,$pdfFilter = null){
-        
-        if ($section == 'sugerido') {
-            $query = Product::find()->where('stock < sugerido');
-            $pagination = false;
-        }elseif($section == 'pdf'){
-            $query = Product::find()
-                    ->where('stock < sugerido')
-                    ->andWhere(['categoria'=>$pdfFilter])
-                    ->orderBy(['name'=>SORT_ASC]);
-            $pagination = false;
-        }elseif($section == 'general'){
+    
+    public function searchGeneral($params){
             $query = Product::find()->orderBy(['name'=>SORT_ASC]);
             $pagination = false;
-        }else{
-            $query = Product::find()->orderBy(['name'=>SORT_ASC]);
-            $pagination = false;
-        }
         
 
-        $dataProvider = new ActiveDataProvider([
+        $dataGeneral = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['attributes' => ['name']],
             'pagination' => [
@@ -50,7 +35,7 @@ class ProductSearch extends Product
         $this->load($params);
 
         if (!$this->validate()) {
-            return $dataProvider;
+            return $dataGeneral;
         }
 
         $query->andFilterWhere([
@@ -66,6 +51,6 @@ class ProductSearch extends Product
             'name' => $this->name
         ]);
         
-        return $dataProvider;
+        return $dataGeneral;
     }
 }

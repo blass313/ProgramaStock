@@ -7,7 +7,6 @@
     use yii\bootstrap4\Modal;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
-    use yii\widgets\Pjax;
     use yii\helpers\Url;
 
     use app\models\Product;
@@ -25,7 +24,7 @@
         <div class="form-row">
             <div class="col-6">
                 <div class="form-group">
-                    <?= Html::a('Generar PDF', ['pdf'],['class'=>'btn btn-danger btn-lg btn-block']); ?>
+                    <?= Html::a('Generar PDF', ['generalpdf'],['class'=>'btn btn-danger btn-lg btn-block']); ?>
                 </div>
             </div>
             <div class="col-6">
@@ -61,13 +60,13 @@
                                 <div class="form-row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <?= $form->field($model, 'cod')->textInput() ?>
+                                            <?= $form->field($modelProduct, 'cod')->textInput() ?>
                                         </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                                        <?= $form->field($modelProduct, 'name')->textInput(['maxlength' => true]) ?>
                                     </div>
                                 </div>
                             </div><!--form row-->
@@ -75,25 +74,12 @@
                             <div class="form-row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'description')->textarea(['rows' => 1]) ?>
+                                        <?= $form->field($modelProduct, 'description')->textarea(['rows' => 1]) ?>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'categoria')->textInput() ?>
-                                    </div>
-                                </div>
-                            </div><!--form row-->
-
-                            <div class="form-row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <?= $form->field($model, 'stock')->textInput() ?>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <?= $form->field($model, 'sugerido')->textInput() ?>
+                                        <?= $form->field($modelProduct, 'categoria')->textInput() ?>
                                     </div>
                                 </div>
                             </div><!--form row-->
@@ -101,12 +87,12 @@
                             <div class="form-row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'kg')->textInput() ?>
+                                        <?= $form->field($modelProduct, 'stock')->textInput() ?>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'precio_bolsa')->textInput() ?>
+                                        <?= $form->field($modelProduct, 'sugerido')->textInput() ?>
                                     </div>
                                 </div>
                             </div><!--form row-->
@@ -114,12 +100,25 @@
                             <div class="form-row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'porcentajekg')->textInput() ?>
+                                        <?= $form->field($modelProduct, 'kg')->textInput() ?>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <?= $form->field($model, 'porcentajebolsa')->textInput() ?>
+                                        <?= $form->field($modelProduct, 'precio_bolsa')->textInput() ?>
+                                    </div>
+                                </div>
+                            </div><!--form row-->
+
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($modelProduct, 'porcentajekg')->textInput() ?>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <?= $form->field($modelProduct, 'porcentajebolsa')->textInput() ?>
                                     </div>
                                 </div>
                             </div><!--form row-->
@@ -141,8 +140,8 @@
     <div id="tabla">
         <?=
             GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
+                'dataProvider' => $dataGeneral,
+                'filterModel' => $searchGeneralModel,
                 'summary' => '',
                 'floatHeader'=>true,
                 'responsiveWrap'=>true,
@@ -150,8 +149,8 @@
                 'options'=>[
                     'class' => "table table-md",
                 ],
-                'rowOptions' => function ($model, $index, $widget, $grid){
-                    if($model->stock == 0 ){
+                'rowOptions' => function ($modelProduct, $index, $widget, $grid){
+                    if($modelProduct->stock == 0 ){
                         return ['style' => 'background-color: rgba(255, 0, 0, 0.2)'];
                     }else {
                         return ['style' => 'background-color: rgba(0, 255, 0, 0.2)'];
@@ -198,11 +197,11 @@
                     [
                         'format'=>'html',
                         'attribute'=>'stock',
-                        'value'=>function($model){
-                                    if (empty($model['stock'])) {
+                        'value'=>function($modelProduct){
+                                    if (empty($modelProduct['stock'])) {
                                         return 0;
                                     }else {
-                                        return $model['stock'];
+                                        return $modelProduct['stock'];
                                     }
                                 },
                         'class'=>'kartik\grid\EditableColumn',
@@ -241,12 +240,12 @@
                     ],
                     [
                         'label'=>'diferencia',
-                        'value'=>$dif = function($model){
-                                            $diferencia = $model['sugerido']-$model['stock'];
+                        'value'=>$dif = function($modelProduct){
+                                            $diferencia = $modelProduct['sugerido']-$modelProduct['stock'];
                                             return $diferencia;
                                         },
-                        'contentOptions' =>function($model){
-                            $diferencia = $model['sugerido']-$model['stock'];
+                        'contentOptions' =>function($modelProduct){
+                            $diferencia = $modelProduct['sugerido']-$modelProduct['stock'];
                             if ($diferencia <= 0) {
                                 return ['style' => 'color: green; font-size: 20px; font-weight: bolder;'];
                             }else{
@@ -271,10 +270,10 @@
                     ],
                     [
                         'label'=>'Precio por Kg',
-                        'value'=>function($model){
-                                $porcentaje = $model['porcentajekg'];
-                                $precio = $model['precio_bolsa'];
-                                $stock = $model['kg'];
+                        'value'=>function($modelProduct){
+                                $porcentaje = $modelProduct['porcentajekg'];
+                                $precio = $modelProduct['precio_bolsa'];
+                                $stock = $modelProduct['kg'];
                                 if ($porcentaje != 0) {
                                     if ($stock != 0) {
                                         $total = ((($precio*$porcentaje)/100)+$precio)/$stock;
@@ -298,9 +297,9 @@
                     ],
                     [
                         'label'=>'Precio por bolsa',
-                        'value'=>function($model){
-                                    $porcentaje = $model['porcentajebolsa'];
-                                    $precio = $model['precio_bolsa'];
+                        'value'=>function($modelProduct){
+                                    $porcentaje = $modelProduct['porcentajebolsa'];
+                                    $precio = $modelProduct['precio_bolsa'];
                                     $total = (($precio*$porcentaje)/100)+$precio;
                                     return round($total);
                         },

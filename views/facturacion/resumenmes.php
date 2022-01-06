@@ -3,8 +3,7 @@
 
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
-    use kartik\date\DatePicker;
-
+    
     $this->title = 'Resumen por meses';
 ?>
 <?php
@@ -17,9 +16,10 @@
         <div class="form-row">
             <div class="col-4">
                 <?= 
-                    $año->field($model2,'año')->textInput([
+                    $año->field($modelAño,'año')->textInput([
                         'type' => 'number',
-                        'min' => 2018
+                        'min' => 2018,
+                        'placeholder' => "Ingrese el año.."
                    ])->label(false);
                 ?>
             </div>
@@ -58,27 +58,26 @@
             <td> $
                 <?php
                     $totalGanancia = null;
-                    foreach ($row2 as $rows) {
-                        $fecha2 = strtotime($rows['fecha']);
-                        if (date('m',$fecha2) == date('m',$fecha)) {
-                            $gananciaDia = ($rows['ingreso']*30)/100;
+                    foreach ($rowFilters as $rowFilter):
+                        $dateFilter = strtotime($rowFilter['fecha']);
+                        if (date('m',$dateFilter) == date('m',$fecha) && date('y',$dateFilter) == date('y',$fecha)) {
+                            $gananciaDia = ($rowFilter['ingreso']*30)/100;
                             $totalGanancia +=$gananciaDia;
                         }
-                    }
+                    endforeach;
                     echo number_format($totalGanancia, 2, '.', ',');
                 ?>
             </td>
             <td> $
                 <?php
                     $totalCaja = null;
-                    $fecha2 = strtotime($rows['fecha']);
-                    foreach ($row2 as $rows) {
-                        $fecha2 = strtotime($rows['fecha']);
-                        if (date('m',$fecha2) == date('m',$fecha)) {
-                            $gananciaDia = $rows['ingreso']-round(($rows['ingreso']*30)/100)-$rows['salida'];
+                    foreach ($rowFilters as $rowFilter):
+                        $dateFilter = strtotime($rowFilter['fecha']);
+                        if (date('m',$dateFilter) == date('m',$fecha) && date('y',$dateFilter) == date('y',$fecha)) {
+                            $gananciaDia = $rowFilter['ingreso']-round(($rowFilter['ingreso']*30)/100)-$rowFilter['salida'];
                             $totalCaja +=$gananciaDia;
                         }
-                    }
+                    endforeach;
                     echo number_format($totalCaja, 2, '.', ',');
                 ?>
             </td>

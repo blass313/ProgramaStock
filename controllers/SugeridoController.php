@@ -1,13 +1,12 @@
 <?php
     namespace app\controllers;
 
-use app\models\Product;
-use Yii;
+    use Yii;
     use yii\filters\AccessControl;
     use yii\web\Controller;
     use yii\filters\VerbFilter;
     use kartik\mpdf\Pdf;
-    use app\models\ProductSearch;
+    use app\models\SugeridoSearch;
 
 
 class SugeridoController extends Controller {
@@ -33,23 +32,22 @@ class SugeridoController extends Controller {
         ];
     }
     
-    public function actionSugerido($filtro = null){
-        $section = 'sugerido';
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section);
+    public function actionSugerido(){
+        $searchSugeridoModel = new SugeridoSearch();
+        $dataSugerido = $searchSugeridoModel->searchSugerido(Yii::$app->request->queryParams);
+
         return $this->render("/sugerido/sugerido", [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'filtro'=>$filtro,
+            'searchSugeridoModel' => $searchSugeridoModel,
+            'dataSugerido' => $dataSugerido,
         ]);
     }
 
-    public function actionPdf($filtro = null, $sector = null){
-                $filtro = $_GET['proveedor'];
-                $section = 'pdf';
-                $searchModel = new ProductSearch();
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
-                $content = $this->renderPartial('pdf_view',['dataProvider'=>$dataProvider,'proveedor'=>$filtro]);
+    public function actionSugeridopdf($filtro = null){
+                $filtro = Yii::$app->request->get('proveedor');
+                //$section = 'pdf';
+                $searchSugeridopdf = new SugeridoSearch();
+                $dataPdf = $searchSugeridopdf->searchSugeridopdf(Yii::$app->request->queryParams,$filtro);
+                $content = $this->renderPartial('pdf_view',['dataPdf'=>$dataPdf,'proveedor'=>$filtro]);
                 $nombre = 'Pedido lo de lalo para '.$filtro.'.pdf';
 
             // setup kartik\mpdf\Pdf component
@@ -74,6 +72,6 @@ class SugeridoController extends Controller {
             ]);
             // return the pdf output as per the destination setting
             return $pdf->render();
-        }
+    }
 }
 ?>

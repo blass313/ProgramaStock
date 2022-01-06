@@ -6,6 +6,8 @@
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
     use kartik\date\DatePicker;
+    
+    use yii\helpers\Url;
 
     $this->title = 'facturacion';
 ?>
@@ -31,11 +33,14 @@
                     ]);
                 ?>
                     <?php
-                        $form = ActiveForm::begin();
+                        $form = ActiveForm::begin([
+                            "action" => Url::toRoute("facturacion/create"),
+                            'method' => 'post',
+                        ]);
                     ?>
                     <div class="form-row">
                         <div class="col-6">
-                            <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
+                            <?= $form->field($modelFacturacion, 'fecha')->widget(DatePicker::class, [
                                 'options' => ['placeholder' => 'Fecha', 'autocomplete' => "off"],
                                 'type' => DatePicker::TYPE_INPUT,
                                 'pluginOptions' => [
@@ -48,15 +53,15 @@
                             ]); ?>
                         </div>
                         <div class="col-6">
-                            <?= $form->field($model, 'ingreso')->textInput(['type' => 'number']) ?>
+                            <?= $form->field($modelFacturacion, 'ingreso')->textInput(['type' => 'number']) ?>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col">
-                            <?= $form->field($model, 'salida')->textInput(['type' => 'number']) ?>
+                            <?= $form->field($modelFacturacion, 'salida')->textInput(['type' => 'number']) ?>
                         </div>
                         <div class="col-6">
-                            <?= $form->field($model, 'personas')->textInput(['type' => 'number']) ?>
+                            <?= $form->field($modelFacturacion, 'personas')->textInput(['type' => 'number']) ?>
                         </div>
                     </div>
                     <div class="form-row">
@@ -80,8 +85,8 @@
 <div>
     <?=
         GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
+            'dataProvider' => $dataFacturacion,
+            'filterModel' => $searchFacturacionModel,
             'summary' => '',
             'floatHeader'=>true,
             'pageSummaryPosition'=>GridView::POS_TOP,
@@ -101,7 +106,7 @@
                     'attribute'=>'fecha',
                     'label'=>'fecha',
                     'filter' => DatePicker::widget([
-                        'model'=>$searchModel,
+                        'model'=>$searchFacturacionModel,
                         'attribute'=>'fecha',
                         'pluginOptions' => [
                             'autoclose' => true,
@@ -114,9 +119,9 @@
                 ],
                 [
                     'attribute'=>'ingreso',
-                    'value'=>function($model){
-                        if ($model['ingreso'] != 0) {
-                            return $model['ingreso'];
+                    'value'=>function($modelFacturacion){
+                        if ($modelFacturacion['ingreso'] != 0) {
+                            return $modelFacturacion['ingreso'];
                         }else{
                             return 0;
                         } 
@@ -128,9 +133,9 @@
                 ],
                 [
                     'attribute'=>'salida',
-                    'value'=>function($model){
-                        if ($model['salida'] != 0) {
-                            return $model['salida'];
+                    'value'=>function($modelFacturacion){
+                        if ($modelFacturacion['salida'] != 0) {
+                            return $modelFacturacion['salida'];
                         }else{
                             return 0;
                         }
@@ -143,9 +148,9 @@
                 ],
                 [
                     'attribute' => 'personas',
-                    'value'=>function($model){
-                        if ($model['personas'] != 0) {
-                            return $model['personas'];
+                    'value'=>function($modelFacturacion){
+                        if ($modelFacturacion['personas'] != 0) {
+                            return $modelFacturacion['personas'];
                         }else{
                             return 0;
                         }
@@ -159,8 +164,8 @@
                 ],
                 [
                     'label'=>'Ganancias',
-                    'value'=>function($model){
-                        return round(($model['ingreso']*30)/100);
+                    'value'=>function($modelFacturacion){
+                        return round(($modelFacturacion['ingreso']*30)/100);
                     },
                     'pageSummary' => true,
                     'hAlign' => 'right',
@@ -170,9 +175,9 @@
                 ],
                 [
                     'label'=>'caja',
-                    'value'=>function($model){
-                        $ganancia = round(($model['ingreso']*30)/100);
-                        return ($model['ingreso']-$ganancia-$model['salida']);
+                    'value'=>function($modelFacturacion){
+                        $ganancia = round(($modelFacturacion['ingreso']*30)/100);
+                        return ($modelFacturacion['ingreso']-$ganancia-$modelFacturacion['salida']);
                     },
                     'headerOptions' => ['class' => 'table-info'],
                     'pageSummary' => true,

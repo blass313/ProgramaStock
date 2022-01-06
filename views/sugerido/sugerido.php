@@ -5,7 +5,6 @@
     use kartik\grid\GridView;
     use yii\helpers\Html;
     use yii\bootstrap4\Modal;
-    use kartik\dynagrid\DynaGrid;
 
     use app\models\Product;
 ?>
@@ -32,7 +31,7 @@
 
     <?=
         Html::beginForm(
-        Url::toRoute("pdf"),
+        Url::toRoute("sugeridopdf"),
         'get',
         ['class'=>'form-block'])
     ?>
@@ -54,8 +53,8 @@
 
 <?=
     GridView::widget([
-    'dataProvider' =>$dataProvider,
-    'filterModel' => $searchModel,
+    'dataProvider' =>$dataSugerido,
+    'filterModel' => $searchSugeridoModel,
     'pageSummaryPosition'=>GridView::POS_TOP,
     'summary' => '',
     'showPageSummary' => true,
@@ -80,15 +79,15 @@
         [
             'attribute'=>'categoria',
             'label'=>'Proveedor',
-            'filter'=> $filtro = ArrayHelper::map(product::find()->where('stock < sugerido')->all(), "categoria","categoria"),
+            'filter'=>ArrayHelper::map(product::find()->where('stock < sugerido')->all(), "categoria","categoria"),
             'headerOptions' => ['style' => 'width:15%'],
             'width' => '120px',
             'hAlign' => 'center',
         ],
         [
             'label'=>'diferencia',
-            'value'=>$dif = function($model){
-                $diferencia = $model['sugerido']-$model['stock'];
+            'value'=>function($modelSugerido){
+                $diferencia = $modelSugerido['sugerido']-$modelSugerido['stock'];
                 return $diferencia;
             },
             'headerOptions' => ['style' => 'width:15%'],
@@ -100,8 +99,8 @@
         ],
         [
             'label'=>'Total',
-            'value'=>function($model){
-                $total = ($model['sugerido']-$model['stock'])*$model['precio_bolsa'];
+            'value'=>function($modelSugerido){
+                $total = ($modelSugerido['sugerido']-$modelSugerido['stock'])*$modelSugerido['precio_bolsa'];
                 return $total;
             },
             'headerOptions' => ['style' => 'width:15%'],

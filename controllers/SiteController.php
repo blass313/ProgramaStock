@@ -54,29 +54,29 @@ class SiteController extends Controller{
     }
 
     public function actionIndex(){
-        $model = new Product();
+        $modelProduct = new Product();
 
         if (Yii::$app->request->post('hasEditable')) {
-            $this->stock(Yii::$app->request->post('editableAttribute'));
+            $this->actionStock(Yii::$app->request->post('editableAttribute'));
         }
 
-        $searchModel = new ProductSearch();
+        $searchGeneralModel = new ProductSearch();
+        $dataGeneral = $searchGeneralModel->searchGeneral(Yii::$app->request->queryParams);
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'model' => $model,
+            'searchGeneralModel' => $searchGeneralModel,
+            'dataGeneral' => $dataGeneral,
+            'modelProduct' => $modelProduct,
         ]);
-    }//index
+    }
 
     public function actionCreate(){
-        $model = new Product();
+        $productCreate = new Product();
 		
-        if ($model->load(Yii::$app->request->post()) && $model->save()){
+        if ($productCreate->load(Yii::$app->request->post()) && $productCreate->save()){
             $model = new Product();
             }else {
-                $model->getErrors();
+                $productCreate->getErrors();
             }
             return $this->redirect('index');
     }
@@ -86,101 +86,26 @@ class SiteController extends Controller{
 
 		$model->delete();
         return $this->redirect(['index']);
-    }//delete
+    }
 
-    public function actionUpdate(){
-        $model = new Product;
-        $msg = null;
+    public function actionUpdate($id){
+        $model = $this->findModel($id);
 
-        if($model->load(Yii::$app->request->post())){
-
-            if($model->validate()){
-
-                $datos = product::findOne($_GET["id"]);
-
-                if($datos){
-                    $datos->cod = $model->cod;
-                    $datos->name = strtoupper($model->name); 
-                    $datos->description = strtoupper($model->description);
-                    $datos->categoria = strtoupper($model->categoria);
-                    $datos->stock = $model->stock;
-                    $datos->sugerido = $model->sugerido;
-                    $datos->kg = $model->kg;
-                    $datos->precio_bolsa = $model->precio_bolsa;
-                    $datos->porcentajekg = $model->porcentajekg;
-                    $datos->porcentajebolsa = $model->porcentajebolsa;
-    
-                    if ($datos->update())
-                    {
-                    $msg =  Alert::widget([
-                                'type' => Alert::TYPE_SUCCESS,
-                                'title' => 'Carga Exitosa',
-                                'icon' => 'fas fa-check-circle',
-                                'body' => 'El items a sido modificado con exito',
-                                'showSeparator' => true,
-                                'delay' => 2000,
-                            ]);
-                    }
-                    else
-                    {
-                        $msg =  Alert::widget([
-                                    'type' => Alert::TYPE_DANGER,
-                                    'title' => 'Fallo al cargar los datos',
-                                    'icon' => 'fas fa-times-circle',
-                                    'body' => 'Algo salio mal y no se pudo cargar el producto',
-                                    'showSeparator' => true,
-                                    'delay' => 2000
-                                ]);
-                    }
-                }
-                else
-                {
-                    $msg = Alert::widget([
-                        'type' => Alert::TYPE_WARNING,
-                        'title' => 'Cuidado!',
-                        'icon' => 'fas fa-exclamation-circle',
-                        'body' => 'El producto no se encontro',
-                        'showSeparator' => true,
-                        'delay' => 2000
-                    ]);
-                }
-            }
-            else{
-                $model->getErrors();
-            }
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect("index");
         }
 
-        if (Yii::$app->request->get("id")){
-            $id = Html::encode($_GET["id"]);
-            if ((int) $id){
-                $datos = product::findOne($id);
-                if($datos)
-                {
-                    $model->cod = $datos->cod;
-                    $model->name = $datos->name;
-                    $model->description = $datos->description;
-                    $model->categoria = $datos->categoria;
-                    $model->stock = $datos->stock;
-                    $model->sugerido = $datos->sugerido;
-                    $model->kg = $datos->kg;
-                    $model->precio_bolsa = $datos->precio_bolsa;
-                    $model->porcentajekg = $datos->porcentajekg;
-                    $model->porcentajebolsa = $datos->porcentajebolsa;
-                }
-                else{
-                    return $this->redirect(["index"]);
-                }
-            }
-            else{
-                return $this->redirect(["index"]);
-            }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    protected function findModel($id){
+        if (($model = Product::findOne($id)) !== null) {
+            return $model;
         }
-        else{
-            return $this->redirect(["index"]);
-        }
-        return $this->render("update", ["model" => $model, "msg" => $msg]);
-    }//update
-    
+    }
+
     public function actionLogin(){
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -203,11 +128,10 @@ class SiteController extends Controller{
         return $this->goHome();
     }
 
-    public function actionPdf($filtro = null, $sector = null){
-        $section = 'general';
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$section,$filtro);
-        $content = $this->renderPartial('pdf_StockGeneral',['dataProvider'=>$dataProvider]);
+    public function actionGeneralpdf(){
+        $searchPdf = new ProductSearch();
+        $dataPdf = $searchPdf->searchGeneral(Yii::$app->request->queryParams);
+        $content = $this->renderPartial('pdf_StockGeneral',['dataPdf'=>$dataPdf]);
         $nombre = 'Stock General.pdf';
 
         $pdf = new Pdf([
@@ -225,7 +149,7 @@ class SiteController extends Controller{
         return $pdf->render();
     }
 
-    public function stock($row) {
+    public function actionStock($row) {
         $datos = product::findOne(Yii::$app->request->post('editableKey'));
         if (isset($_POST['hasEditable'])) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -242,4 +166,5 @@ class SiteController extends Controller{
             }
         }
     }
+
 }

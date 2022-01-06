@@ -23,7 +23,7 @@
     <main>
         <?=
             GridView::widget([
-            'dataProvider' =>$dataProvider,
+            'dataProvider' =>$dataPdf,
             'columns'=>[
                 [
                     'attribute'=>'name',

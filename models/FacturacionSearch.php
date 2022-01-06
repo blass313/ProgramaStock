@@ -1,6 +1,6 @@
 <?php
     namespace app\models;
-
+    use Yii;
     use yii\base\Model;
     use yii\data\ActiveDataProvider;
     use app\models\Facturacion;
@@ -11,23 +11,20 @@
         public $fechaHasta;
         public $año;
 
-        public function rules()
-        {
-            return [
-                [['id', 'ingreso', 'salida', 'personas'], 'integer'],
-                [['fecha','fechaDesde','fechaHasta','año'], 'safe'],
-                
-            ];
+        public function validateDates($attribute){
+            if(!$this->hasErrors() && strtotime($this->fechaDesde) > strtotime($this->fechaHasta)){
+                $this->addError('fechaDesde','escriba de forma correcta el rango');
+            }
         }
 
         public function scenarios(){
             return Model::scenarios();
         }
 
-        public function search($params){
+        public function searchFacturacion($params){
             $query = Facturacion::find()->orderBy(['fecha'=>SORT_DESC]);
 
-            $dataProvider = new ActiveDataProvider([
+            $dataFacturacion = new ActiveDataProvider([
                 'query' => $query,
                 'pagination' => [
                     'pageSize' => false,
@@ -37,7 +34,7 @@
             $this->load($params);
     
             if (!$this->validate()) {
-                return $dataProvider;
+                return $dataFacturacion;
             }
             
             $query->andFilterWhere([
@@ -48,7 +45,7 @@
                 'personas' => $this->personas,
             ]);
             
-            return $dataProvider;
+            return $dataFacturacion;
         }
     }
 ?>
