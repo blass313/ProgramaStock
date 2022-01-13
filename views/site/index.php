@@ -260,6 +260,7 @@
                     ],
                     [
                         'attribute'=>'precio_bolsa',
+                        'label'=>'Precio distribuidora',
                         'width' => '12%',
                         'class'=>'kartik\grid\EditableColumn',
                         'hAlign' => 'right',

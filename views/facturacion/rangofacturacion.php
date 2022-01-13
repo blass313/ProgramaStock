@@ -68,6 +68,8 @@
             <tr>
                 <th>Total de personas </th>
                 <th>Total de ganancia</th>
+                <th>Total de ingresos </th>
+                <th>Total de gastos</th>
                 <th>Total de caja</th>
             </tr>
         </thead>
@@ -89,7 +91,25 @@
                                 $gananciaDia = ($row['ingreso']*30)/100;
                                 $totalGanancia +=$gananciaDia;
                             }
-                            echo number_format($totalGanancia, 2, '.', ',');
+                            echo number_format(round($totalGanancia), 2, '.', ',');
+                    ?>
+                </td>
+                <td> $
+                    <?php
+                            $totalIngreso = null;
+                            foreach ($rows as $row) {
+                                $totalIngreso +=$row['ingreso'];
+                            }
+                            echo number_format($totalIngreso, 2, '.', ',');
+                    ?>
+                </td>
+                <td> $
+                    <?php
+                            $totalSalida = null;
+                            foreach ($rows as $row) {
+                                $totalSalida += $row['salida'];
+                            }
+                            echo number_format($totalSalida, 2, '.', ',');
                     ?>
                 </td>
                 <td> $
@@ -99,38 +119,39 @@
                             $gananciaDia = $row['ingreso']-round(($row['ingreso']*30)/100)-$row['salida'];
                             $totalCaja +=$gananciaDia;
                         }
-                        echo number_format($totalCaja, 2, '.', ',');
+                        echo  number_format($totalCaja, 2, '.', ',');
                     ?>
                 </td>
             </tr>
         </tbody>
 </table>
-    <table class="table" id="tabla" style="height:200px;
-            overflow:scroll;">
-            <thead class="thead-dark">
-                <tr style="position: sticky; top: 0; z-index: 10; background-color: #ffffff;">
-                    <th class="header" scope="col">Fecha</th>
-                    <th class="header" scope="col">Ingreso</th>
-                    <th class="header" scope="col">Salida</th>
-                    <th class="header" scope="col">Personas</th>
-                    <th class="header" scope="col">ganancia</th>
-                    <th class="header" scope="col">caja</th>
-                </tr>
-            </thead>
-            <?php
-                foreach($rows as $row):
-            ?>
-                <tbody>
+    <div id="tabla" class="container-fluid">
+        <table class="table">
+                <thead class="thead-dark">
                     <tr style="position: sticky; top: 0; z-index: 10; background-color: #ffffff;">
-                        <td><?=$row['fecha'];?></td>
-                        <td>$ <?=number_format($row['ingreso'], 2, '.', ',')?></td>
-                        <td>$ <?=number_format($row['salida'], 2, '.', ',')?></td>
-                        <td><?=$row['personas']?></td>
-                        <td>$ <?=number_format(round(($row['ingreso']*30)/100), 2, '.', ','); ?></td>
-                        <td>$ <?=number_format($row['ingreso']-round(($row['ingreso']*30)/100)-$row['salida'], 2, '.', ',');?></td>
+                        <th class="header" scope="col">Fecha</th>
+                        <th class="header" scope="col">Ingreso</th>
+                        <th class="header" scope="col">Salida</th>
+                        <th class="header" scope="col">Personas</th>
+                        <th class="header" scope="col">ganancia</th>
+                        <th class="header" scope="col">caja</th>
                     </tr>
-                </tbody>
-            <?php
-                endforeach;
-            ?>
-    </table>
+                </thead>
+                <?php
+                    foreach($rows as $row):
+                ?>
+                    <tbody>
+                        <tr style="position: sticky; top: 0; z-index: 10; background-color: #ffffff;">
+                            <td><?=$row['fecha'];?></td>
+                            <td>$ <?=number_format($row['ingreso'], 2, '.', ',')?></td>
+                            <td>$ <?=number_format($row['salida'], 2, '.', ',')?></td>
+                            <td><?=$row['personas']?></td>
+                            <td>$ <?=number_format(round(($row['ingreso']*30)/100), 2, '.', ','); ?></td>
+                            <td>$ <?=number_format($row['ingreso']-round(($row['ingreso']*30)/100)-$row['salida'], 2, '.', ',');?></td>
+                        </tr>
+                    </tbody>
+                <?php
+                    endforeach;
+                ?>
+        </table>
+    </div>

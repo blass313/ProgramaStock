@@ -11,12 +11,19 @@
         public $fechaHasta;
         public $año;
 
+        public function rules()
+        {
+            return [
+                [['id', 'ingreso', 'salida', 'personas'], 'integer'],
+                [['fecha','año'], 'safe'],
+                [['fechaDesde','fechaHasta'],'validateDates'],
+            ];
+        }
         public function validateDates($attribute){
             if(!$this->hasErrors() && strtotime($this->fechaDesde) > strtotime($this->fechaHasta)){
                 $this->addError('fechaDesde','escriba de forma correcta el rango');
             }
         }
-
         public function scenarios(){
             return Model::scenarios();
         }

@@ -85,7 +85,7 @@
 
         public function actionRangofacturacion($rows = null, $formFecha = null){
             $model = new facturacion;
-            $formFecha = new FacturacionSearch;
+            $formFecha = new FacturacionSearch();
 
             if(!empty($formFecha->load(Yii::$app->request->get()))){
                 $rows = $this->actionSearchMes($model,$formFecha);
@@ -134,8 +134,8 @@
                 $desde = Html::encode($formFecha->fechaDesde);
                 $hasta = Html::encode($formFecha->fechaHasta);
                 if (!empty($desde) && !empty($hasta)) {
-                    $query = "SELECT * FROM facturacion WHERE fecha BETWEEN '$desde' AND '$hasta'";
-                    return $model->findBySql($query)->all();
+                        $query = "SELECT * FROM facturacion WHERE fecha BETWEEN '$desde' AND '$hasta'";
+                        return $model->findBySql($query)->all();
                 }else {
                     $query = "SELECT * FROM facturacion";
                     return $model->findBySql($query)->asArray()->all();

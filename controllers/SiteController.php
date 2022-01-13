@@ -11,7 +11,6 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 
 use kartik\mpdf\Pdf;
-use kartik\widgets\Alert;
 
 use app\models\ProductSearch;
 use app\models\LoginForm;

@@ -6,6 +6,7 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    
   </head>
   <body class="card">
     <header style="margin-bottom: 50px; margin-top: 50px;">
@@ -13,7 +14,7 @@
         <img src="../views/sugerido/img/perro.png" width="80px">
       </div>
       <h1>Forrajeria Lo de Lalo</h1>
-      <h4>Pedido para proveedor: <?=$proveedor?></h4>
+      <h4>Pedido de productos seleccionados</h4>
       <h4>Fecha de pedido: <?=date("d.m.y")?></h4>
       <div class="card" style="margin-top: 20px;">
         <div>Calle 11 entre 112 y 114</div>
@@ -46,9 +47,9 @@
                     }
                 ?>
             </tbody>
-            <tfoot >
-              <tr >
-                <th style="background-color: lightblue;" colspan="3">Monto aproximado:</th>
+            <tfoot>
+              <tr class="table-info">
+              <th style="background-color: lightblue;" colspan="3">Monto aproximado:</th>
                 <td style="background-color: lightblue;">$ <?=$montoTotal?></td>
               </tr>
             </tfoot>

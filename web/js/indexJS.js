@@ -31,4 +31,26 @@ $(document).ready(function() {
             calculateDifference(popOver, rowIndex, diferenciaTd);
         });
     });
+/*
+    $("#generar").submit(function (e) {
+        e.preventDefault();
+        var ids;
+        var url = $('#form').attr('action');
+        ids = $('input[name=selection]:checked').map(function() {
+            return $(this).attr('id');
+        }).get();
+        $.ajax({
+            type: "get",
+            url: url,
+            data: {ids},
+            dataType: "dataType",
+            success: function (response) {
+                console.log(ids);
+                console.log(response);
+            },
+            fail: function() {
+                console.log('error');
+            }
+        });
+    });*/
 });
